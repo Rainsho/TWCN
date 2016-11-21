@@ -17,13 +17,29 @@
 		<property name="connection.driver_class">
 			com.mysql.jdbc.Driver
 		</property>
-		<property name="myeclipse.connection.profile">mysql_twcn</property>
+		<property name="myeclipse.connection.profile">
+			mysql_twcn
+		</property>
 		<property name="connection.characterEncoding">UTF-8</property>
 		<property name="connection.autocommit">true</property>
 		<!-- for de_bug -->
 		<property name="show_sql">true</property>
 		<property name="format_sql">true</property>
 
+		<!-- entity mapping -->
+		<mapping class="com.rainsho.entity.T2p" />
+		<mapping class="com.rainsho.entity.Mentions" />
+		<mapping class="com.rainsho.entity.Relationships" />
+		<mapping class="com.rainsho.entity.T2t" />
+		<mapping class="com.rainsho.entity.Tweets" />
+		<mapping class="com.rainsho.entity.Directmsgs" />
+		<mapping class="com.rainsho.entity.Likes" />
+		<mapping class="com.rainsho.entity.Replays" />
+		<mapping class="com.rainsho.entity.Forwards" />
+		<mapping class="com.rainsho.entity.Pics" />
+		<mapping class="com.rainsho.entity.Users" />
+		<mapping class="com.rainsho.entity.Topics" />
+		<mapping class="com.rainsho.entity.Videos" />
 	</session-factory>
 
 </hibernate-configuration>

@@ -4,6 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
 	xmlns:tx="http://www.springframework.org/schema/tx">
 
+	<!-- datasource and seesion -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="url" value="jdbc:mysql://localhost:3306/twcn"></property>
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
@@ -13,12 +14,84 @@
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
-		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- auto generated DAO -->
+	<bean id="T2pDAO" class="com.rainsho.dao.T2pDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="MentionsDAO" class="com.rainsho.dao.MentionsDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="RelationshipsDAO" class="com.rainsho.dao.RelationshipsDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="T2tDAO" class="com.rainsho.dao.T2tDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="TweetsDAO" class="com.rainsho.dao.TweetsDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="DirectmsgsDAO" class="com.rainsho.dao.DirectmsgsDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="LikesDAO" class="com.rainsho.dao.LikesDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ReplaysDAO" class="com.rainsho.dao.ReplaysDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ForwardsDAO" class="com.rainsho.dao.ForwardsDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="PicsDAO" class="com.rainsho.dao.PicsDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="UsersDAO" class="com.rainsho.dao.UsersDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="TopicsDAO" class="com.rainsho.dao.TopicsDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="VideosDAO" class="com.rainsho.dao.VideosDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<!-- test bean -->
+	<bean id="test" class="com.rainsho.test.Test">
+		<property name="dao" ref="UsersDAO"></property>
+	</bean>
 
 </beans>
