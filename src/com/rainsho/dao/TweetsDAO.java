@@ -14,6 +14,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rainsho.entity.Tweets;
+import com.rainsho.entity.Users;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -170,4 +171,12 @@ public class TweetsDAO {
 	public static TweetsDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (TweetsDAO) ctx.getBean("TweetsDAO");
 	}
+
+	// additional function
+	public List<Tweets> findByUser(Users user) {
+		String hql = "from Tweets as t where t.users=? order by t.tweettime desc";
+		Query query = getCurrentSession().createQuery(hql);
+		return query.setEntity(0, user).list();
+	}
+
 }

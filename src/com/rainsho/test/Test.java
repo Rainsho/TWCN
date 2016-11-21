@@ -29,4 +29,7 @@ public class Test {
 		user = dao.findById(1);
 		return "success";
 	}
+	
+	public static void main(String[] args) {
+	}
 }

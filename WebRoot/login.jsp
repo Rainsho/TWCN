@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -35,8 +36,7 @@
 			<div class="global-nav global-nav--newLoggedOut">
 				<div class="global-nav-inner">
 					<div class="container">
-						<ul class="nav js-global-actions" role="navigation"
-							id="global-actions">
+						<ul class="nav js-global-actions" id="global-actions">
 							<li id="global-nav-home" class="home"><a
 								class="js-nav js-tooltip js-dynamic-tooltip" href="/"> <span
 									class="Icon Icon--bird Icon--large"></span> <span class="text">主页</span>
@@ -66,11 +66,10 @@
 							</div>
 						</div>
 						<div class="front-signin js-front-signin">
-							<form action="https://twitter.com/sessions"
-								class="t1-form signin" method="post">
+							<form action="login.action" class="t1-form signin" method="post">
 								<div class="username field">
 									<input type="text" id="signin-email"
-										class="text-input email-input" name="login_id"
+										class="text-input email-input" name="user.username"
 										placeholder="邮件地址或用户名">
 								</div>
 								<table class="flex-table password-signin">
@@ -79,7 +78,7 @@
 											<td class="flex-table-primary">
 												<div class="password flex-table-form">
 													<input type="password" id="signin-password"
-														class="text-input flex-table-input" name="login_psw"
+														class="text-input flex-table-input" name="user.password"
 														placeholder="密码">
 												</div>
 											</td>
@@ -93,6 +92,9 @@
 								<div class="remember-forgot">
 									<label class="t1-label remember"><input type="checkbox"
 										value="1" name="remember_me"><span>记住我</span></label>
+									<c:if test="${login_msg != null }">
+										<span style="color: red;font-size: 12px;">${login_msg }</span>
+									</c:if>
 									<!--<span class="separator">·</span>
 											<a class="forgot" href="https://twitter.com/account/begin_password_reset">忘记密码?</a>-->
 								</div>
@@ -101,19 +103,22 @@
 						<div class="front-signup js-front-signup">
 							<h2>
 								<strong>新来 TWCN?</strong> 注册
+								<c:if test="${signup_msg != null }">
+									<span style="color: red;font-size: 12px;">${signup_msg }</span>
+								</c:if>
 							</h2>
-							<form action="https://twitter.com/signup" class="t1-form signup"
+							<form action="login!signup.action" class="t1-form signup"
 								id="frontpage-signup-form" method="post">
 								<div class="field">
-									<input type="text" class="text-input" name="nickname"
-										maxlength="20" placeholder="全名">
+									<input type="text" class="text-input" name="user.nickname"
+										maxlength="20" placeholder="全名" value="${user.nickname }">
 								</div>
 								<div class="field">
-									<input type="text" class="text-input email-input" name="email"
-										placeholder="邮件地址">
+									<input type="text" class="text-input email-input"
+										name="user.email" placeholder="邮件地址">
 								</div>
 								<div class="field">
-									<input type="password" class="text-input" name="password"
+									<input type="password" class="text-input" name="user.password"
 										placeholder="密码">
 								</div>
 								<button type="submit" class="btn signup-btn u-floatRight">注册

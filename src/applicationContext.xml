@@ -94,4 +94,20 @@
 		<property name="dao" ref="UsersDAO"></property>
 	</bean>
 
+	<!-- function -->
+	<bean id="LoginService" class="com.rainsho.service.LoginService">
+		<property name="dao" ref="UsersDAO"></property>
+	</bean>
+	<bean id="LoginAction" class="com.rainsho.action.LoginAction">
+		<property name="service" ref="LoginService"></property>
+	</bean>
+
+	<bean id="UserService" class="com.rainsho.service.UserService">
+		<property name="dao" ref="UsersDAO"></property>
+		<property name="tdao" ref="TweetsDAO"></property>
+	</bean>
+	<bean id="UserAction" class="com.rainsho.action.UserAction">
+		<property name="service" ref="UserService"></property>
+	</bean>
+
 </beans>

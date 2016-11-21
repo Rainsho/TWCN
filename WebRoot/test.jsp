@@ -28,5 +28,11 @@
 	${t.tcontent }
 	</c:forEach>
 	</h3>
+	<h3>
+		order by!!!
+		<c:forEach var="tt" items="${list }">
+	${tt.tcontent }
+	</c:forEach>
+	</h3>
 </body>
 </html>
