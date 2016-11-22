@@ -1,5 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -13,7 +13,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>TWCN —— ${user.nickname }</title>
+<title>TWCN —— ${LOGIN_USER.nickname }</title>
 <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="css/twitter_identify.css" />
 
@@ -66,20 +66,20 @@
 							<li class="me dropdown session" id="user-dropdown"><a
 								class="btn js-tooltip settings dropdown-toggle"
 								id="user-dropdown-toggle"> <img class="avatar size32"
-									src="img/twitter-icon.png" alt="Profile and settings"></a>
+									src="${LOGIN_USER.avatar }" alt="Profile and settings"></a>
 								<div class="dropdown-menu">
 									<div class="dropdown-caret">
 										<span class="caret-outer"></span> <span class="caret-inner"></span>
 									</div>
 									<ul>
 										<li class="current-user" data-name="profile"><a
-											href="u/${user.username }"
+											href="u/${LOGIN_USER.username }"
 											class="account-summary account-summary-small js-nav">
 												<div class="content">
 													<div class="account-group js-mini-current-user">
-														<b class="fullname">${user.nickname }</b> <span
-															class="screen-name hidden" dir="ltr">@${user.nickname }</span> <small
-															class="metadata">查看个人资料</small>
+														<b class="fullname">${LOGIN_USER.nickname }</b> <span
+															class="screen-name hidden" dir="ltr">@${LOGIN_USER.nickname
+															}</span> <small class="metadata">查看个人主页</small>
 													</div>
 												</div>
 										</a></li>
@@ -112,18 +112,21 @@
 						href="u/${user.username }" tabindex="-1" aria-hidden="true"></a>
 					<div class="DashboardProfileCard-content">
 						<a class="DashboardProfileCard-avatarLink u-inlineBlock"
-							href="u/${user.username }" title="${user.username }" tabindex="-1" aria-hidden="true">
-							<img class="DashboardProfileCard-avatarImage"
-							src="${user.avatar }" alt="">
+							href="u/${user.username }" title="${user.username }"
+							tabindex="-1" aria-hidden="true"> <img
+							class="DashboardProfileCard-avatarImage" src="${user.avatar }"
+							alt="">
 						</a>
 						<div class="DashboardProfileCard-userFields">
 							<div class="DashboardProfileCard-name u-textTruncate">
-								<a class="u-textInheritColor" href="u/${user.username }">${user.nickname }</a>
+								<a class="u-textInheritColor" href="u/${user.username }">${user.nickname
+									}</a>
 							</div>
 							<span class="DashboardProfileCard-screenname u-inlineBlock u-dir"
 								dir="ltr"> <a
 								class="DashboardProfileCard-screennameLink u-linkComplex u-linkClean"
-								href="u/${user.username }">@<span class="u-linkComplex-target">${user.username }</span></a>
+								href="u/${user.username }">@<span
+									class="u-linkComplex-target">${user.username }</span></a>
 							</span>
 						</div>
 						<div class="ProfileCardStats">
@@ -133,13 +136,15 @@
 									class="ProfileCardStats-statLink u-textUserColor u-linkClean u-block"
 									href="u/${user.username }"> <span
 										class="ProfileCardStats-statLabel u-block">推文</span> <span
-										class="ProfileCardStats-statValue">${user.tweetses.size() }</span>
+										class="ProfileCardStats-statValue">${user.tweetses.size()
+											}</span>
 								</a></li>
 								<li class="ProfileCardStats-stat Arrange-sizeFit"><a
 									class="ProfileCardStats-statLink u-textUserColor u-linkClean u-block"
 									href="u/${user.username }/following"> <span
 										class="ProfileCardStats-statLabel u-block">正在关注</span> <span
-										class="ProfileCardStats-statValue">${user.relationshipsesForHuid.size() }</span>
+										class="ProfileCardStats-statValue">${user.relationshipsesForHuid.size()
+											}</span>
 								</a></li>
 							</ul>
 						</div>
@@ -254,431 +259,188 @@
 
 					<div class="stream">
 						<ol class="stream-items js-navigable-stream" id="stream-items-id">
-						
-						<!-- core tweet -->
-						<c:forEach var="t" items="${list }">
-						<!--test html content begin-->
-							<li class="stream-item">
-								<div class="tweet">
-									<div class="content">
-										<!--userinfo-->
-										<div class="stream-item-header">
-											<a class="account-group" href="u/${t.users.username }"> <img class="avatar"
-												src="${t.users.avatar }" alt=""> <strong
-												class="fullname">${t.users.nickname }</strong> <span>‏</span><span
-												class="username"><s>@</s><b>${t.users.username }</b></span>
-											</a> <small class="time"><span class="_timestamp">${t.fmtTime() }</span></small>
-										</div>
-										<!--msg-->
-										<div class="js-tweet-text-container">
-											<p class="TweetTextSize">${t.tcontent }</p>
-										</div>
-										<!--option-->
-										<div class="stream-item-footer">
-											<!--replay-->
-											<div class="ProfileTweet-actionList">
-												<div class="ProfileTweet-action ProfileTweet-action--reply">
-													<button
-														class="ProfileTweet-actionButton u-textUserColorHover"
-														type="button">
-														<div class="IconContainer">
-															<span class="Icon Icon--reply"></span>
-														</div>
-														<div class="IconTextContainer">
-															<span
-																class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">${t.replayses.size() }</span>
-														</div>
-													</button>
+							<!-- core tweet -->
+							<c:forEach var="t" items="${list }">
+								<!--test html content begin-->
+								<li class="stream-item">
+									<div class="tweet">
+										<div class="content">
+											<!--userinfo-->
+											<div class="stream-item-header">
+												<a class="account-group" href="u/${t.users.username }">
+													<img class="avatar" src="${t.users.avatar }" alt="">
+													<strong class="fullname">${t.users.nickname }</strong> <span>‏</span><span
+													class="username"><s>@</s><b>${t.users.username }</b></span>
+												</a> <small class="time"><span class="_timestamp">${t.fmtTime()
+														}</span></small>
+											</div>
+											<!--msg-->
+											<div class="js-tweet-text-container">
+												<p class="TweetTextSize">${t.tcontent }</p>
+											</div>
+											<!--media-->
+											<c:if test="${t.t2ps.size() > 0 }">
+												<div class="AdaptiveMedia">
+													<div class="AdaptiveMedia-container">
+														<c:choose>
+															<c:when test="${t.t2ps.size()==1 }">
+																<c:forEach var="t2p" items="${t.t2ps }">
+																	<div class="AdaptiveMedia-singlePhoto">
+																		<div class="AdaptiveMedia-photoContainer">
+																			<img src="${t2p.pics.ppath }" alt="${t2p.pics.pid }"
+																				style="width: 100%; top: -0px;">
+																		</div>
+																	</div>
+																</c:forEach>
+															</c:when>
+															<c:when test="${t.t2ps.size()==2 }">
+																<div class="AdaptiveMedia-doublePhoto">
+																	<c:forEach var="t2p" items="${t.t2ps }">
+																		<div class="AdaptiveMedia-halfWidthPhoto">
+																			<div class="AdaptiveMedia-photoContainer">
+																				<img src="${t2p.pics.ppath }" alt="${t2p.pics.pid }"
+																					style="height: 100%; left: -62px;">
+																			</div>
+																		</div>
+																	</c:forEach>
+																</div>
+															</c:when>
+															<c:when test="${t.t2ps.size()==3 }">
+																<div class="AdaptiveMedia-triplePhoto">
+																	<c:forEach var="t2p" items="${t.t2ps }" begin="0"
+																		end="0">
+																		<div class="AdaptiveMedia-twoThirdsWidthPhoto">
+																			<div class="AdaptiveMedia-photoContainer">
+																				<img src="${t2p.pics.ppath }" alt="${t2p.pics.pid }"
+																					style="height: 100%; left: -83px;">
+																			</div>
+																		</div>
+																	</c:forEach>
+																	<div class="AdaptiveMedia-halfHeightPhotoContainer">
+																		<c:forEach var="t2p" items="${t.t2ps }" begin="1">
+																			<div class="AdaptiveMedia-halfHeightPhoto">
+																				<div class="AdaptiveMedia-photoContainer">
+																					<img src="${t2p.pics.ppath }"
+																						alt="${t2p.pics.pid }"
+																						style="height: 100%; left: -41px;">
+																				</div>
+																			</div>
+																		</c:forEach>
+																	</div>
+																</div>
+															</c:when>
+															<c:otherwise>
+																<div class="AdaptiveMedia-quadPhoto">
+																	<c:forEach var="t2p" items="${t.t2ps }" begin="0"
+																		end="0">
+																		<div class="AdaptiveMedia-threeQuartersWidthPhoto">
+																			<div class="AdaptiveMedia-photoContainer">
+																				<img src="${t2p.pics.ppath }" alt="${t2p.pics.pid }"
+																					style="height: 100%; left: -146px;">
+																			</div>
+																		</div>
+																	</c:forEach>
+																	<div class="AdaptiveMedia-thirdHeightPhotoContainer">
+																		<c:forEach var="t2p" items="${t.t2ps }" begin="1"
+																			end="3">
+																			<div class="AdaptiveMedia-thirdHeightPhoto">
+																				<div class="AdaptiveMedia-photoContainer">
+																					<img src="${t2p.pics.ppath }"
+																						alt="${t2p.pics.pid }"
+																						style="height: 100%; left: -41px;">
+																				</div>
+																			</div>
+																		</c:forEach>
+																	</div>
+																</div>
+															</c:otherwise>
+														</c:choose>
+													</div>
 												</div>
-												<!--forwart-->
-												<div
-													class="ProfileTweet-action ProfileTweet-action--retweet">
-													<button class="ProfileTweet-actionButton" type="button">
-														<div class="IconContainer js-tooltip">
-															<span class="Icon Icon--retweet"></span>
-														</div>
-														<div class="IconTextContainer">
-															<span
-																class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">${t.forwardses.size() }</span>
-														</div>
-													</button>
-												</div>
-												<!--like-->
-												<div
-													class="ProfileTweet-action ProfileTweet-action--favorite">
-													<button class="ProfileTweet-actionButton" type="button">
-														<div class="IconContainer">
-															<div class="HeartAnimationContainer">
-																<div class="HeartAnimation"></div>
-															</div>
-														</div>
-														<div class="IconTextContainer">
-															<span
-																class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">${t.likeses.size() }</span>
-														</div>
-													</button>
-												</div>
-												<!--more option-->
-												<div class="ProfileTweet-action ProfileTweet-action--more">
-													<div class="dropdown">
+											</c:if>
+											<!--option-->
+											<div class="stream-item-footer">
+												<!--replay-->
+												<div class="ProfileTweet-actionList">
+													<div class="ProfileTweet-action ProfileTweet-action--reply">
 														<button
 															class="ProfileTweet-actionButton u-textUserColorHover"
 															type="button">
 															<div class="IconContainer">
-																<span class="Icon Icon--dots"></span>
+																<span class="Icon Icon--reply"></span>
+															</div>
+															<div class="IconTextContainer">
+																<span
+																	class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">${t.replayses.size()
+																	}</span>
 															</div>
 														</button>
-														<div class="dropdown-menu">
-															<div class="dropdown-caret">
-																<div class="caret-outer"></div>
-																<div class="caret-inner"></div>
+													</div>
+													<!--forwart-->
+													<div
+														class="ProfileTweet-action ProfileTweet-action--retweet">
+														<button class="ProfileTweet-actionButton" type="button">
+															<div class="IconContainer js-tooltip">
+																<span class="Icon Icon--retweet"></span>
 															</div>
-															<ul>
-																<li class="share-via-dm">
-																	<button type="button" class="dropdown-link">私信分享</button>
-																</li>
-																<li class="block-link">
-																	<button type="button" class="dropdown-link">屏蔽
-																		@${t.users.username }</button>
-																</li>
-																<li class="dropdown-divider"></li>
-															</ul>
+															<div class="IconTextContainer">
+																<span
+																	class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">${t.forwardses.size()
+																	}</span>
+															</div>
+														</button>
+													</div>
+													<!--like-->
+													<div
+														class="ProfileTweet-action ProfileTweet-action--favorite">
+														<button class="ProfileTweet-actionButton" type="button">
+															<div class="IconContainer">
+																<div class="HeartAnimationContainer">
+																	<div class="HeartAnimation"></div>
+																</div>
+															</div>
+															<div class="IconTextContainer">
+																<span
+																	class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">${t.likeses.size()
+																	}</span>
+															</div>
+														</button>
+													</div>
+													<!--more option-->
+													<div class="ProfileTweet-action ProfileTweet-action--more">
+														<div class="dropdown">
+															<button
+																class="ProfileTweet-actionButton u-textUserColorHover"
+																type="button">
+																<div class="IconContainer">
+																	<span class="Icon Icon--dots"></span>
+																</div>
+															</button>
+															<div class="dropdown-menu">
+																<div class="dropdown-caret">
+																	<div class="caret-outer"></div>
+																	<div class="caret-inner"></div>
+																</div>
+																<ul>
+																	<li class="share-via-dm">
+																		<button type="button" class="dropdown-link">私信分享</button>
+																	</li>
+																	<li class="block-link">
+																		<button type="button" class="dropdown-link">屏蔽
+																			@${t.users.username }</button>
+																	</li>
+																	<li class="dropdown-divider"></li>
+																</ul>
+															</div>
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							</li>
-							<!--test html content end-->
-						
-						</c:forEach>
-						<!-- core tweet -->
-						
-						
-						
-							<!--test html content begin-->
-							<li class="stream-item">
-								<div class="tweet">
-									<div class="content">
-										<!--userinfo-->
-										<div class="stream-item-header">
-											<a class="account-group" href="/"> <img class="avatar"
-												src="img/twitter-icon.png" alt=""> <strong
-												class="fullname">niakname</strong> <span>‏</span><span
-												class="username"><s>@</s><b>username</b></span>
-											</a> <small class="time"><span class="_timestamp">1分钟前</span></small>
-										</div>
-										<!--msg-->
-										<div class="js-tweet-text-container">
-											<p class="TweetTextSize">图片测试</p>
-										</div>
-										<!--media-->
-										<div class="AdaptiveMedia">
-											<div class="AdaptiveMedia-container">
-												<div class="AdaptiveMedia-doublePhoto">
-													<div class="AdaptiveMedia-halfWidthPhoto">
-														<div class="AdaptiveMedia-photoContainer">
-															<img src="img/bg2.jpg" alt=""
-																style="height: 100%; left: -62px;">
-														</div>
-													</div>
-													<div class="AdaptiveMedia-halfWidthPhoto">
-														<div class="AdaptiveMedia-photoContainer">
-															<img src="img/bg3.jpg" alt=""
-																style="height: 100%; left: -62px;">
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<!--option-->
-										<div class="stream-item-footer">
-											<!--replay-->
-											<div class="ProfileTweet-actionList">
-												<div class="ProfileTweet-action ProfileTweet-action--reply">
-													<button
-														class="ProfileTweet-actionButton u-textUserColorHover"
-														type="button">
-														<div class="IconContainer">
-															<span class="Icon Icon--reply"></span>
-														</div>
-														<div class="IconTextContainer">
-															<span
-																class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">18</span>
-														</div>
-													</button>
-												</div>
-												<!--forwart-->
-												<div
-													class="ProfileTweet-action ProfileTweet-action--retweet">
-													<button class="ProfileTweet-actionButton" type="button">
-														<div class="IconContainer js-tooltip">
-															<span class="Icon Icon--retweet"></span>
-														</div>
-														<div class="IconTextContainer">
-															<span
-																class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">1200</span>
-														</div>
-													</button>
-												</div>
-												<!--like-->
-												<div
-													class="ProfileTweet-action ProfileTweet-action--favorite">
-													<button class="ProfileTweet-actionButton" type="button">
-														<div class="IconContainer">
-															<div class="HeartAnimationContainer">
-																<div class="HeartAnimation"></div>
-															</div>
-														</div>
-														<div class="IconTextContainer">
-															<span
-																class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">3100</span>
-														</div>
-													</button>
-												</div>
-												<!--more option-->
-												<div class="ProfileTweet-action ProfileTweet-action--more">
-													<div class="dropdown">
-														<button
-															class="ProfileTweet-actionButton u-textUserColorHover"
-															type="button">
-															<div class="IconContainer">
-																<span class="Icon Icon--dots"></span>
-															</div>
-														</button>
-														<div class="dropdown-menu">
-															<div class="dropdown-caret">
-																<div class="caret-outer"></div>
-																<div class="caret-inner"></div>
-															</div>
-															<ul>
-																<li class="share-via-dm">
-																	<button type="button" class="dropdown-link">私信分享</button>
-																</li>
-																<li class="block-link">
-																	<button type="button" class="dropdown-link">屏蔽
-																		@username</button>
-																</li>
-																<li class="dropdown-divider"></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</li>
-							<!--test html content end-->
-
-							<!--test html content begin-->
-							<li class="stream-item">
-								<div class="tweet">
-									<div class="content">
-										<!--userinfo-->
-										<div class="stream-item-header">
-											<a class="account-group" href="/"> <img class="avatar"
-												src="img/twitter-icon.png" alt=""> <strong
-												class="fullname">niakname</strong> <span>‏</span><span
-												class="username"><s>@</s><b>username</b></span>
-											</a> <small class="time"><span class="_timestamp">1分钟前</span></small>
-										</div>
-										<!--msg-->
-										<div class="js-tweet-text-container">
-											<p class="TweetTextSize">
-												Business Plans aren't just a formality – and here's why<span>&nbsp;</span>
-												<a href="#" class="twitter-timeline-link">http</a><span>&nbsp;</span>
-											</p>
-										</div>
-										<!--media-->
-										<div class="AdaptiveMedia">
-											<div class="AdaptiveMedia-container">
-												<div class="AdaptiveMedia-singlePhoto">
-													<div class="AdaptiveMedia-photoContainer">
-														<img src="img/bg1.jpg" alt=""
-															style="width: 100%; top: -0px;">
-													</div>
-												</div>
-											</div>
-										</div>
-										<!--option-->
-										<div class="stream-item-footer">
-											<!--replay-->
-											<div class="ProfileTweet-actionList">
-												<div class="ProfileTweet-action ProfileTweet-action--reply">
-													<button
-														class="ProfileTweet-actionButton u-textUserColorHover"
-														type="button">
-														<div class="IconContainer">
-															<span class="Icon Icon--reply"></span>
-														</div>
-														<div class="IconTextContainer">
-															<span
-																class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">18</span>
-														</div>
-													</button>
-												</div>
-												<!--forwart-->
-												<div
-													class="ProfileTweet-action ProfileTweet-action--retweet">
-													<button class="ProfileTweet-actionButton" type="button">
-														<div class="IconContainer js-tooltip">
-															<span class="Icon Icon--retweet"></span>
-														</div>
-														<div class="IconTextContainer">
-															<span
-																class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">1200</span>
-														</div>
-													</button>
-												</div>
-												<!--like-->
-												<div
-													class="ProfileTweet-action ProfileTweet-action--favorite">
-													<button class="ProfileTweet-actionButton" type="button">
-														<div class="IconContainer">
-															<div class="HeartAnimationContainer">
-																<div class="HeartAnimation"></div>
-															</div>
-														</div>
-														<div class="IconTextContainer">
-															<span
-																class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">3100</span>
-														</div>
-													</button>
-												</div>
-												<!--more option-->
-												<div class="ProfileTweet-action ProfileTweet-action--more">
-													<div class="dropdown">
-														<button
-															class="ProfileTweet-actionButton u-textUserColorHover"
-															type="button">
-															<div class="IconContainer">
-																<span class="Icon Icon--dots"></span>
-															</div>
-														</button>
-														<div class="dropdown-menu">
-															<div class="dropdown-caret">
-																<div class="caret-outer"></div>
-																<div class="caret-inner"></div>
-															</div>
-															<ul>
-																<li class="share-via-dm">
-																	<button type="button" class="dropdown-link">私信分享</button>
-																</li>
-																<li class="block-link">
-																	<button type="button" class="dropdown-link">屏蔽
-																		@username</button>
-																</li>
-																<li class="dropdown-divider"></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</li>
-							<!--test html content end-->
-
-							<!--test html content begin-->
-							<li class="stream-item">
-								<div class="tweet">
-									<div class="content">
-										<!--userinfo-->
-										<div class="stream-item-header">
-											<a class="account-group" href="/"> <img class="avatar"
-												src="img/twitter-icon.png" alt=""> <strong
-												class="fullname">niakname</strong> <span>‏</span><span
-												class="username"><s>@</s><b>username</b></span>
-											</a> <small class="time"><span class="_timestamp">1分钟前</span></small>
-										</div>
-										<!--msg-->
-										<div class="js-tweet-text-container">
-											<p class="TweetTextSize">test only</p>
-										</div>
-										<!--option-->
-										<div class="stream-item-footer">
-											<!--replay-->
-											<div class="ProfileTweet-actionList">
-												<div class="ProfileTweet-action ProfileTweet-action--reply">
-													<button
-														class="ProfileTweet-actionButton u-textUserColorHover"
-														type="button">
-														<div class="IconContainer">
-															<span class="Icon Icon--reply"></span>
-														</div>
-														<div class="IconTextContainer">
-															<span
-																class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">18</span>
-														</div>
-													</button>
-												</div>
-												<!--forwart-->
-												<div
-													class="ProfileTweet-action ProfileTweet-action--retweet">
-													<button class="ProfileTweet-actionButton" type="button">
-														<div class="IconContainer js-tooltip">
-															<span class="Icon Icon--retweet"></span>
-														</div>
-														<div class="IconTextContainer">
-															<span
-																class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">1200</span>
-														</div>
-													</button>
-												</div>
-												<!--like-->
-												<div
-													class="ProfileTweet-action ProfileTweet-action--favorite">
-													<button class="ProfileTweet-actionButton" type="button">
-														<div class="IconContainer">
-															<div class="HeartAnimationContainer">
-																<div class="HeartAnimation"></div>
-															</div>
-														</div>
-														<div class="IconTextContainer">
-															<span
-																class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">3100</span>
-														</div>
-													</button>
-												</div>
-												<!--more option-->
-												<div class="ProfileTweet-action ProfileTweet-action--more">
-													<div class="dropdown">
-														<button
-															class="ProfileTweet-actionButton u-textUserColorHover"
-															type="button">
-															<div class="IconContainer">
-																<span class="Icon Icon--dots"></span>
-															</div>
-														</button>
-														<div class="dropdown-menu">
-															<div class="dropdown-caret">
-																<div class="caret-outer"></div>
-																<div class="caret-inner"></div>
-															</div>
-															<ul>
-																<li class="share-via-dm">
-																	<button type="button" class="dropdown-link">私信分享</button>
-																</li>
-																<li class="block-link">
-																	<button type="button" class="dropdown-link">屏蔽
-																		@username</button>
-																</li>
-																<li class="dropdown-divider"></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</li>
-							<!--test html content end-->
-
+								</li>
+							</c:forEach>
+							<!-- core tweet -->
 						</ol>
 
 						<div class="stream-footer ">

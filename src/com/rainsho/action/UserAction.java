@@ -64,13 +64,14 @@ public class UserAction {
 		list = service.findIndexTweets(users);
 		return "user_page";
 	}
-	
+
 	public String logout() {
+		user = null;
 		ServletActionContext.getRequest().getSession()
-		.removeAttribute("LOGIN_USER");
+				.removeAttribute("LOGIN_USER");
 		return "logout";
 	}
-	
+
 	public String update() {
 		user = (Users) ServletActionContext.getRequest().getSession()
 				.getAttribute("LOGIN_USER");

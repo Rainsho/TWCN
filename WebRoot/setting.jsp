@@ -76,8 +76,8 @@
 												<div class="content">
 													<div class="account-group js-mini-current-user">
 														<b class="fullname">${user.nickname }</b> <span
-															class="screen-name hidden" dir="ltr">@${user.username }</span> <small
-															class="metadata">查看个人资料</small>
+															class="screen-name hidden" dir="ltr">@${user.username
+															}</span> <small class="metadata">查看个人资料</small>
 													</div>
 												</div>
 										</a></li>
@@ -109,19 +109,21 @@
 						href="u/${user.username }" tabindex="-1" aria-hidden="true"></a>
 					<div class="DashboardProfileCard-content">
 						<a class="DashboardProfileCard-avatarLink u-inlineBlock"
-							href="u/${user.username }" title="twcn" tabindex="-1" aria-hidden="true">
-							<img
+							href="u/${user.username }" title="twcn" tabindex="-1"
+							aria-hidden="true"> <img
 							class="DashboardProfileCard-avatarImage js-action-profile-avatar"
 							src="${user.avatar }" alt="">
 						</a>
 						<div class="DashboardProfileCard-userFields">
 							<div class="DashboardProfileCard-name u-textTruncate">
-								<a class="u-textInheritColor" href="u/${user.username }">${user.nickname }</a>
+								<a class="u-textInheritColor" href="u/${user.username }">${user.nickname
+									}</a>
 							</div>
 							<span class="DashboardProfileCard-screenname u-inlineBlock u-dir"
 								dir="ltr"> <a
 								class="DashboardProfileCard-screennameLink u-linkComplex u-linkClean"
-								href="u/${user.username }">@<span class="u-linkComplex-target">${user.username }</span></a>
+								href="u/${user.username }">@<span
+									class="u-linkComplex-target">${user.username }</span></a>
 							</span>
 						</div>
 					</div>
@@ -171,7 +173,8 @@
 					<form id="account-form"
 						class="t1-form form-horizontal requires-password"
 						autocomplete="off" method="POST"
-						action="userupdateusername.action" onsubmit="return updateusername();" >
+						action="userupdateusername.action"
+						onsubmit="return updateusername();">
 						<div id="settings-alert-box" class="alert hidden">
 							<span id="settings-alert-close" class="icon close"></span>
 						</div>
@@ -179,10 +182,11 @@
 							<label for="user_screen_name" class="t1-label control-label">用户名</label>
 							<div class="controls">
 								<p id="username_notification" class="notification"></p>
-								<input id="user_screen_name" maxlength="15"
-									name="user_username" type="text" value="${user.username }">
+								<input id="user_screen_name" maxlength="15" name="user_username"
+									type="text" value="${user.username }">
 								<p class="notification">
-									https://twitter.com/<span id="username_path">${user.username }</span>
+									https://twitter.com/<span id="username_path">${user.username
+										}</span>
 								</p>
 							</div>
 						</div>
@@ -202,8 +206,8 @@
 						</div>
 						<hr>
 						<div class="form-actions">
-							<button id="settings_save_username" class="btn primary-btn" type="submit"
-								disabled="disabled">保存更改</button>
+							<button id="settings_save_username" class="btn primary-btn"
+								type="submit" disabled="disabled">保存更改</button>
 							<span class="spinner-small settings-save-spinner"></span>
 						</div>
 					</form>
@@ -220,8 +224,8 @@
 				</div>
 				<div class="content-inner no-stream-end">
 					<form class="t1-form form-horizontal" id="password-form"
-						method="POST"
-						action="userupdatepassword.action" onsubmit="return updatepassword();">
+						method="POST" action="userupdatepassword.action"
+						onsubmit="return updatepassword();">
 						<div id="settings-alert-box" class="alert hidden">
 							<span id="settings-alert-close" class="icon close"></span>
 						</div>
@@ -229,7 +233,9 @@
 							<label for="current_password" class="t1-label control-label">当前密码</label>
 							<div class="controls">
 								<input id="current_password" type="password"
-									name="current_password">
+									name="current_password" data-pswdck="0"> <small
+									id="password_strength_feedback" class="help-inline help-error"
+									style="display: none;">当前密码错误</small>
 								<p>
 									<a href="/account/access_password_reset" id="forgot_password"
 										class="js-static-forgot-password">忘记密码了?</a>
@@ -241,8 +247,6 @@
 								<label for="user_password" class="t1-label control-label">新密码</label>
 								<div id="password_strength" class="controls">
 									<input id="user_password" type="password" name="user_password">
-									<small id="password_strength_feedback"
-										class="help-inline help-error" style="display: none;"></small>
 								</div>
 							</div>
 							<div class="control-group">
@@ -258,8 +262,8 @@
 						</div>
 						<hr>
 						<div class="form-actions">
-							<button id="settings_save_password" class="btn primary-btn" type="submit"
-								disabled="disabled">保存更改</button>
+							<button id="settings_save_password" class="btn primary-btn"
+								type="submit" disabled="disabled">保存更改</button>
 							<span class="spinner-small settings-save-spinner"></span>
 						</div>
 					</form>

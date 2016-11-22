@@ -42,16 +42,25 @@ public class UserService {
 				.findByUsername(username).get(0);
 	}
 
+	public Users findUserByEmail(String email) {
+		return dao.findByEmail(email).size() == 0 ? null : dao.findByEmail(
+				email).get(0);
+	}
+
 	public List<Tweets> findTweetByUser(Users user) {
 		return tdao.findByUser(user);
 	}
-	
+
 	public List<Tweets> findIndexTweets(List<Users> list) {
 		return tdao.indexTweets(list);
 	}
-	
+
 	public List<Users> findFollow(Users user) {
 		return rdao.findFollow(user);
+	}
+	
+	public void updateUser(Users user) {
+		dao.attachDirty(user);
 	}
 
 }

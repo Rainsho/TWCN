@@ -24,5 +24,14 @@
 		</action>
 
 	</package>
+	
+	<!-- json -->
+	<package name="json" namespace="/json" extends="json-default">
+		<action name="json*" class="JsonAction" method="{1}">
+			<result type="json">
+				<param name="root">jsonResult</param>
+			</result>
+		</action>
+	</package>
 
 </struts>

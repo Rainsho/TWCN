@@ -112,4 +112,8 @@
 		<property name="service" ref="UserService"></property>
 	</bean>
 
+	<bean id="JsonAction" class="com.rainsho.action.JsonAction">
+		<property name="uService" ref="UserService"></property>
+	</bean>
+
 </beans>
