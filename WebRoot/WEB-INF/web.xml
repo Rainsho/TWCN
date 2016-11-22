@@ -36,7 +36,7 @@
 		<dispatcher>FORWARD</dispatcher>
 	</filter-mapping>
 
-	<!-- forward user page -->
+	<!-- forward page -->
 	<servlet>
 		<servlet-name>ForwardUserPage</servlet-name>
 		<servlet-class>com.rainsho.servlet.ForwardUserPage</servlet-class>
@@ -45,5 +45,13 @@
 		<servlet-name>ForwardUserPage</servlet-name>
 		<url-pattern>/u/*</url-pattern>
 	</servlet-mapping>
-
+	<servlet>
+		<servlet-name>ForwardIndexPage</servlet-name>
+		<servlet-class>com.rainsho.servlet.ForwardIndexPage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ForwardIndexPage</servlet-name>
+		<url-pattern>/i</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

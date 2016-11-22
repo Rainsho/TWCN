@@ -12,7 +12,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>TWCN —— 推特中国</title>
+<title>TWCN —— ${user.nickname }</title>
 <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="css/twitter_identify.css" />
 
@@ -34,7 +34,7 @@
 				<div class="container">
 					<div role="navigation" style="display: inline-block;">
 						<ul class="nav" id="global-actions">
-							<li id="global-nav-home" class="home"><a href="/"> <span
+							<li id="global-nav-home" class="home"><a href="i"> <span
 									class="Icon Icon--home Icon--large"></span> <span class="text">主页</span>
 							</a></li>
 							<li class="people notifications"><a href="/i/notifications">
@@ -64,27 +64,27 @@
 							<li class="me dropdown session" id="user-dropdown"><a
 								class="btn js-tooltip settings dropdown-toggle"
 								id="user-dropdown-toggle"> <img class="avatar size32"
-									src="img/twitter-icon.png" alt="Profile and settings"></a>
+									src="${user.avatar }" alt="Profile and settings"></a>
 								<div class="dropdown-menu">
 									<div class="dropdown-caret">
 										<span class="caret-outer"></span> <span class="caret-inner"></span>
 									</div>
 									<ul>
 										<li class="current-user" data-name="profile"><a
-											href="/Rainsho"
+											href="u/${user.username }"
 											class="account-summary account-summary-small js-nav">
 												<div class="content">
 													<div class="account-group js-mini-current-user">
-														<b class="fullname">Rainsho</b> <span
-															class="screen-name hidden" dir="ltr">@Rainsho</span> <small
+														<b class="fullname">${user.nickname }</b> <span
+															class="screen-name hidden" dir="ltr">@${user.username }</span> <small
 															class="metadata">查看个人资料</small>
 													</div>
 												</div>
 										</a></li>
 										<li class="dropdown-divider"></li>
-										<li><a href="#" class="js-nav">设置</a></li>
+										<li><a href="userupdate.action" class="js-nav">设置</a></li>
 										<li class="js-signout-button" id="signout-button"><a
-											href="#" class="dropdown-link">登出</a></li>
+											href="userlogout.action" class="dropdown-link">登出</a></li>
 									</ul>
 								</div></li>
 							<!--<li role="complementary" class="topbar-tweet-btn">
@@ -106,22 +106,22 @@
 				<div
 					class="DashboardProfileCard DashboardProfileCard--withoutStats module">
 					<a class="DashboardProfileCard-bg u-bgUserColor u-block"
-						href="/RainshoTwcn" tabindex="-1" aria-hidden="true"></a>
+						href="u/${user.username }" tabindex="-1" aria-hidden="true"></a>
 					<div class="DashboardProfileCard-content">
 						<a class="DashboardProfileCard-avatarLink u-inlineBlock"
-							href="/RainshoTwcn" title="twcn" tabindex="-1" aria-hidden="true">
+							href="u/${user.username }" title="twcn" tabindex="-1" aria-hidden="true">
 							<img
 							class="DashboardProfileCard-avatarImage js-action-profile-avatar"
-							src="img/twitter-icon.png" alt="">
+							src="${user.avatar }" alt="">
 						</a>
 						<div class="DashboardProfileCard-userFields">
 							<div class="DashboardProfileCard-name u-textTruncate">
-								<a class="u-textInheritColor" href="/RainshoTwcn">twcn</a>
+								<a class="u-textInheritColor" href="u/${user.username }">${user.nickname }</a>
 							</div>
 							<span class="DashboardProfileCard-screenname u-inlineBlock u-dir"
 								dir="ltr"> <a
 								class="DashboardProfileCard-screennameLink u-linkComplex u-linkClean"
-								href="/RainshoTwcn">@<span class="u-linkComplex-target">RainshoTwcn</span></a>
+								href="u/${user.username }">@<span class="u-linkComplex-target">${user.username }</span></a>
 							</span>
 						</div>
 					</div>
@@ -171,7 +171,7 @@
 					<form id="account-form"
 						class="t1-form form-horizontal requires-password"
 						autocomplete="off" method="POST"
-						action="https://twitter.com/settings/accounts/update">
+						action="userupdateusername.action" onsubmit="return updateusername();" >
 						<div id="settings-alert-box" class="alert hidden">
 							<span id="settings-alert-close" class="icon close"></span>
 						</div>
@@ -180,9 +180,9 @@
 							<div class="controls">
 								<p id="username_notification" class="notification"></p>
 								<input id="user_screen_name" maxlength="15"
-									name="user[screen_name]" type="text" value="RainshoTwcn">
+									name="user_username" type="text" value="${user.username }">
 								<p class="notification">
-									https://twitter.com/<span id="username_path">RainshoTwcn</span>
+									https://twitter.com/<span id="username_path">${user.username }</span>
 								</p>
 							</div>
 						</div>
@@ -190,8 +190,8 @@
 							<label for="user_email" class="t1-label control-label">邮件地址</label>
 							<div class="controls">
 								<p id="email_notification" class="notification"></p>
-								<input id="user_email" class="email-input" name="user[email]"
-									type="text" value="rainsho@126.com">
+								<input id="user_email" class="email-input" name="user_email"
+									type="text" value="${user.email }">
 								<p>
 									邮件地址不会公开显示。 <a
 										href="https://support.twitter.com/articles/15356"
@@ -202,7 +202,7 @@
 						</div>
 						<hr>
 						<div class="form-actions">
-							<button id="settings_save" class="btn primary-btn" type="submit"
+							<button id="settings_save_username" class="btn primary-btn" type="submit"
 								disabled="disabled">保存更改</button>
 							<span class="spinner-small settings-save-spinner"></span>
 						</div>
@@ -221,7 +221,7 @@
 				<div class="content-inner no-stream-end">
 					<form class="t1-form form-horizontal" id="password-form"
 						method="POST"
-						action="https://twitter.com/settings/passwords/update">
+						action="userupdatepassword.action" onsubmit="return updatepassword();">
 						<div id="settings-alert-box" class="alert hidden">
 							<span id="settings-alert-close" class="icon close"></span>
 						</div>
@@ -258,11 +258,10 @@
 						</div>
 						<hr>
 						<div class="form-actions">
-							<button id="settings_save" class="btn primary-btn" type="submit"
+							<button id="settings_save_password" class="btn primary-btn" type="submit"
 								disabled="disabled">保存更改</button>
 							<span class="spinner-small settings-save-spinner"></span>
 						</div>
-
 					</form>
 				</div>
 			</div>

@@ -2,6 +2,8 @@ package com.rainsho.action;
 
 import java.util.List;
 
+import org.apache.struts2.ServletActionContext;
+
 import com.rainsho.entity.Tweets;
 import com.rainsho.entity.Users;
 import com.rainsho.service.UserService;
@@ -52,7 +54,27 @@ public class UserAction {
 			return "no_such_user";
 		}
 		list = service.findTweetByUser(user);
-		return "success";
+		return "user_page";
+	}
+
+	public String index() {
+		user = (Users) ServletActionContext.getRequest().getSession()
+				.getAttribute("LOGIN_USER");
+		List<Users> users = service.findFollow(user);
+		list = service.findIndexTweets(users);
+		return "user_page";
+	}
+	
+	public String logout() {
+		ServletActionContext.getRequest().getSession()
+		.removeAttribute("LOGIN_USER");
+		return "logout";
+	}
+	
+	public String update() {
+		user = (Users) ServletActionContext.getRequest().getSession()
+				.getAttribute("LOGIN_USER");
+		return "setting";
 	}
 
 }

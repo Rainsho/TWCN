@@ -1,11 +1,17 @@
 package com.rainsho.service;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
+import com.rainsho.dao.RelationshipsDAO;
 import com.rainsho.dao.UsersDAO;
+import com.rainsho.entity.Relationships;
 import com.rainsho.entity.Users;
 import com.rainsho.util.StringUtil;
 
 public class LoginService {
 	private UsersDAO dao;
+	private RelationshipsDAO rdao;
 
 	public UsersDAO getDao() {
 		return dao;
@@ -15,8 +21,22 @@ public class LoginService {
 		this.dao = dao;
 	}
 
+	public RelationshipsDAO getRdao() {
+		return rdao;
+	}
+
+	public void setRdao(RelationshipsDAO rdao) {
+		this.rdao = rdao;
+	}
+
 	public void signup(Users user) {
 		dao.save(user);
+		Relationships rs = new Relationships();
+		rs.setUsersByHuid(user);
+		rs.setUsersBySuid(user);
+		rs.setFollowtime(new Timestamp(new Date().getTime()));
+		rs.setRsstate((short) 1);
+		rdao.save(rs);
 	}
 
 	public boolean checkEmailExist(Users user) {

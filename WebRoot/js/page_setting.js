@@ -21,3 +21,13 @@ $(function() {
 	});
 
 });
+
+function updateusername() {
+	alert(1);
+	return false;
+}
+
+function updatepassword() {
+	alert(2);
+	return false;
+}

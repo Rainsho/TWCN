@@ -38,7 +38,7 @@
 					<div class="container">
 						<ul class="nav js-global-actions" id="global-actions">
 							<li id="global-nav-home" class="home"><a
-								class="js-nav js-tooltip js-dynamic-tooltip" href="/"> <span
+								class="js-nav js-tooltip js-dynamic-tooltip" href="i"> <span
 									class="Icon Icon--bird Icon--large"></span> <span class="text">主页</span>
 							</a></li>
 							<li id="global-nav-about" class="about"><a
@@ -144,5 +144,3 @@
 </body>
 
 </html>
-
-

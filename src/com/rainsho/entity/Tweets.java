@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.rainsho.util.StringUtil;
+
 /**
  * Tweets entity. @author MyEclipse Persistence Tools
  */
@@ -184,6 +186,10 @@ public class Tweets implements java.io.Serializable {
 
 	public void setForwardses(Set<Forwards> forwardses) {
 		this.forwardses = forwardses;
+	}
+	
+	public String fmtTime() {
+		return StringUtil.fmtTime(this.tweettime);
 	}
 
 }

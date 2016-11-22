@@ -178,5 +178,10 @@ public class TweetsDAO {
 		Query query = getCurrentSession().createQuery(hql);
 		return query.setEntity(0, user).list();
 	}
+	public List<Tweets> indexTweets(List<Users> list) {
+		String hql = "from Tweets as t where t.users in (:list) order by t.tweettime desc";
+		Query query = getCurrentSession().createQuery(hql).setParameterList("list", list);
+		return query.list();
+	}
 
 }

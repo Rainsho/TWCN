@@ -13,6 +13,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rainsho.entity.Relationships;
+import com.rainsho.entity.Users;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -165,5 +166,11 @@ public class RelationshipsDAO {
 	public static RelationshipsDAO getFromApplicationContext(
 			ApplicationContext ctx) {
 		return (RelationshipsDAO) ctx.getBean("RelationshipsDAO");
+	}
+	
+	// advanced function
+	public List<Users> findFollow(Users user) {
+		String hql = "select r.usersBySuid from Relationships as r where r.usersByHuid=?";
+		return getCurrentSession().createQuery(hql).setEntity(0, user).list();
 	}
 }

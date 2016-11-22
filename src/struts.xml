@@ -17,8 +17,10 @@
 			<result name="signup_fail">/login.jsp</result>
 		</action>
 		<action name="user*" class="UserAction" method="{1}">
-			<result name="success">/test.jsp</result>
+			<result name="user_page">/user.jsp</result>
 			<result name="no_such_user">/login.jsp</result>
+			<result name="logout">/login.jsp</result>
+			<result name="setting">/setting.jsp</result>
 		</action>
 
 	</package>
