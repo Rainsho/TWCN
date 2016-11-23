@@ -23,6 +23,9 @@
 			<result name="logout">/login.jsp</result>
 			<result name="setting">/setting.jsp</result>
 		</action>
+		<action name="rs*" class="RelationshipAction" method="{1}">
+			<result>/ok.html</result>
+		</action>
 
 	</package>
 

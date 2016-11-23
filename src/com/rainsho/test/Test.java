@@ -1,8 +1,10 @@
 package com.rainsho.test;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import com.rainsho.dao.UsersDAO;
+import com.rainsho.entity.Relationships;
 import com.rainsho.entity.Users;
 
 public class Test {
@@ -38,6 +40,8 @@ public class Test {
 	// test function
 	public String execute() {
 		user = dao.findById(1);
+		Set<Relationships> set = user.getRelationshipsesForHuid();
+		System.out.println(set.size());
 		return "success";
 	}
 	

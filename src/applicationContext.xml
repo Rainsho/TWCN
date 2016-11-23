@@ -126,4 +126,12 @@
 		<property name="uService" ref="UserService"></property>
 	</bean>
 
+	<bean id="RelationshipService" class="com.rainsho.service.RelationshipService">
+		<property name="dao" ref="RelationshipsDAO"></property>
+		<property name="udao" ref="UsersDAO"></property>
+	</bean>
+	<bean id="RelationshipAction" class="com.rainsho.action.RelationshipAction">
+		<property name="service" ref="RelationshipService"></property>
+	</bean>
+
 </beans>

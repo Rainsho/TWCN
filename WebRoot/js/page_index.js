@@ -105,6 +105,23 @@ $(function() {
 		}
 	});
 
+	// 取消关注相关事件
+	$('.js-unfollowed button').click(
+			function() {
+				var that = $(this);
+				if (confirm('确认取关？')) {
+					uid = that.attr('data-uid');
+					$.post('rsunfollow.action', {
+						'uid' : uid
+					}, function(data) {
+						$('.js-unfollowed button[data-uid=' + uid + ']')
+								.parents('.stream-item').hide(1000);
+					});
+				}
+			});
+	
+	// 关注相关事件
+
 });
 
 function ck_t_file() {

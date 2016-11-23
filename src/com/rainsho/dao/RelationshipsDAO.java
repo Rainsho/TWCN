@@ -100,8 +100,9 @@ public class RelationshipsDAO {
 		log.debug("finding Relationships instance with property: "
 				+ propertyName + ", value: " + value);
 		try {
+			// 逻辑删除
 			String queryString = "from Relationships as model where model."
-					+ propertyName + "= ?";
+					+ propertyName + "= ? and model.rsstate = 1";
 			Query queryObject = getCurrentSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
 			return queryObject.list();
@@ -118,7 +119,8 @@ public class RelationshipsDAO {
 	public List findAll() {
 		log.debug("finding all Relationships instances");
 		try {
-			String queryString = "from Relationships";
+			// 逻辑删除
+			String queryString = "from Relationships as rs where rs.rsstate = 1";
 			Query queryObject = getCurrentSession().createQuery(queryString);
 			return queryObject.list();
 		} catch (RuntimeException re) {
@@ -167,10 +169,22 @@ public class RelationshipsDAO {
 			ApplicationContext ctx) {
 		return (RelationshipsDAO) ctx.getBean("RelationshipsDAO");
 	}
-	
+
 	// advanced function
 	public List<Users> findFollow(Users user) {
-		String hql = "select r.usersBySuid from Relationships as r where r.usersByHuid=?";
+		String hql = "select r.usersBySuid from Relationships as r where r.usersByHuid=? and r.rsstate = 1";
 		return getCurrentSession().createQuery(hql).setEntity(0, user).list();
 	}
+
+	public Relationships findByBoth(Users huser, Users suser) {
+		String hql = "from Relationships as r where r.usersByHuid=? and r.usersBySuid=?";
+		List list = getCurrentSession().createQuery(hql).setEntity(0, huser)
+				.setEntity(1, suser).list();
+		if (list.size() != 0) {
+			return (Relationships) list.get(0);
+		} else {
+			return null;
+		}
+	}
+
 }

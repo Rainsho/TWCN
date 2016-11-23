@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Where;
+
 /**
  * Users entity. @author MyEclipse Persistence Tools
  */
@@ -291,6 +293,8 @@ public class Users implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usersByHuid")
+	// limit many!!!
+	@Where(clause = "rsstate = 1")
 	public Set<Relationships> getRelationshipsesForHuid() {
 		return this.relationshipsesForHuid;
 	}
