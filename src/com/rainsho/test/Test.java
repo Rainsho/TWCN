@@ -50,5 +50,9 @@ public class Test {
 	}
 	
 	public static void main(String[] args) {
+		String str1 = "123.mp4";
+		String str2 = "abc.123.def.jpg";
+		System.out.println(str1.substring(str1.lastIndexOf(".")));
+		System.out.println(str2.substring(str2.lastIndexOf(".")));
 	}
 }

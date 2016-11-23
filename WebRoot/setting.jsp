@@ -185,7 +185,7 @@
 								<input id="user_screen_name" maxlength="15" name="user_username"
 									type="text" value="${user.username }">
 								<p class="notification">
-									https://twitter.com/<span id="username_path">${user.username
+									http://rainsho.cc:8080/TWCN/u/<span id="username_path">${user.username
 										}</span>
 								</p>
 							</div>

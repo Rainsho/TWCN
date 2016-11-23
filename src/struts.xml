@@ -3,6 +3,7 @@
 <struts>
 
 	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	<constant name="struts.multipart.maxSize" value="30000000"></constant>
 
 	<package name="twcn" namespace="/" extends="struts-default">
 		<!-- test action -->
@@ -24,14 +25,20 @@
 		</action>
 
 	</package>
-	
+
 	<!-- json -->
 	<package name="json" namespace="/json" extends="json-default">
-		<action name="json*" class="JsonAction" method="{1}">
+		<action name="json*" class="InfoUpdateAction" method="{1}">
 			<result type="json">
 				<param name="root">jsonResult</param>
 			</result>
 		</action>
+		<action name="t*" class="TweetAction" method="{1}">
+			<result type="json">
+				<param name="root">jsonResult</param>
+			</result>
+		</action>
+
 	</package>
 
 </struts>

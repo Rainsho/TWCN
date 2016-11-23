@@ -7,7 +7,7 @@ import org.apache.struts2.ServletActionContext;
 import com.rainsho.entity.Users;
 import com.rainsho.service.UserService;
 
-public class JsonAction {
+public class InfoUpdateAction {
 	private UserService uService;
 	private HashMap<String, Object> jsonResult;
 	private String tocheck;

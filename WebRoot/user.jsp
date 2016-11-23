@@ -66,7 +66,7 @@
 							<li class="me dropdown session" id="user-dropdown"><a
 								class="btn js-tooltip settings dropdown-toggle"
 								id="user-dropdown-toggle"> <img class="avatar size32"
-									src="${LOGIN_USER.avatar }" alt="Profile and settings"></a>
+									src="${LOGIN_USER.avatar }" alt="未登陆"></a>
 								<div class="dropdown-menu">
 									<div class="dropdown-caret">
 										<span class="caret-outer"></span> <span class="caret-inner"></span>
@@ -191,8 +191,8 @@
 					<!--home-tweet-box begin-->
 					<div class="home-tweet-box tweet-box tweet-user">
 						<img class="top-timeline-tweet-box-user-image avatar size32"
-							src="img/twitter-icon.png" alt="">
-						<form class="t1-form tweet-form condensed" method="get" action=""
+							src="${LOGIN_USER.avatar }" alt="未登陆">
+						<form class="t1-form tweet-form condensed" method="post" action=""
 							enctype="multipart/form-data">
 							<div class="tweet-content">
 								<div class="RichEditor">
@@ -208,6 +208,15 @@
 										</div>
 									</div>
 									<div class="RichEditor-mozillaCursorWorkaround">&nbsp;</div>
+								</div>
+							</div>
+							<div class="TweetBoxUploadProgress-uploading" id="upload_div"
+								style="display: none;">
+								<span id="select_files">已选文件：123456...</span><br /> <span
+									id="upload_state">正在上传</span>
+								<div class="TweetBoxUploadProgress-bar" id="upload_bar">
+									<div class="TweetBoxUploadProgress-barPosition"
+										style="width: 33%;"></div>
 								</div>
 							</div>
 							<div class="TweetBoxToolbar">
@@ -226,8 +235,7 @@
 												</label>
 											</div>
 										</div>
-									</span> <span class="TweetBoxExtras-item"><div
-											class="FoundMediaSearch found-media-search dropdown"></div></span>
+									</span>
 								</div>
 								<div class="TweetBoxToolbar-tweetButton tweet-button">
 									<span class="tweet-counter">140</span>
@@ -251,10 +259,9 @@
 
 				<div class="stream-container conversations-enabled">
 
-					<div
-						class="stream-item js-new-items-bar-container new-tweets-bar-visible"
-						style="display: none;">
-						<div class="new-tweets-bar js-new-tweets-bar">查看 2 条新推文</div>
+					<div class="stream-item new-tweets-bar-visible"
+						style="display: none;" id="new_tweet_bar">
+						<div class="new-tweets-bar">查看 2 条新推文</div>
 					</div>
 
 					<div class="stream">
@@ -430,6 +437,19 @@
 																			@${t.users.username }</button>
 																	</li>
 																	<li class="dropdown-divider"></li>
+																	<c:if test="${LOGIN_USER.uid == t.users.uid }">
+																		<li class="js-actionDelete">
+																			<button type="button" class="dropdown-link"
+																				data-tid="${t.tid }">删除推文</button>
+																		</li>
+																	</c:if>
+																	<c:if test="${LOGIN_USER.uid != t.users.uid }">
+																		<li class="js-unfollowed">
+																			<button type="button" class="dropdown-link"
+																				data-uid="${t.users.uid }">取消关注@${t.users.username
+																				}</button>
+																		</li>
+																	</c:if>
 																</ul>
 															</div>
 														</div>
@@ -540,4 +560,3 @@
 </body>
 
 </html>
-

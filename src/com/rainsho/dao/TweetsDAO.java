@@ -75,6 +75,10 @@ public class TweetsDAO {
 		try {
 			Tweets instance = (Tweets) getCurrentSession().get(
 					"com.rainsho.entity.Tweets", id);
+			// 逻辑删除
+			if (instance.getTstate() == 0) {
+				return null;
+			}
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -101,8 +105,9 @@ public class TweetsDAO {
 		log.debug("finding Tweets instance with property: " + propertyName
 				+ ", value: " + value);
 		try {
+			// 逻辑删除
 			String queryString = "from Tweets as model where model."
-					+ propertyName + "= ?";
+					+ propertyName + "= ? and model.tstate != 0";
 			Query queryObject = getCurrentSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
 			return queryObject.list();
@@ -123,7 +128,8 @@ public class TweetsDAO {
 	public List findAll() {
 		log.debug("finding all Tweets instances");
 		try {
-			String queryString = "from Tweets";
+			// 逻辑删除
+			String queryString = "from Tweets as model where model.tstate != 0";
 			Query queryObject = getCurrentSession().createQuery(queryString);
 			return queryObject.list();
 		} catch (RuntimeException re) {
@@ -174,13 +180,15 @@ public class TweetsDAO {
 
 	// additional function
 	public List<Tweets> findByUser(Users user) {
-		String hql = "from Tweets as t where t.users=? order by t.tweettime desc";
+		String hql = "from Tweets as t where t.users=? and t.tstate != 0 order by t.tweettime desc";
 		Query query = getCurrentSession().createQuery(hql);
 		return query.setEntity(0, user).list();
 	}
+
 	public List<Tweets> indexTweets(List<Users> list) {
-		String hql = "from Tweets as t where t.users in (:list) order by t.tweettime desc";
-		Query query = getCurrentSession().createQuery(hql).setParameterList("list", list);
+		String hql = "from Tweets as t where t.users in (:list) and t.tstate != 0 order by t.tweettime desc";
+		Query query = getCurrentSession().createQuery(hql).setParameterList(
+				"list", list);
 		return query.list();
 	}
 

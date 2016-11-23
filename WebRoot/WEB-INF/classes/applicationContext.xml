@@ -112,7 +112,17 @@
 		<property name="service" ref="UserService"></property>
 	</bean>
 
-	<bean id="JsonAction" class="com.rainsho.action.JsonAction">
+	<bean id="MediaService" class="com.rainsho.service.MediaService">
+		<property name="pdao" ref="PicsDAO"></property>
+		<property name="vdao" ref="VideosDAO"></property>
+		<property name="tdao" ref="TweetsDAO"></property>
+		<property name="tpdao" ref="T2pDAO"></property>
+	</bean>
+	<bean id="TweetAction" class="com.rainsho.action.TweetAction">
+		<property name="mService" ref="MediaService"></property>
+	</bean>
+
+	<bean id="InfoUpdateAction" class="com.rainsho.action.InfoUpdateAction">
 		<property name="uService" ref="UserService"></property>
 	</bean>
 
