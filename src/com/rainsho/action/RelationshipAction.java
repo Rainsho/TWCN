@@ -1,6 +1,7 @@
 package com.rainsho.action;
 
 import org.apache.struts2.ServletActionContext;
+import org.hibernate.Hibernate;
 
 import com.rainsho.entity.Users;
 import com.rainsho.service.RelationshipService;
@@ -33,6 +34,7 @@ public class RelationshipAction {
 		if (huser != null && suser != null & huser.getUid() != suser.getUid()) {
 			service.follow(huser, suser);
 		}
+		upLOGINUSER(huser.getUid());
 		return "success";
 	}
 
@@ -43,7 +45,25 @@ public class RelationshipAction {
 		if (huser != null && suser != null & huser.getUid() != suser.getUid()) {
 			service.unfollow(huser, suser);
 		}
+		upLOGINUSER(huser.getUid());
 		return "success";
+	}
+
+	public void upLOGINUSER(int id) {
+		Users user = service.findUserById(id);
+		// MEGER 加载属性
+		Hibernate.initialize(user.getTweetses());
+		Hibernate.initialize(user.getLikeses());
+		Hibernate.initialize(user.getForwardses());
+		Hibernate.initialize(user.getMentionses());
+		Hibernate.initialize(user.getDirectmsgsesForHuid());
+		Hibernate.initialize(user.getDirectmsgsesForSuid());
+		Hibernate.initialize(user.getReplaysesForHuid());
+		Hibernate.initialize(user.getReplaysesForSuid());
+		Hibernate.initialize(user.getRelationshipsesForHuid());
+		Hibernate.initialize(user.getRelationshipsesForSuid());
+		ServletActionContext.getRequest().getSession()
+				.setAttribute("LOGIN_USER", user);
 	}
 
 }

@@ -1,3 +1,5 @@
+<%@page import="com.rainsho.entity.Relationships"%>
+<%@page import="com.rainsho.entity.Users"%>
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
@@ -22,9 +24,10 @@
 <link rel="stylesheet" href="css/twitter_core.bundle.css">
 <link rel="stylesheet" href="css/twitter_more_1.bundle.css">
 <link rel="stylesheet" href="css/twitter_more_2.bundle.css">
+<link rel="stylesheet" href="css/my.css">
 
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="js/page_index.js"></script>
+<script type="text/javascript" src="js/page_user.js"></script>
 
 </head>
 
@@ -129,6 +132,26 @@
 									class="u-linkComplex-target">${user.username }</span></a>
 							</span>
 						</div>
+						<%
+							Users login_user = (Users) session.getAttribute("LOGIN_USER");
+							Users request_user = (Users) request.getAttribute("user");
+							if (login_user != null
+									&& login_user.getUid() != request_user.getUid()
+									&& !login_user.hasRelation(request_user)) {
+						%>
+						<div class="not-following"
+							style="position: absolute;left: 90px;top: 60px;">
+							<button type="button"
+								class="small-follow-btn follow-btn btn small follow-button"
+								data-uid="${user.uid }">
+								<div class="follow-text action-text">
+									<span class="Icon Icon--follow"></span>关注
+								</div>
+							</button>
+						</div>
+						<%
+							}
+						%>
 						<div class="ProfileCardStats">
 							<ul
 								class="ProfileCardStats-statList Arrange Arrange--bottom Arrange--equal">
@@ -371,7 +394,7 @@
 												<div class="ProfileTweet-actionList">
 													<div class="ProfileTweet-action ProfileTweet-action--reply">
 														<button
-															class="ProfileTweet-actionButton u-textUserColorHover"
+															class="ProfileTweet-actionButton u-textUserColorHover js-replay-btn"
 															type="button">
 															<div class="IconContainer">
 																<span class="Icon Icon--reply"></span>
@@ -400,7 +423,11 @@
 													<!--like-->
 													<div
 														class="ProfileTweet-action ProfileTweet-action--favorite">
-														<button class="ProfileTweet-actionButton" type="button">
+														<button class="ProfileTweet-actionButton js-like-btn"
+															type="button" data-tid="${t.tid }"
+															<c:forEach var="l" items="${t.likeses }">
+														<c:if test="${l.users.uid == sessionScope.LOGIN_USER.uid }">data-like="1"</c:if>
+														</c:forEach>>
 															<div class="IconContainer">
 																<div class="HeartAnimationContainer">
 																	<div class="HeartAnimation"></div>
@@ -452,6 +479,50 @@
 																	</c:if>
 																</ul>
 															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="replay_area">
+												<c:forEach var="r" items="${t.replayses }">
+													<div class="replay_area_d0">
+														<div class="replay_area_d1">
+															<img class="size24" src="${r.usersByHuid.avatar }">
+														</div>
+														<div class="replay_area_d2">
+															<div>
+																<a href="u/${r.usersByHuid.username }">@${r.usersByHuid.username
+																	}</a>&nbsp;
+																<c:if test="${r.usersBySuid != null }">
+																	回复&nbsp;<a href="u/${r.usersBySuid.username }">@${r.usersBySuid.username
+																		}</a>
+																</c:if>
+																：&nbsp;<span>${r.rcontent }</span>
+															</div>
+															<div style="margin-top: 1px;">
+																<span>&nbsp;&nbsp;时间：${r.fmtTime() }</span><span
+																	class="replay_span"><button
+																		class="replay-replay-btn"
+																		data-suid="${r.usersByHuid.uid }"
+																		data-username="${r.usersByHuid.username
+																		}">回复</button>
+																	<c:if
+																		test="${r.usersByHuid.uid==sessionScope.LOGIN_USER.uid }">&nbsp;|&nbsp;&nbsp;<button
+																			class="replay-del-btn" data-rid="${r.rid }">删除</button>
+																	</c:if></span>
+															</div>
+														</div>
+													</div>
+												</c:forEach>
+												<div class="replay_area_d0" style="margin-top: 4px;">
+													<div class="replay_area_d1">
+														<img class="size24" src="${LOGIN_USER.avatar }">
+													</div>
+													<div class="replay_area_d2">
+														<div style="margin-top: 1px;">
+															<input type="text" maxlength="200"
+																style="height: 14px; width: 397px; margin-right: 12px;"></input>
+															<button data-tid="${t.tid }" class="replay-btn">评论</button>
 														</div>
 													</div>
 												</div>

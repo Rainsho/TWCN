@@ -81,5 +81,5 @@ public class Likes implements java.io.Serializable {
 	public void setLiketime(Timestamp liketime) {
 		this.liketime = liketime;
 	}
-
+	
 }

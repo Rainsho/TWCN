@@ -26,6 +26,10 @@
 		<action name="rs*" class="RelationshipAction" method="{1}">
 			<result>/ok.html</result>
 		</action>
+		<action name="tm*" class="TweetMoreAction" method="{1}">
+			<result>/ok.html</result>
+			<result name="addreplay">/ajax_replay.jsp</result>
+		</action>
 
 	</package>
 

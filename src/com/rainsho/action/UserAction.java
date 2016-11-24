@@ -48,7 +48,6 @@ public class UserAction {
 
 	// action name = user*
 	public String page() {
-		System.out.println("action:" + u);
 		user = service.findUserByUsername(u);
 		if (user == null) {
 			return "no_such_user";

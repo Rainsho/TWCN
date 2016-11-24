@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.rainsho.util.StringUtil;
+
 /**
  * Replays entity. @author MyEclipse Persistence Tools
  */
@@ -71,7 +73,7 @@ public class Replays implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "suid", nullable = false)
+	@JoinColumn(name = "suid")
 	public Users getUsersBySuid() {
 		return this.usersBySuid;
 	}
@@ -115,6 +117,11 @@ public class Replays implements java.io.Serializable {
 
 	public void setRstate(Short rstate) {
 		this.rstate = rstate;
+	}
+	
+	// other function
+	public String fmtTime() {
+		return StringUtil.fmtTime(this.replaytime);
 	}
 
 }

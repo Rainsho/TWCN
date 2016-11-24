@@ -24,7 +24,7 @@
 		<property name="connection.autocommit">true</property>
 		<!-- for de_bug -->
 		<property name="show_sql">true</property>
-		<property name="format_sql">true</property>
+		<!-- <property name="format_sql">true</property> -->
 
 		<!-- entity mapping -->
 		<mapping class="com.rainsho.entity.T2p" />

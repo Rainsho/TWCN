@@ -62,5 +62,9 @@ public class UserService {
 	public void updateUser(Users user) {
 		dao.attachDirty(user);
 	}
+	
+	public Users findById(int uid) {
+		return dao.findById(uid);
+	}
 
 }

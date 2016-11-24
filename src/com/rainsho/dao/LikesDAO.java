@@ -13,6 +13,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rainsho.entity.Likes;
+import com.rainsho.entity.Tweets;
+import com.rainsho.entity.Users;
 
 /**
  * A data access object (DAO) providing persistence and search support for Likes
@@ -158,4 +160,16 @@ public class LikesDAO {
 	public static LikesDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (LikesDAO) ctx.getBean("LikesDAO");
 	}
+	
+	// other function
+	public Likes findByBoth(Tweets tweet, Users user) {
+		String hql = "from Likes as l where l.tweets=? and l.users=?";
+		List list = getCurrentSession().createQuery(hql).setEntity(0, tweet).setEntity(1, user).list();
+		if (list.size()>0) {
+			return (Likes) list.get(0);
+		}else {
+			return null;
+		}
+	}
+	
 }

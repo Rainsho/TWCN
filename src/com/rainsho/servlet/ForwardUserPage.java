@@ -20,7 +20,6 @@ public class ForwardUserPage extends HttpServlet {
 			throws ServletException, IOException {
 
 		String u = request.getRequestURI().replace("/TWCN/u/", "");
-		System.out.println("servlet:" + u);
 		request.getRequestDispatcher("/userpage.action?u=" + u).forward(
 				request, response);
 

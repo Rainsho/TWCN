@@ -100,7 +100,7 @@ public class ReplaysDAO {
 				+ ", value: " + value);
 		try {
 			String queryString = "from Replays as model where model."
-					+ propertyName + "= ?";
+					+ propertyName + "= ? and model.rstate > 0";
 			Query queryObject = getCurrentSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
 			return queryObject.list();
@@ -121,7 +121,7 @@ public class ReplaysDAO {
 	public List findAll() {
 		log.debug("finding all Replays instances");
 		try {
-			String queryString = "from Replays";
+			String queryString = "from Replays as r where r.rstate > 0";
 			Query queryObject = getCurrentSession().createQuery(queryString);
 			return queryObject.list();
 		} catch (RuntimeException re) {

@@ -284,6 +284,8 @@ public class Users implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usersByHuid")
+	// limit many!!!
+	@Where(clause = "rstate > 0")
 	public Set<Replays> getReplaysesForHuid() {
 		return this.replaysesForHuid;
 	}
@@ -321,6 +323,16 @@ public class Users implements java.io.Serializable {
 	public void setRelationshipsesForSuid(
 			Set<Relationships> relationshipsesForSuid) {
 		this.relationshipsesForSuid = relationshipsesForSuid;
+	}
+
+	// advanced function
+	public boolean hasRelation(Users request_user) {
+		for (Relationships x : relationshipsesForHuid) {
+			if (x.getUsersBySuid().getUid() == request_user.getUid()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

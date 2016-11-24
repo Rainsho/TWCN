@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
 import com.rainsho.util.StringUtil;
 
 /**
@@ -135,6 +137,8 @@ public class Tweets implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "tweets")
+	// limit many!!!
+	@Where(clause = "rstate > 0")
 	public Set<Replays> getReplayses() {
 		return this.replayses;
 	}
@@ -187,9 +191,19 @@ public class Tweets implements java.io.Serializable {
 	public void setForwardses(Set<Forwards> forwardses) {
 		this.forwardses = forwardses;
 	}
-	
+
+	// other function
 	public String fmtTime() {
 		return StringUtil.fmtTime(this.tweettime);
+	}
+
+	public boolean isLike(Users user) {
+		for (Likes x : likeses) {
+			if (x.getUsers().getUid() == user.getUid()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

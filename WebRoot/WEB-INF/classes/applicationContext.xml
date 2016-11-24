@@ -134,4 +134,14 @@
 		<property name="service" ref="RelationshipService"></property>
 	</bean>
 
+	<bean id="TweetMoreService" class="com.rainsho.service.TweetMoreService">
+		<property name="tdao" ref="TweetsDAO"></property>
+		<property name="ldao" ref="LikesDAO"></property>
+		<property name="rdao" ref="ReplaysDAO"></property>
+		<property name="udao" ref="UsersDAO"></property>
+	</bean>
+	<bean id="TweetMoreAction" class="com.rainsho.action.TweetMoreAction">
+		<property name="service" ref="TweetMoreService"></property>
+	</bean>
+
 </beans>
