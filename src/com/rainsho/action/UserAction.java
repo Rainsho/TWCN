@@ -76,5 +76,13 @@ public class UserAction {
 				.getAttribute("LOGIN_USER");
 		return "setting";
 	}
+	
+	public String following() {
+		user = service.findUserByUsername(u);
+		if (user == null) {
+			return "no_such_user";
+		}
+		return "following_page";
+	}
 
 }

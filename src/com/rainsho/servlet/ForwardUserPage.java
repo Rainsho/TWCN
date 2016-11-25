@@ -20,8 +20,19 @@ public class ForwardUserPage extends HttpServlet {
 			throws ServletException, IOException {
 
 		String u = request.getRequestURI().replace("/TWCN/u/", "");
-		request.getRequestDispatcher("/userpage.action?u=" + u).forward(
-				request, response);
+		if (u.indexOf("/") == -1) {
+			request.getRequestDispatcher("/userpage.action?u=" + u).forward(
+					request, response);
+		} else {
+			String u1 = u.split("/")[0];
+			String u2 = u.split("/")[1];
+			if (u2.equals("following")) {
+				request.getRequestDispatcher("/userfollowing.action?u=" + u1)
+						.forward(request, response);
+			} else {
+				response.sendRedirect("/TWCN/i");
+			}
+		}
 
 	}
 

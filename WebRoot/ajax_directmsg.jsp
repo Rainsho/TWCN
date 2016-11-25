@@ -10,13 +10,6 @@
 <html>
 <head>
 <base href="<%=basePath%>">
-<link rel="stylesheet" href="css/twitter_core.bundle.css">
-<link rel="stylesheet" href="css/twitter_more_1.bundle.css">
-<link rel="stylesheet" href="css/twitter_more_2.bundle.css">
-<link rel="stylesheet" href="css/my.css">
-
-<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="js/page_user.js"></script>
 </head>
 <body>
 	<div class="modal-overlay" style="z-index: 4001;display: block;"></div>

@@ -14,7 +14,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>TWCN —— ${LOGIN_USER.nickname }</title>
+<title>TWCN —— ${user.nickname }</title>
 <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="css/twitter_identify.css" />
 
