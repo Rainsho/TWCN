@@ -1,4 +1,3 @@
-<%@page import="com.rainsho.entity.Users"%>
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
@@ -23,6 +22,7 @@
 <link rel="stylesheet" href="css/twitter_core.bundle.css">
 <link rel="stylesheet" href="css/twitter_more_1.bundle.css">
 <link rel="stylesheet" href="css/twitter_more_2.bundle.css">
+<link rel="stylesheet" href="css/my.css">
 
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="js/page_user.js"></script>
@@ -52,10 +52,10 @@
 					</div>
 					<div class="pull-right" style="display: inline-block;">
 						<div role="search">
-							<form class="t1-form form-search js-search-form" action="/search"
+							<form class="t1-form form-search js-search-form" action="usersearch.action"  method="get"
 								id="global-nav-search">
 								<input class="search-input" type="text" id="search-query"
-									placeholder="搜索 Twitter" name="q"> <span
+									placeholder="搜索 Twitter" name="keyword"> <span
 									class="search-icon js-search-action">
 									<button type="submit" class="Icon Icon--search nav-search"
 										tabindex="-1"></button>
@@ -77,7 +77,7 @@
 											class="account-summary account-summary-small js-nav">
 												<div class="content">
 													<div class="account-group js-mini-current-user">
-														<b class="fullname">${user.nickname }</b> <span
+														<b class="fullname">${LOGIN_USER.nickname }</b> <span
 															class="screen-name hidden" dir="ltr">@${LOGIN_USER.username
 															}</span> <small class="metadata">查看个人资料</small>
 													</div>
@@ -127,26 +127,18 @@
 									class="u-linkComplex-target">${user.username }</span></a>
 							</span>
 						</div>
-						<%
-							Users login_user = (Users) session.getAttribute("LOGIN_USER");
-							Users request_user = (Users) request.getAttribute("user");
-							if (login_user != null
-									&& login_user.getUid() != request_user.getUid()
-									&& !login_user.hasRelation(request_user)) {
-						%>
-						<div class="not-following"
-							style="position: absolute;left: 90px;top: 60px;">
-							<button type="button"
-								class="small-follow-btn follow-btn btn small follow-button"
-								data-uid="${user.uid }">
-								<div class="follow-text action-text">
-									<span class="Icon Icon--follow"></span>关注
-								</div>
-							</button>
-						</div>
-						<%
-							}
-						%>
+						<c:if test="${! rs_set_suid.contains(user.uid) }">
+							<div class="not-following"
+								style="position: absolute;left: 90px;top: 60px;">
+								<button type="button"
+									class="small-follow-btn follow-btn btn small follow-button"
+									data-uid="${user.uid }">
+									<div class="follow-text action-text">
+										<span class="Icon Icon--follow"></span>关注
+									</div>
+								</button>
+							</div>
+						</c:if>
 						<div class="ProfileCardStats">
 							<ul
 								class="ProfileCardStats-statList Arrange Arrange--bottom Arrange--equal">
@@ -184,67 +176,114 @@
 					</div>
 				</div>
 			</div>
-
+			<!-- user -->
 			<div role="main" aria-labelledby="content-main-heading"
 				class="content-main" id="div_username">
 				<div class="content-header">
 					<div class="header-inner">
-						<h2 id="content-main-heading">${user.nickname
-							}&nbsp;@${user.username }</h2>
-						<p class="subheader">正在关注的用户</p>
+						<h2 id="content-main-heading">“${keyword }”</h2>
+						<p class="subheader">搜索到的用户</p>
 					</div>
 				</div>
 				<div class="content-inner no-stream-end">
 					<div class="GridTimeline-items" role="list">
 						<div class="Grid Grid--withGutter">
-							<c:forEach var="rs" items="${user.relationshipsesForHuid }">
+							<c:forEach var="su" items="${search_list }">
 								<div class="Grid-cell u-size1of2 u-lg-size1of3 u-mb10">
 									<div class="DashboardProfileCard  module">
 										<a class="DashboardProfileCard-bg u-bgUserColor u-block"
-											href="u/${rs.usersBySuid.username }" tabindex="-1"
+											href="u/${su.username }" tabindex="-1"
 											aria-hidden="true"></a>
 										<div class="DashboardProfileCard-content">
 											<a class="DashboardProfileCard-avatarLink u-inlineBlock"
-												href="u/${rs.usersBySuid.username }"
-												title="${rs.usersBySuid.username }" tabindex="-1"
+												href="u/${su.username }"
+												title="${su.username }" tabindex="-1"
 												aria-hidden="true"> <img
 												class="DashboardProfileCard-avatarImage"
-												src="${rs.usersBySuid.avatar }" alt="">
+												src="${su.avatar }" alt="">
 											</a>
 											<div class="DashboardProfileCard-userFields">
 												<div class="DashboardProfileCard-name u-textTruncate">
 													<a class="u-textInheritColor"
-														href="u/${rs.usersBySuid.username }">${rs.usersBySuid.nickname
+														href="u/${su.username }">${su.nickname
 														}</a>
 												</div>
 												<span
 													class="DashboardProfileCard-screenname u-inlineBlock u-dir"
 													dir="ltr"> <a
 													class="DashboardProfileCard-screennameLink u-linkComplex u-linkClean"
-													href="u/${rs.usersBySuid.username }">@<span
-														class="u-linkComplex-target">${rs.usersBySuid.username
+													href="u/${su.username }">@<span
+														class="u-linkComplex-target">${su.username
 															}</span></a>
 												</span>
 											</div>
-											
-											// 关注按钮+条件判断											
-											<div class="not-following"
-												style="position: absolute;left: 90px;top: 60px;">
-												<button type="button"
-													class="small-follow-btn follow-btn btn small follow-button"
-													data-uid="${user.uid }">
-													<div class="follow-text action-text">
-														<span class="Icon Icon--follow"></span>关注
-													</div>
-												</button>
-											</div>
-											
+											<!-- 关注按钮+条件判断	 -->
+											<c:if test="${! rs_set_suid.contains(su.uid) }">
+												<div class="not-following"
+													style="position: absolute;left: 90px;top: 60px;">
+													<button type="button"
+														class="small-follow-btn follow-btn btn small follow-button"
+														data-uid="${su.uid }">
+														<div class="follow-text action-text">
+															<span class="Icon Icon--follow"></span>关注
+														</div>
+													</button>
+												</div>
+											</c:if>
 											<p class="ProfileCard-bio u-dir" dir="ltr"
-												style="padding: 0 10px;">${rs.usersBySuid.bio }</p>
+												style="padding: 0 10px;">${su.bio }</p>
 										</div>
 									</div>
 								</div>
 							</c:forEach>
+						</div>
+					</div>
+				</div>
+				<!-- tweet -->
+				<div class="content-header">
+					<div class="header-inner">
+						<h2 id="content-main-heading">“${keyword }”</h2>
+						<p class="subheader">搜索到的推文</p>
+					</div>
+				</div>
+				<div class="content-main top-timeline-tweetbox" id="timeline">
+					<div class="stream-container conversations-enabled">
+						<div class="stream">
+							<ol class="stream-items js-navigable-stream" id="stream-items-id">
+								<c:forEach var="t" items="${list }">
+									<li class="stream-item">
+										<div class="tweet">
+											<div class="content">
+												<div class="stream-item-header">
+													<a class="account-group" href="u/${t.users.username }">
+														<img class="avatar" src="${t.users.avatar }" alt="">
+														<strong class="fullname">${t.users.nickname }</strong> <span>‏</span><span
+														class="username"><s>@</s><b>${t.users.username
+																}</b></span>
+													</a> <small class="time"><span class="_timestamp">${t.fmtTime()
+															}</span></small>
+												</div>
+												<div class="js-tweet-text-container">
+													<p class="TweetTextSize">${t.tcontent }</p>
+												</div>
+											</div>
+										</div>
+									</li>
+								</c:forEach>
+							</ol>
+							<div class="stream-footer ">
+								<div class="timeline-end has-items has-more-items">
+									<div class="stream-end" style="display: block;">
+										<div class="stream-end-inner">
+											<span class="Icon Icon--large Icon--logo"></span>
+											<p>
+												<button type="button" class="btn-link back-to-top"
+													style="display: inline-block;">回到顶部 ↑</button>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

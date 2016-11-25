@@ -210,4 +210,13 @@ public class UsersDAO {
 	public static UsersDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (UsersDAO) ctx.getBean("UsersDAO");
 	}
+
+	// other function
+	public List<Users> search(String keyword) {
+		String hql = "from Users as u where u.username like ? or u.nickname like ?";
+		return getCurrentSession().createQuery(hql)
+				.setString(0, "%" + keyword + "%")
+				.setString(1, "%" + keyword + "%").list();
+	}
+
 }

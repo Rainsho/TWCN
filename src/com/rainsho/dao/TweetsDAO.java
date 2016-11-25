@@ -192,4 +192,9 @@ public class TweetsDAO {
 		return query.list();
 	}
 
+	public List<Tweets> search(String keyword) {
+		String hql = "from Tweets as t where t.tcontent like ? and t.tstate=1";
+		return getCurrentSession().createQuery(hql)
+				.setString(0, "%" + keyword + "%").list();
+	}
 }

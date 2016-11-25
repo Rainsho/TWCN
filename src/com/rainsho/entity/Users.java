@@ -230,6 +230,7 @@ public class Users implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "users")
+	@Where(clause = "tstate = 1")
 	public Set<Tweets> getTweetses() {
 		return this.tweetses;
 	}

@@ -112,7 +112,7 @@ create table replays
 (
    rid                  int not null auto_increment,
    huid                 int not null,
-   suid                 int not null,
+   suid                 int,
    tid                  int not null,
    rcontent             varchar(1000) not null,
    replaytime           datetime not null,
@@ -125,7 +125,7 @@ create table replays
 /*==============================================================*/
 create table t2p
 (
-   tpid                 int not null,
+   tpid                 int not null auto_increment,
    tid                  int not null,
    pid                  int not null,
    primary key (tpid)

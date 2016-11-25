@@ -88,6 +88,10 @@ $(function() {
 			$('.t1-form').addClass('condensed');
 			$('#new_tweet_bar').show();
 			$('#new_tweet_bar div').text('发送成功，请刷新查看新推文');
+			var c = $('.ProfileCardStats-statValue').first().text();
+			$('.ProfileCardStats-statValue').first().text(++c);
+			// update session
+			$.post('userflushlogin.action');
 		});
 	});
 
@@ -100,6 +104,10 @@ $(function() {
 				'tweet.tid' : tid
 			}, function() {
 				that.parents('.stream-item').remove();
+				var c = $('.ProfileCardStats-statValue').first().text();
+				$('.ProfileCardStats-statValue').first().text(--c);
+				// update session
+				$.post('userflushlogin.action');
 			});
 		}
 	});

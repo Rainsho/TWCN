@@ -22,7 +22,9 @@
 			<result name="no_such_user">/login.jsp</result>
 			<result name="logout">/login.jsp</result>
 			<result name="setting">/setting.jsp</result>
-			<result name="following_page">/following.jsp</result>
+			<result name="following_page">/user_following.jsp</result>
+			<result name="search_page">/user_search.jsp</result>
+			<result name="flush_session">/ok.html</result>
 		</action>
 		<action name="rs*" class="RelationshipAction" method="{1}">
 			<result>/ok.html</result>

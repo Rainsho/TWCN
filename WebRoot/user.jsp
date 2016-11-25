@@ -1,4 +1,3 @@
-<%@page import="com.rainsho.entity.Users"%>
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
@@ -54,10 +53,10 @@
 					</div>
 					<div class="pull-right" style="display: inline-block;">
 						<div role="search">
-							<form class="t1-form form-search js-search-form" action="/search"
+							<form class="t1-form form-search js-search-form" action="usersearch.action"  method="get"
 								id="global-nav-search">
 								<input class="search-input" type="text" id="search-query"
-									placeholder="搜索 Twitter" name="q"> <span
+									placeholder="搜索 Twitter" name="keyword"> <span
 									class="search-icon js-search-action">
 									<button type="submit" class="Icon Icon--search nav-search"
 										tabindex="-1"></button>
@@ -130,26 +129,18 @@
 									class="u-linkComplex-target">${user.username }</span></a>
 							</span>
 						</div>
-						<%
-							Users login_user = (Users) session.getAttribute("LOGIN_USER");
-							Users request_user = (Users) request.getAttribute("user");
-							if (login_user != null
-									&& login_user.getUid() != request_user.getUid()
-									&& !login_user.hasRelation(request_user)) {
-						%>
-						<div class="not-following"
-							style="position: absolute;left: 90px;top: 60px;">
-							<button type="button"
-								class="small-follow-btn follow-btn btn small follow-button"
-								data-uid="${user.uid }">
-								<div class="follow-text action-text">
-									<span class="Icon Icon--follow"></span>关注
-								</div>
-							</button>
-						</div>
-						<%
-							}
-						%>
+						<c:if test="${! rs_set_suid.contains(user.uid) }">
+							<div class="not-following"
+								style="position: absolute;left: 90px;top: 60px;">
+								<button type="button"
+									class="small-follow-btn follow-btn btn small follow-button"
+									data-uid="${user.uid }">
+									<div class="follow-text action-text">
+										<span class="Icon Icon--follow"></span>关注
+									</div>
+								</button>
+							</div>
+						</c:if>
 						<div class="ProfileCardStats">
 							<ul
 								class="ProfileCardStats-statList Arrange Arrange--bottom Arrange--equal">
