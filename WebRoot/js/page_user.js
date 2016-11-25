@@ -1,5 +1,6 @@
 var i = 0;
 var h = null;
+var _test = null;
 
 function heart_burst() {
 	h.css('background-position-x', (i++ / 0.28) + '%');
@@ -177,10 +178,11 @@ $(function() {
 				}
 			});
 
-	// 回复相关事件
+	// 评论相关事件
 	$('.js-replay-btn').click(function() {
 		$(this).parents('.stream-item').find('.replay_area').toggle(500);
 	});
+	// 发送评论
 	$('.replay-btn').click(
 			function() {
 				var that = $(this);
@@ -212,46 +214,26 @@ $(function() {
 							that.parents('.replay_area_d0').before(
 									$(div).children().parent());
 							// 新元素绑定事件！！！
+							replay_area_events();
 						});
 			});
+	// 异步加载后新元素需要绑定事件，回复和删除按钮
+	replay_area_events();
 
-	// 删除回复
-	$('.replay-del-btn').click(
-			function() {
-				var that = $(this);
-				var rid = that.attr('data-rid');
-				$.post('tmdelreplay.action', {
-					'rid' : rid
-				},
-						function() {
-							var c = that.parents('.tweet').find(
-									'.js-replay-btn .IconTextContainer span')
-									.text();
-							that.parents('.tweet').find(
-									'.js-replay-btn .IconTextContainer span')
-									.text(--c);
-							that.parents('.replay_area_d0').hide(1000);
-						});
-			});
-
-	// 回复回复
-	$('.replay-replay-btn').click(
-			function() {
-				var that = $(this);
-				var suid = that.attr('data-suid');
-				var username = that.attr('data-username');
-				that.parents('.replay_area').children('.replay_area_d0').find(
-						'input').val('回复@' + username + '：');
-				that.parents('.replay_area').children('.replay_area_d0').find(
-						'.replay-btn').attr('data-suid', suid);
-				that.parents('.replay_area').children('.replay_area_d0').find(
-						'.replay-btn').text('回复');
-			});
-	$('.replay-btn').prev('input').change(function() {
-		if ($(this).val() == '') {
-			$(this).next().text('评论');
-			$(this).next().removeAttr('data-suid');
-		}
+	// dm相关事件
+	$('.show-dm-area').click(function() {
+		var huid = $(this).attr('data-huid');
+		var suid = $(this).attr('data-suid');
+		var obj = {
+			huid : huid,
+			suid : suid
+		};
+		$.post('dmtoshow.action', obj, function(data) {
+			var _html = $.parseHTML(data);
+			$('body').append(_html[13]);
+			$('body').append(_html[15]);
+			dm_area_events();
+		});
 	});
 
 });
@@ -297,4 +279,103 @@ function ck_t_length() {
 	} else {
 		$('.tweet-counter + button').prop('disabled', true);
 	}
+}
+
+function replay_area_events() {
+	// 删除回复
+	$('.replay-del-btn').click(
+			function() {
+				var that = $(this);
+				var rid = that.attr('data-rid');
+				$.post('tmdelreplay.action', {
+					'rid' : rid
+				},
+						function() {
+							var c = that.parents('.tweet').find(
+									'.js-replay-btn .IconTextContainer span')
+									.text();
+							that.parents('.tweet').find(
+									'.js-replay-btn .IconTextContainer span')
+									.text(--c);
+							that.parents('.replay_area_d0').hide(1000);
+						});
+			});
+
+	// 回复回复
+	$('.replay-replay-btn').click(
+			function() {
+				var that = $(this);
+				var suid = that.attr('data-suid');
+				var username = that.attr('data-username');
+				that.parents('.replay_area').children('.replay_area_d0').find(
+						'input').val('回复@' + username + '：');
+				that.parents('.replay_area').children('.replay_area_d0').find(
+						'.replay-btn').attr('data-suid', suid);
+				that.parents('.replay_area').children('.replay_area_d0').find(
+						'.replay-btn').text('回复');
+			});
+	$('.replay-btn').prev('input').change(function() {
+		if ($(this).val() == '') {
+			$(this).next().text('评论');
+			$(this).next().removeAttr('data-suid');
+		}
+	});
+}
+
+function dm_area_events() {
+	// dispear event
+	$('.js-close-dm, .DMActivity-close').click(function() {
+		$('.modal-overlay').remove();
+		$('#dm_dialog').remove();
+	});
+	// input event
+	$('#dm_msg').keyup(function() {
+		if ($(this).val().length > 0) {
+			$('#dm_send_btn').prop('disabled', false);
+		} else {
+			$('#dm_send_btn').prop('disabled', true);
+		}
+	});
+	// send event
+	$('#dm_send_btn').click(
+			function() {
+				var that = $(this);
+				var huid = that.attr('data-huid');
+				var suid = that.attr('data-suid');
+				var dcontent = $('#dm_msg').val();
+				var obj = {
+					'huid' : huid,
+					'suid' : suid,
+					'dm.dcontent' : dcontent
+				};
+				$.post('dmtoadd.action', obj, function(data) {
+					$('#dm_msg').val('');
+					$('#dm_send_btn').prop('disabled', true);
+					var _html = $.parseHTML(data);
+					_html = $(_html).find('.DirectMessage').last();
+					$('.DirectMessage').last().after(_html);
+					$('.js-dm-scroll').prop('scrollTop',
+							$('.js-dm-scroll').prop('scrollHeight'));
+					// 新元素绑定事件！！！
+					dm_area_del_event();
+				});
+			});
+	// scroll
+	$('.js-dm-scroll').prop('scrollTop',
+			$('.js-dm-scroll').prop('scrollHeight'));
+	// delete event
+	dm_area_del_event();
+}
+
+function dm_area_del_event() {
+	// delete event
+	$('.js-del-msg').click(function() {
+		var that = $(this);
+		var did = that.attr('data-did');
+		$.post('dmtodel.action', {
+			'dm.did' : did
+		}, function() {
+			that.parents('.DirectMessage').hide(500);
+		});
+	});
 }

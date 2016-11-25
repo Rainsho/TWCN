@@ -1,4 +1,3 @@
-<%@page import="com.rainsho.entity.Relationships"%>
 <%@page import="com.rainsho.entity.Users"%>
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -104,7 +103,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 	<div id="page-outer">
 		<div id="page-container" class="AppContent wrapper wrapper-home">
@@ -456,9 +454,14 @@
 																	<div class="caret-inner"></div>
 																</div>
 																<ul>
-																	<li class="share-via-dm">
-																		<button type="button" class="dropdown-link">私信分享</button>
-																	</li>
+																	<c:if test="${LOGIN_USER.uid != t.users.uid }">
+																		<li class="share-via-dm">
+																			<button type="button"
+																				class="dropdown-link show-dm-area"
+																				data-huid="${LOGIN_USER.uid }"
+																				data-suid="${t.users.uid }">发送私信</button>
+																		</li>
+																	</c:if>
 																	<li class="block-link">
 																		<button type="button" class="dropdown-link">屏蔽
 																			@${t.users.username }</button>
@@ -538,8 +541,6 @@
 							<div class="timeline-end has-items has-more-items">
 								<div class="stream-end" style="display: block;">
 									<div class="stream-end-inner">
-										<h1>test info</h1>
-										<h1>test info</h1>
 										<h1>test info</h1>
 										<span class="Icon Icon--large Icon--logo"></span>
 										<p>
@@ -628,6 +629,11 @@
 				</div>
 			</div>
 			<!--who to follow and copyright end-->
-</body>
 
+		</div>
+	</div>
+
+	<!-- 私信模块 -->
+
+</body>
 </html>

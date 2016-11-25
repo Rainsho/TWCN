@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.rainsho.util.StringUtil;
+
 /**
  * Directmsgs entity. @author MyEclipse Persistence Tools
  */
@@ -103,6 +105,11 @@ public class Directmsgs implements java.io.Serializable {
 
 	public void setDstate(Short dstate) {
 		this.dstate = dstate;
+	}
+
+	// other function
+	public String fmtTime() {
+		return StringUtil.fmtTime(this.msgtime);
 	}
 
 }

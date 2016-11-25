@@ -144,4 +144,12 @@
 		<property name="service" ref="TweetMoreService"></property>
 	</bean>
 
+	<bean id="DirectmsgService" class="com.rainsho.service.DirectmsgService">
+		<property name="dao" ref="DirectmsgsDAO"></property>
+		<property name="udao" ref="UsersDAO"></property>
+	</bean>
+	<bean id="DirectmsgAction" class="com.rainsho.action.DirectmsgAction">
+		<property name="service" ref="DirectmsgService"></property>
+	</bean>
+
 </beans>

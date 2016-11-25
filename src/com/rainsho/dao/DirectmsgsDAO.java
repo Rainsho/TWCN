@@ -13,6 +13,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rainsho.entity.Directmsgs;
+import com.rainsho.entity.Users;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -169,5 +170,13 @@ public class DirectmsgsDAO {
 
 	public static DirectmsgsDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (DirectmsgsDAO) ctx.getBean("DirectmsgsDAO");
+	}
+
+	// other function
+	public List<Directmsgs> findDmByBoth(Users huser, Users suser) {
+		String hql = "from Directmsgs as d where (d.usersByHuid=? and d.usersBySuid=? and d.dstate > 0) or (d.usersByHuid=? and d.usersBySuid=? and d.dstate > 0) order by d.msgtime asc";
+		return getCurrentSession().createQuery(hql).setEntity(0, huser)
+				.setEntity(1, suser).setEntity(2, suser).setEntity(3, huser)
+				.list();
 	}
 }

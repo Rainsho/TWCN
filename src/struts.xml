@@ -30,6 +30,11 @@
 			<result>/ok.html</result>
 			<result name="addreplay">/ajax_replay.jsp</result>
 		</action>
+		<action name="dm*" class="DirectmsgAction" method="{1}">
+			<result>/ok.html</result>
+			<result name="find_dm">/ajax_directmsg.jsp</result>
+			<result name="add_dm">/ajax_directmsg.jsp</result>
+		</action>
 
 	</package>
 
