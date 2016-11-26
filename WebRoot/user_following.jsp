@@ -39,7 +39,7 @@
 							<li id="global-nav-home" class="home"><a href="i"> <span
 									class="Icon Icon--home Icon--large"></span> <span class="text">主页</span>
 							</a></li>
-							<li class="people notifications"><a href="/i/notifications">
+							<li class="people notifications"><a href="i/notifications">
 									<span class="Icon Icon--notifications Icon--large"></span> <span
 									class="text">通知</span> <span class="count"><span
 										class="count-inner">0</span></span>

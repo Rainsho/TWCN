@@ -8,6 +8,7 @@ import java.util.Set;
 import org.apache.struts2.ServletActionContext;
 
 import com.rainsho.entity.Relationships;
+import com.rainsho.entity.Replays;
 import com.rainsho.entity.Tweets;
 import com.rainsho.entity.Users;
 import com.rainsho.service.UserService;
@@ -20,6 +21,7 @@ public class UserAction {
 	private Set<Integer> rs_set_suid;
 	private String keyword;
 	private List<Users> search_list;
+	private List<Replays> receive_list;
 
 	public UserService getService() {
 		return service;
@@ -77,6 +79,14 @@ public class UserAction {
 		this.search_list = search_list;
 	}
 
+	public List<Replays> getReceive_list() {
+		return receive_list;
+	}
+
+	public void setReceive_list(List<Replays> receive_list) {
+		this.receive_list = receive_list;
+	}
+
 	// action name = user*
 	public String page() {
 		user = service.findUserByUsername(u);
@@ -125,6 +135,10 @@ public class UserAction {
 				.getAttribute("LOGIN_USER");
 		search_list = new ArrayList<Users>();
 		list = new ArrayList<Tweets>();
+		if (keyword.equals("")) {
+			keyword = "未输入关键字";
+			return "search_page";
+		}
 		search_list = service.searchUser(keyword);
 		list = service.searchTweet(keyword);
 		resetRs();
@@ -144,6 +158,14 @@ public class UserAction {
 		// update session
 		service.upLOGINUSER();
 		return "flush_session";
+	}
+
+	public String ntf() {
+		// 收到的评论来自回复和评论本人推特
+		receive_list = service.findRRp();
+		// 发出的评论取自LOGIN_USER
+		service.upLOGINUSER();
+		return "ntf_page";
 	}
 
 }

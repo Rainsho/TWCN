@@ -27,6 +27,11 @@
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="js/page_user.js"></script>
 
+<link rel="stylesheet" type="text/css" href="easyui/easyui.css">
+<link rel="stylesheet" type="text/css" href="easyui/icon.css">
+<link rel="stylesheet" type="text/css" href="easyui/demo.css">
+<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+
 </head>
 
 <body>
@@ -39,7 +44,7 @@
 							<li id="global-nav-home" class="home"><a href="i"> <span
 									class="Icon Icon--home Icon--large"></span> <span class="text">主页</span>
 							</a></li>
-							<li class="people notifications"><a href="i/notifications">
+							<li class="people notifications active"><a href="i/notifications">
 									<span class="Icon Icon--notifications Icon--large"></span> <span
 									class="text">通知</span> <span class="count"><span
 										class="count-inner">0</span></span>
@@ -52,8 +57,8 @@
 					</div>
 					<div class="pull-right" style="display: inline-block;">
 						<div role="search">
-							<form class="t1-form form-search js-search-form" action="usersearch.action"  method="get"
-								id="global-nav-search">
+							<form class="t1-form form-search js-search-form"
+								action="usersearch.action" method="get" id="global-nav-search">
 								<input class="search-input" type="text" id="search-query"
 									placeholder="搜索 Twitter" name="keyword"> <span
 									class="search-icon js-search-action">
@@ -79,7 +84,8 @@
 													<div class="account-group js-mini-current-user">
 														<b class="fullname">${LOGIN_USER.nickname }</b> <span
 															class="screen-name hidden" dir="ltr">@${LOGIN_USER.username
-															}</span> <small class="metadata">查看个人资料</small>
+															}</span>
+														<small class="metadata">查看个人资料</small>
 													</div>
 												</div>
 										</a></li>
@@ -107,53 +113,41 @@
 			<div class="dashboard">
 				<div class="DashboardProfileCard  module">
 					<a class="DashboardProfileCard-bg u-bgUserColor u-block"
-						href="u/${user.username }" tabindex="-1" aria-hidden="true"></a>
+						href="u/${LOGIN_USER.username }" tabindex="-1" aria-hidden="true"></a>
 					<div class="DashboardProfileCard-content">
 						<a class="DashboardProfileCard-avatarLink u-inlineBlock"
-							href="u/${user.username }" title="${user.username }"
+							href="u/${LOGIN_USER.username }" title="${LOGIN_USER.username }"
 							tabindex="-1" aria-hidden="true"> <img
-							class="DashboardProfileCard-avatarImage" src="${user.avatar }"
-							alt="">
+							class="DashboardProfileCard-avatarImage"
+							src="${LOGIN_USER.avatar }" alt="">
 						</a>
 						<div class="DashboardProfileCard-userFields">
 							<div class="DashboardProfileCard-name u-textTruncate">
-								<a class="u-textInheritColor" href="u/${user.username }">${user.nickname
+								<a class="u-textInheritColor" href="u/${LOGIN_USER.username }">${LOGIN_USER.nickname
 									}</a>
 							</div>
 							<span class="DashboardProfileCard-screenname u-inlineBlock u-dir"
 								dir="ltr"> <a
 								class="DashboardProfileCard-screennameLink u-linkComplex u-linkClean"
-								href="u/${user.username }">@<span
-									class="u-linkComplex-target">${user.username }</span></a>
+								href="u/${LOGIN_USER.username }">@<span
+									class="u-linkComplex-target">${LOGIN_USER.username }</span></a>
 							</span>
 						</div>
-						<c:if test="${! rs_set_suid.contains(user.uid) }">
-							<div class="not-following"
-								style="position: absolute;left: 90px;top: 60px;">
-								<button type="button"
-									class="small-follow-btn follow-btn btn small follow-button"
-									data-uid="${user.uid }">
-									<div class="follow-text action-text">
-										<span class="Icon Icon--follow"></span>关注
-									</div>
-								</button>
-							</div>
-						</c:if>
 						<div class="ProfileCardStats">
 							<ul
 								class="ProfileCardStats-statList Arrange Arrange--bottom Arrange--equal">
 								<li class="ProfileCardStats-stat Arrange-sizeFit"><a
 									class="ProfileCardStats-statLink u-textUserColor u-linkClean u-block"
-									href="u/${user.username }"> <span
+									href="u/${LOGIN_USER.username }"> <span
 										class="ProfileCardStats-statLabel u-block">推文</span> <span
-										class="ProfileCardStats-statValue">${user.tweetses.size()
+										class="ProfileCardStats-statValue">${LOGIN_USER.tweetses.size()
 											}</span>
 								</a></li>
 								<li class="ProfileCardStats-stat Arrange-sizeFit"><a
 									class="ProfileCardStats-statLink u-textUserColor u-linkClean u-block"
-									href="u/${user.username }/following"> <span
+									href="u/${LOGIN_USER.username }/following"> <span
 										class="ProfileCardStats-statLabel u-block">正在关注</span> <span
-										class="ProfileCardStats-statValue">${user.relationshipsesForHuid.size()
+										class="ProfileCardStats-statValue">${LOGIN_USER.relationshipsesForHuid.size()
 											}</span>
 								</a></li>
 							</ul>
@@ -176,115 +170,74 @@
 					</div>
 				</div>
 			</div>
-			<!-- user -->
 			<div role="main" aria-labelledby="content-main-heading"
 				class="content-main" id="div_username">
-				<div class="content-header">
-					<div class="header-inner">
-						<h2 id="content-main-heading">“${keyword }”</h2>
-						<p class="subheader">搜索到的用户</p>
-					</div>
-				</div>
-				<div class="content-inner no-stream-end">
-					<div class="GridTimeline-items" role="list">
-						<div class="Grid Grid--withGutter">
-							<c:forEach var="su" items="${search_list }">
-								<div class="Grid-cell u-size1of2 u-lg-size1of3 u-mb10">
-									<div class="DashboardProfileCard  module">
-										<a class="DashboardProfileCard-bg u-bgUserColor u-block"
-											href="u/${su.username }" tabindex="-1"
-											aria-hidden="true"></a>
-										<div class="DashboardProfileCard-content">
-											<a class="DashboardProfileCard-avatarLink u-inlineBlock"
-												href="u/${su.username }"
-												title="${su.username }" tabindex="-1"
-												aria-hidden="true"> <img
-												class="DashboardProfileCard-avatarImage"
-												src="${su.avatar }" alt="">
-											</a>
-											<div class="DashboardProfileCard-userFields">
-												<div class="DashboardProfileCard-name u-textTruncate">
-													<a class="u-textInheritColor"
-														href="u/${su.username }">${su.nickname
-														}</a>
-												</div>
-												<span
-													class="DashboardProfileCard-screenname u-inlineBlock u-dir"
-													dir="ltr"> <a
-													class="DashboardProfileCard-screennameLink u-linkComplex u-linkClean"
-													href="u/${su.username }">@<span
-														class="u-linkComplex-target">${su.username
-															}</span></a>
-												</span>
-											</div>
-											<!-- 关注按钮+条件判断	 -->
-											<c:if test="${! rs_set_suid.contains(su.uid) }">
-												<div class="not-following"
-													style="position: absolute;left: 90px;top: 60px;">
-													<button type="button"
-														class="small-follow-btn follow-btn btn small follow-button"
-														data-uid="${su.uid }">
-														<div class="follow-text action-text">
-															<span class="Icon Icon--follow"></span>关注
-														</div>
-													</button>
-												</div>
-											</c:if>
-											<p class="ProfileCard-bio u-dir" dir="ltr"
-												style="padding: 0 10px;">${su.bio }</p>
-										</div>
-									</div>
+				<div class="easyui-tabs" style="border-radius: 4px;">
+					<div title="收到的评论" style="padding:10px;">
+						<c:forEach var="r" items="${receive_list }">
+							<div class="replay_area_d0" style="margin-bottom: 5px;">
+								<div class="replay_area_d1">
+									<a href="u/${r.usersByHuid.username }"><img class="size24"
+										src="${r.usersByHuid.avatar }"></a>
 								</div>
-							</c:forEach>
-						</div>
-					</div>
-				</div>
-				<!-- tweet -->
-				<div class="content-header">
-					<div class="header-inner">
-						<h2 id="content-main-heading">“${keyword }”</h2>
-						<p class="subheader">搜索到的推文</p>
-					</div>
-				</div>
-				<div class="content-main top-timeline-tweetbox" id="timeline">
-					<div class="stream-container conversations-enabled">
-						<div class="stream">
-							<ol class="stream-items js-navigable-stream" id="stream-items-id">
-								<c:forEach var="t" items="${list }">
-									<li class="stream-item">
-										<div class="tweet">
-											<div class="content">
-												<div class="stream-item-header">
-													<a class="account-group" href="u/${t.users.username }">
-														<img class="avatar" src="${t.users.avatar }" alt="">
-														<strong class="fullname">${t.users.nickname }</strong> <span>‏</span><span
-														class="username"><s>@</s><b>${t.users.username
-																}</b></span>
-													</a> <small class="time"><span class="_timestamp">${t.fmtTime()
-															}</span></small>
-												</div>
-												<div class="js-tweet-text-container">
-													<p class="TweetTextSize">${t.tcontent }</p>
-												</div>
-											</div>
-										</div>
-									</li>
-								</c:forEach>
-							</ol>
-							<div class="stream-footer ">
-								<div class="timeline-end has-items has-more-items">
-									<div class="stream-end" style="display: block;">
-										<div class="stream-end-inner">
-											<span class="Icon Icon--large Icon--logo"></span>
-											<p>
-												<button type="button" class="btn-link back-to-top"
-													style="display: inline-block;">回到顶部 ↑</button>
-											</p>
-										</div>
+								<div class="replay_area_d2">
+									<div style="padding-left:5px;">
+										<c:if test="${r.usersBySuid != null }">回复<a
+												href="u/${r.usersBySuid.username }">@${r.usersBySuid.username }</a>：
+										</c:if>
+										<span>${r.rcontent }</span>
+									</div>
+									<div
+										style="margin: 8px 2px;padding:8px 4px;border: 1px dotted #e1e8ed;">
+										${r.usersBySuid != null ? "回复" : "评论" }<a
+											href="u/${r.tweets.users.username }">@${r.tweets.users.username }</a>的推特：${r.tweets.tcontent }
+									</div>
+									<div style="margin-top: 1px;padding-left:5px;">
+										<span>时间：${r.fmtTime() }</span><span class="replay_span">
+											<button class="replay-replay-btn"
+												data-suid="${r.usersByHuid.uid }">回复</button>
+										</span>
 									</div>
 								</div>
 							</div>
-						</div>
+						</c:forEach>
+					</div>
+					<div title="发出的评论" style="padding:10px;">
+						<c:forEach var="r" items="${LOGIN_USER.replaysesForHuid }">
+							<div class="replay_area_d0" style="margin-bottom: 5px;">
+								<div class="replay_area_d1">
+									<a href="u/${r.usersByHuid.username }"><img class="size24"
+										src="${r.usersByHuid.avatar }"></a>
+								</div>
+								<div class="replay_area_d2">
+									<div style="padding-left:5px;">
+										<c:if test="${r.usersBySuid != null }">回复<a
+												href="u/${r.usersBySuid.username }">@${r.usersBySuid.username }</a>：
+										</c:if>
+										<span>${r.rcontent }</span>
+									</div>
+									<div
+										style="margin: 8px 2px;padding:8px 4px;border: 1px dotted #e1e8ed;">
+										${r.usersBySuid != null ? "回复" : "评论" }<a
+											href="u/${r.tweets.users.username }">@${r.tweets.users.username }</a>的推特：${r.tweets.tcontent }
+									</div>
+									<div style="margin-top: 1px;padding-left:5px;">
+										<span>时间：${r.fmtTime() }</span><span class="replay_span">
+											<button class="replay-del-btn" data-rid="${r.rid }">删除</button>
+										</span>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+				</div>
+				<div class="stream-end" style="display: block;">
+					<div class="stream-end-inner">
+						<span class="Icon Icon--large Icon--logo"></span>
+						<p>
+							<button type="button" class="btn-link back-to-top"
+								style="display: inline-block;">回到顶部 ↑</button>
+						</p>
 					</div>
 				</div>
 			</div>

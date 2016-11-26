@@ -54,7 +54,7 @@ $(function() {
 		if (ck_t_file()) {
 			var files = $('.t1-label input').prop('files');
 			var data = new FormData();
-			for ( var i = 0; i < files.length; i++) {
+			for (var i = 0; i < files.length; i++) {
 				data.append('file', files[i]);
 			}
 			// upload
@@ -238,8 +238,11 @@ $(function() {
 		};
 		$.post('dmtoshow.action', obj, function(data) {
 			var _html = $.parseHTML(data);
-			$('body').append(_html[13]);
-			$('body').append(_html[15]);
+			$.each(_html, function(i, x) {
+				if (x.nodeName == 'DIV') {
+					$('body').append(x);
+				}
+			});
 			dm_area_events();
 		});
 	});

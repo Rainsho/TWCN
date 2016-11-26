@@ -2,17 +2,21 @@ package com.rainsho.dao;
 
 import java.sql.Timestamp;
 import java.util.List;
+
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import static org.hibernate.criterion.Example.create;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rainsho.entity.Replays;
+import com.rainsho.entity.Users;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -168,5 +172,12 @@ public class ReplaysDAO {
 
 	public static ReplaysDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (ReplaysDAO) ctx.getBean("ReplaysDAO");
+	}
+
+	// other function
+	public List<Replays> findReceivedReplays(Users user) {
+		String hql = "from Replays as r where (r.usersBySuid=? or r.tweets.users=?) and r.rstate>0 order by r.replaytime desc";
+		return getCurrentSession().createQuery(hql).setEntity(0, user)
+				.setEntity(1, user).list();
 	}
 }

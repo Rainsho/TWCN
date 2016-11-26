@@ -6,8 +6,10 @@ import org.apache.struts2.ServletActionContext;
 import org.hibernate.Hibernate;
 
 import com.rainsho.dao.RelationshipsDAO;
+import com.rainsho.dao.ReplaysDAO;
 import com.rainsho.dao.TweetsDAO;
 import com.rainsho.dao.UsersDAO;
+import com.rainsho.entity.Replays;
 import com.rainsho.entity.Tweets;
 import com.rainsho.entity.Users;
 
@@ -15,6 +17,15 @@ public class UserService {
 	private UsersDAO dao;
 	private TweetsDAO tdao;
 	private RelationshipsDAO rdao;
+	private ReplaysDAO rpdao;
+
+	public ReplaysDAO getRpdao() {
+		return rpdao;
+	}
+
+	public void setRpdao(ReplaysDAO rpdao) {
+		this.rpdao = rpdao;
+	}
 
 	public UsersDAO getDao() {
 		return dao;
@@ -77,9 +88,10 @@ public class UserService {
 	public List<Tweets> searchTweet(String keyword) {
 		return tdao.search(keyword);
 	}
-	
+
 	public void upLOGINUSER() {
-		Users user = (Users) ServletActionContext.getRequest().getSession().getAttribute("LOGIN_USER");
+		Users user = (Users) ServletActionContext.getRequest().getSession()
+				.getAttribute("LOGIN_USER");
 		user = dao.findById(user.getUid());
 		// MEGER 加载属性
 		Hibernate.initialize(user.getTweetses());
@@ -96,4 +108,9 @@ public class UserService {
 				.setAttribute("LOGIN_USER", user);
 	}
 
+	public List<Replays> findRRp() {
+		Users user = (Users) ServletActionContext.getRequest().getSession()
+				.getAttribute("LOGIN_USER");
+		return rpdao.findReceivedReplays(user);
+	}
 }

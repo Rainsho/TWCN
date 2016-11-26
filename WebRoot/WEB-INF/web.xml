@@ -53,5 +53,13 @@
 		<servlet-name>ForwardIndexPage</servlet-name>
 		<url-pattern>/i</url-pattern>
 	</servlet-mapping>
-	
+	<servlet>
+		<servlet-name>ForwardNotificationsPage</servlet-name>
+		<servlet-class>com.rainsho.servlet.ForwardNotificationsPage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ForwardNotificationsPage</servlet-name>
+		<url-pattern>/i/notifications</url-pattern>
+	</servlet-mapping>
+
 </web-app>

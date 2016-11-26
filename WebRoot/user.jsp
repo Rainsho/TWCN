@@ -40,7 +40,7 @@
 									<span class="Icon Icon--home Icon--large"></span> <span
 									class="text">主页</span>
 							</a></li>
-							<li class="people notifications"><a href="/i/notifications">
+							<li class="people notifications"><a href="i/notifications">
 									<span class="Icon Icon--notifications Icon--large"></span> <span
 									class="text">通知</span> <span class="count"><span
 										class="count-inner">0</span></span>
@@ -515,7 +515,7 @@
 													<div class="replay_area_d2">
 														<div style="margin-top: 1px;">
 															<input type="text" maxlength="200"
-																style="height: 14px; width: 397px; margin-right: 12px;"></input>
+																style="height: 14px; width: 396px; margin-right: 12px;"></input>
 															<button data-tid="${t.tid }" class="replay-btn">评论</button>
 														</div>
 													</div>
