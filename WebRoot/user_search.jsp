@@ -52,8 +52,8 @@
 					</div>
 					<div class="pull-right" style="display: inline-block;">
 						<div role="search">
-							<form class="t1-form form-search js-search-form" action="usersearch.action"  method="get"
-								id="global-nav-search">
+							<form class="t1-form form-search js-search-form"
+								action="usersearch.action" method="get" id="global-nav-search">
 								<input class="search-input" type="text" id="search-query"
 									placeholder="搜索 Twitter" name="keyword"> <span
 									class="search-icon js-search-action">
@@ -79,7 +79,8 @@
 													<div class="account-group js-mini-current-user">
 														<b class="fullname">${LOGIN_USER.nickname }</b> <span
 															class="screen-name hidden" dir="ltr">@${LOGIN_USER.username
-															}</span> <small class="metadata">查看个人资料</small>
+															}</span>
+														<small class="metadata">查看个人资料</small>
 													</div>
 												</div>
 										</a></li>
@@ -89,12 +90,13 @@
 											href="userlogout.action" class="dropdown-link">登出</a></li>
 									</ul>
 								</div></li>
-							<!--<li role="complementary" class="topbar-tweet-btn">
-									<button id="global-new-tweet-button" type="button" class="js-global-new-tweet js-tooltip btn primary-btn tweet-btn js-dynamic-tooltip">
-          							<span class="Icon Icon--tweet Icon--large"></span>
-          							<span class="text">发推</span>
-        						</button>
-								</li>-->
+							<li role="complementary" class="topbar-tweet-btn">
+								<button id="global-new-tweet-button" type="button"
+									class="js-global-new-tweet js-tooltip btn primary-btn tweet-btn js-dynamic-tooltip">
+									<span class="Icon Icon--tweet Icon--large"></span> <span
+										class="text">发推</span>
+								</button>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -192,20 +194,17 @@
 								<div class="Grid-cell u-size1of2 u-lg-size1of3 u-mb10">
 									<div class="DashboardProfileCard  module">
 										<a class="DashboardProfileCard-bg u-bgUserColor u-block"
-											href="u/${su.username }" tabindex="-1"
-											aria-hidden="true"></a>
+											href="u/${su.username }" tabindex="-1" aria-hidden="true"></a>
 										<div class="DashboardProfileCard-content">
 											<a class="DashboardProfileCard-avatarLink u-inlineBlock"
-												href="u/${su.username }"
-												title="${su.username }" tabindex="-1"
-												aria-hidden="true"> <img
-												class="DashboardProfileCard-avatarImage"
-												src="${su.avatar }" alt="">
+												href="u/${su.username }" title="${su.username }"
+												tabindex="-1" aria-hidden="true"> <img
+												class="DashboardProfileCard-avatarImage" src="${su.avatar }"
+												alt="">
 											</a>
 											<div class="DashboardProfileCard-userFields">
 												<div class="DashboardProfileCard-name u-textTruncate">
-													<a class="u-textInheritColor"
-														href="u/${su.username }">${su.nickname
+													<a class="u-textInheritColor" href="u/${su.username }">${su.nickname
 														}</a>
 												</div>
 												<span

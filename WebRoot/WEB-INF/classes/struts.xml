@@ -33,6 +33,7 @@
 		<action name="tm*" class="TweetMoreAction" method="{1}">
 			<result>/ok.html</result>
 			<result name="addreplay">/ajax_replay.jsp</result>
+			<result name="rptweet">/ajax_tweet.jsp</result>
 		</action>
 		<action name="dm*" class="DirectmsgAction" method="{1}">
 			<result>/ok.html</result>

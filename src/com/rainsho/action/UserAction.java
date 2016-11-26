@@ -167,5 +167,7 @@ public class UserAction {
 		service.upLOGINUSER();
 		return "ntf_page";
 	}
+	
+	
 
 }

@@ -1,7 +1,9 @@
 package com.rainsho.action;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 
@@ -19,6 +21,15 @@ public class TweetMoreAction {
 	private int rid;
 	// ajax test
 	private Replays r;
+	private List<Tweets> list;
+
+	public List<Tweets> getList() {
+		return list;
+	}
+
+	public void setList(List<Tweets> list) {
+		this.list = list;
+	}
 
 	public Replays getR() {
 		return r;
@@ -110,6 +121,12 @@ public class TweetMoreAction {
 		}
 		rid = 0;
 		return "success";
+	}
+
+	public String rptweet() {
+		list = new ArrayList<Tweets>();
+		list.add(service.findTweetById(tid));
+		return "rptweet";
 	}
 
 }

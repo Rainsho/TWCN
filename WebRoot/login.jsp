@@ -30,7 +30,6 @@
 
 <body
 	class="three-col logged-out ms-windows asian zh-cn front-page-photo-set front-page">
-
 	<div id="doc">
 		<div class="topbar js-topbar">
 			<div class="global-nav global-nav--newLoggedOut">
@@ -142,5 +141,4 @@
 		</div>
 	</div>
 </body>
-
 </html>

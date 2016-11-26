@@ -38,60 +38,20 @@ $(function() {
 	});
 
 	// 发推相关事件
-	$('#tweet-box-home-timeline div').bind("DOMSubtreeModified", function() {
-		ck_t_length();
-	});
-	$('#tweet-box-home-timeline div').click(function() {
-		if ($(this).text() == '有什么新鲜事?') {
-			$(this).html('<br>');
-		}
-	});
-	// 文件上传
-	$('.t1-label input').change(function() {
-		if ($('.t1-label input').val() == '') {
-			return;
-		}
-		if (ck_t_file()) {
-			var files = $('.t1-label input').prop('files');
-			var data = new FormData();
-			for (var i = 0; i < files.length; i++) {
-				data.append('file', files[i]);
-			}
-			// upload
-			$('.tweet-counter + button').prop('disabled', true);
-			$.ajax({
-				url : 'json/tuploadmedia.action',
-				type : 'POST',
-				data : data,
-				cache : false,
-				processData : false,
-				contentType : false,
-				success : function() {
-					// 上传完成事件
-					$('#select_files').text('上传完成');
-					$('#upload_bar div').css('width', '100%');
-					ck_t_length();
+	tweet_area_events();
+
+	// 快速发推相关事件
+	$('#global-new-tweet-button').click(function() {
+		$.post('ajax_tweetbox.jsp', function(data) {
+			var _html = $.parseHTML(data);
+			$.each(_html, function(i, x) {
+				if (x.nodeName == 'DIV') {
+					$('body').append(x);
 				}
 			});
-		}
-		;
-	});
-	$('.tweet-counter + button').click(function() {
-		var txt = $('#tweet-box-home-timeline div').text();
-		$.post('json/ttweet.action', {
-			'tweet.tcontent' : txt
-		}, function(data) {
-			// 发推完成事件
-			$('#upload_div').hide();
-			$('#upload_bar div').css('width', '33%');
+			tweet_area_events();
+			dm_area_events();
 			$('#tweet-box-home-timeline div').html('<br>');
-			$('.t1-form').addClass('condensed');
-			$('#new_tweet_bar').show();
-			$('#new_tweet_bar div').text('发送成功，请刷新查看新推文');
-			var c = $('.ProfileCardStats-statValue').first().text();
-			$('.ProfileCardStats-statValue').first().text(++c);
-			// update session
-			$.post('userflushlogin.action');
 		});
 	});
 
@@ -190,41 +150,7 @@ $(function() {
 	$('.js-replay-btn').click(function() {
 		$(this).parents('.stream-item').find('.replay_area').toggle(500);
 	});
-	// 发送评论
-	$('.replay-btn').click(
-			function() {
-				var that = $(this);
-				var rcontent = that.prev().val();
-				var tid = that.attr('data-tid');
-				var suid = that.attr('data-suid');
-				if (rcontent.length == 0) {
-					alert('没有评论内容');
-					return;
-				}
-				var obj = {
-					tid : tid,
-					suid : suid,
-					rcontent : rcontent
-				};
-				$.post('tmaddreplay.action', obj,
-						function(data) {
-							var c = that.parents('.tweet').find(
-									'.js-replay-btn .IconTextContainer span')
-									.text();
-							that.parents('.tweet').find(
-									'.js-replay-btn .IconTextContainer span')
-									.text(++c);
-							that.prev().val('');
-							that.removeAttr('data-suid');
-							that.text('评论');
-							// 异步加载其他信息
-							var div = $.parseHTML(data);
-							that.parents('.replay_area_d0').before(
-									$(div).children().parent());
-							// 新元素绑定事件！！！
-							replay_area_events();
-						});
-			});
+
 	// 异步加载后新元素需要绑定事件，回复和删除按钮
 	replay_area_events();
 
@@ -245,6 +171,24 @@ $(function() {
 			});
 			dm_area_events();
 		});
+	});
+
+	// 通知页相关事件
+	$('.ntf-tweet-div, .ntf-replay-btn').click(function() {
+		var tid = $(this).attr('data-tid');
+		$.post('tmrptweet.action', {
+			'tid' : tid
+		}, function(data) {
+			var _html = $.parseHTML(data);
+			$.each(_html, function(i, x) {
+				if (x.nodeName == 'DIV') {
+					$('body').append(x);
+				}
+			});
+			$('.replay_area').show();
+			replay_area_events();
+			dm_area_events();
+		})
 	});
 
 });
@@ -311,7 +255,6 @@ function replay_area_events() {
 							that.parents('.replay_area_d0').hide(1000);
 						});
 			});
-
 	// 回复回复
 	$('.replay-replay-btn').click(
 			function() {
@@ -331,6 +274,41 @@ function replay_area_events() {
 			$(this).next().removeAttr('data-suid');
 		}
 	});
+	// 发送评论
+	$('.replay-btn').click(
+			function() {
+				var that = $(this);
+				var rcontent = that.prev().val();
+				var tid = that.attr('data-tid');
+				var suid = that.attr('data-suid');
+				if (rcontent.length == 0) {
+					alert('没有评论内容');
+					return;
+				}
+				var obj = {
+					tid : tid,
+					suid : suid,
+					rcontent : rcontent
+				};
+				$.post('tmaddreplay.action', obj,
+						function(data) {
+							var c = that.parents('.tweet').find(
+									'.js-replay-btn .IconTextContainer span')
+									.text();
+							that.parents('.tweet').find(
+									'.js-replay-btn .IconTextContainer span')
+									.text(++c);
+							that.prev().val('');
+							that.removeAttr('data-suid');
+							that.text('评论');
+							// 异步加载其他信息
+							var div = $.parseHTML(data);
+							that.parents('.replay_area_d0').before(
+									$(div).children().parent());
+							// 新元素绑定事件！！！
+							replay_area_events();
+						});
+			});
 }
 
 function dm_area_events() {
@@ -368,17 +346,17 @@ function dm_area_events() {
 					$('.js-dm-scroll').prop('scrollTop',
 							$('.js-dm-scroll').prop('scrollHeight'));
 					// 新元素绑定事件！！！
-					dm_area_del_event();
+					dm_area_del_events();
 				});
 			});
 	// scroll
 	$('.js-dm-scroll').prop('scrollTop',
 			$('.js-dm-scroll').prop('scrollHeight'));
 	// delete event
-	dm_area_del_event();
+	dm_area_del_events();
 }
 
-function dm_area_del_event() {
+function dm_area_del_events() {
 	// delete event
 	$('.js-del-msg').click(function() {
 		var that = $(this);
@@ -387,6 +365,69 @@ function dm_area_del_event() {
 			'dm.did' : did
 		}, function() {
 			that.parents('.DirectMessage').hide(500);
+		});
+	});
+}
+
+function tweet_area_events() {
+	// 发推相关事件
+	$('#tweet-box-home-timeline div').bind("DOMSubtreeModified", function() {
+		ck_t_length();
+	});
+	$('#tweet-box-home-timeline div').click(function() {
+		if ($(this).text() == '有什么新鲜事?') {
+			$(this).html('<br>');
+		}
+	});
+	// 文件上传
+	$('.t1-label input').change(function() {
+		if ($('.t1-label input').val() == '') {
+			return;
+		}
+		if (ck_t_file()) {
+			var files = $('.t1-label input').prop('files');
+			var data = new FormData();
+			for (var i = 0; i < files.length; i++) {
+				data.append('file', files[i]);
+			}
+			// upload
+			$('.tweet-counter + button').prop('disabled', true);
+			$.ajax({
+				url : 'json/tuploadmedia.action',
+				type : 'POST',
+				data : data,
+				cache : false,
+				processData : false,
+				contentType : false,
+				success : function() {
+					// 上传完成事件
+					$('#select_files').text('上传完成');
+					$('#upload_bar div').css('width', '100%');
+					ck_t_length();
+				}
+			});
+		}
+		;
+	});
+	// 发送推特
+	$('.tweet-counter + button').click(function() {
+		var txt = $('#tweet-box-home-timeline div').text();
+		$.post('json/ttweet.action', {
+			'tweet.tcontent' : txt
+		}, function(data) {
+			// 发推完成事件
+			$('#upload_div').hide();
+			$('#upload_bar div').css('width', '33%');
+			$('#tweet-box-home-timeline div').html('<br>');
+			$('.t1-form').addClass('condensed');
+			$('#new_tweet_bar').show();
+			$('#new_tweet_bar div').text('发送成功，请刷新查看新推文');
+			var c = $('.ProfileCardStats-statValue').first().text();
+			$('.ProfileCardStats-statValue').first().text(++c);
+			// update session
+			$.post('userflushlogin.action');
+			// 快速推特关闭窗口
+			$('.js-close-dm').click();
 		});
 	});
 }

@@ -24,6 +24,7 @@
 
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="js/page_setting.js"></script>
+<script type="text/javascript" src="js/page_user.js"></script>
 
 </head>
 
@@ -77,7 +78,8 @@
 													<div class="account-group js-mini-current-user">
 														<b class="fullname">${user.nickname }</b> <span
 															class="screen-name hidden" dir="ltr">@${user.username
-															}</span> <small class="metadata">查看个人资料</small>
+															}</span>
+														<small class="metadata">查看个人资料</small>
 													</div>
 												</div>
 										</a></li>
@@ -87,12 +89,13 @@
 											href="userlogout.action" class="dropdown-link">登出</a></li>
 									</ul>
 								</div></li>
-							<!--<li role="complementary" class="topbar-tweet-btn">
-									<button id="global-new-tweet-button" type="button" class="js-global-new-tweet js-tooltip btn primary-btn tweet-btn js-dynamic-tooltip">
-          							<span class="Icon Icon--tweet Icon--large"></span>
-          							<span class="text">发推</span>
-        						</button>
-								</li>-->
+							<li role="complementary" class="topbar-tweet-btn">
+								<button id="global-new-tweet-button" type="button"
+									class="js-global-new-tweet js-tooltip btn primary-btn tweet-btn js-dynamic-tooltip">
+									<span class="Icon Icon--tweet Icon--large"></span> <span
+										class="text">发推</span>
+								</button>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -272,9 +275,5 @@
 
 		</div>
 	</div>
-
 </body>
-
 </html>
-
-

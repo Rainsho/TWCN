@@ -44,8 +44,9 @@
 							<li id="global-nav-home" class="home"><a href="i"> <span
 									class="Icon Icon--home Icon--large"></span> <span class="text">主页</span>
 							</a></li>
-							<li class="people notifications active"><a href="i/notifications">
-									<span class="Icon Icon--notifications Icon--large"></span> <span
+							<li class="people notifications active"><a
+								href="i/notifications"> <span
+									class="Icon Icon--notifications Icon--large"></span> <span
 									class="text">通知</span> <span class="count"><span
 										class="count-inner">0</span></span>
 							</a></li>
@@ -95,12 +96,13 @@
 											href="userlogout.action" class="dropdown-link">登出</a></li>
 									</ul>
 								</div></li>
-							<!--<li role="complementary" class="topbar-tweet-btn">
-									<button id="global-new-tweet-button" type="button" class="js-global-new-tweet js-tooltip btn primary-btn tweet-btn js-dynamic-tooltip">
-          							<span class="Icon Icon--tweet Icon--large"></span>
-          							<span class="text">发推</span>
-        						</button>
-								</li>-->
+							<li role="complementary" class="topbar-tweet-btn">
+								<button id="global-new-tweet-button" type="button"
+									class="js-global-new-tweet js-tooltip btn primary-btn tweet-btn js-dynamic-tooltip">
+									<span class="Icon Icon--tweet Icon--large"></span> <span
+										class="text">发推</span>
+								</button>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -188,14 +190,16 @@
 										<span>${r.rcontent }</span>
 									</div>
 									<div
-										style="margin: 8px 2px;padding:8px 4px;border: 1px dotted #e1e8ed;">
+										style="margin: 8px 2px;padding:8px 4px;border: 1px dotted #e1e8ed;"
+										class="ntf-tweet-div" data-tid="${r.tweets.tid }"
+										data-suid="${r.usersByHuid.uid }">
 										${r.usersBySuid != null ? "回复" : "评论" }<a
 											href="u/${r.tweets.users.username }">@${r.tweets.users.username }</a>的推特：${r.tweets.tcontent }
 									</div>
 									<div style="margin-top: 1px;padding-left:5px;">
 										<span>时间：${r.fmtTime() }</span><span class="replay_span">
-											<button class="replay-replay-btn"
-												data-suid="${r.usersByHuid.uid }">回复</button>
+											<button class="ntf-replay-btn" data-tid="${r.tweets.tid }"
+												data-suid="${r.usersByHuid.uid }">查看|回复</button>
 										</span>
 									</div>
 								</div>
@@ -217,7 +221,9 @@
 										<span>${r.rcontent }</span>
 									</div>
 									<div
-										style="margin: 8px 2px;padding:8px 4px;border: 1px dotted #e1e8ed;">
+										style="margin: 8px 2px;padding:8px 4px;border: 1px dotted #e1e8ed;"
+										class="ntf-tweet-div" data-tid="${r.tweets.tid }"
+										data-suid="${r.usersByHuid.uid }">
 										${r.usersBySuid != null ? "回复" : "评论" }<a
 											href="u/${r.tweets.users.username }">@${r.tweets.users.username }</a>的推特：${r.tweets.tcontent }
 									</div>

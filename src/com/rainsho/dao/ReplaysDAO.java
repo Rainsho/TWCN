@@ -176,8 +176,8 @@ public class ReplaysDAO {
 
 	// other function
 	public List<Replays> findReceivedReplays(Users user) {
-		String hql = "from Replays as r where (r.usersBySuid=? or r.tweets.users=?) and r.rstate>0 order by r.replaytime desc";
+		String hql = "from Replays as r where (r.usersBySuid=? or (r.tweets.users=? and r.usersByHuid != ?)) and r.rstate>0 order by r.replaytime desc";
 		return getCurrentSession().createQuery(hql).setEntity(0, user)
-				.setEntity(1, user).list();
+				.setEntity(1, user).setEntity(2, user).list();
 	}
 }
