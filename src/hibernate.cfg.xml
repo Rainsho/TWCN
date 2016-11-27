@@ -20,6 +20,7 @@
 		<property name="myeclipse.connection.profile">
 			mysql_twcn
 		</property>
+		<property name="connection.useSSL">false</property>
 		<property name="connection.characterEncoding">UTF-8</property>
 		<property name="connection.autocommit">true</property>
 		<!-- for de_bug -->

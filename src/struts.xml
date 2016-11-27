@@ -39,6 +39,7 @@
 			<result>/ok.html</result>
 			<result name="find_dm">/ajax_directmsg.jsp</result>
 			<result name="add_dm">/ajax_directmsg.jsp</result>
+			<result name="dm_page">/user_directmsg.jsp</result>
 		</action>
 
 	</package>

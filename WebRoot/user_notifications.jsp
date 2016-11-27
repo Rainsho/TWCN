@@ -50,7 +50,7 @@
 									class="text">通知</span> <span class="count"><span
 										class="count-inner">0</span></span>
 							</a></li>
-							<li class="dm-nav"><a href="#"> <span
+							<li class="dm-nav"><a href="i/directmsg"> <span
 									class="Icon Icon--dm Icon--large"></span> <span class="text">私信</span>
 									<span class="dm-new"><span class="count-inner"></span></span>
 							</a></li>

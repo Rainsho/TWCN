@@ -1,12 +1,17 @@
 package com.rainsho.dao;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import static org.hibernate.criterion.Example.create;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -178,5 +183,22 @@ public class DirectmsgsDAO {
 		return getCurrentSession().createQuery(hql).setEntity(0, huser)
 				.setEntity(1, suser).setEntity(2, suser).setEntity(3, huser)
 				.list();
+	}
+
+	public Map<Integer, Directmsgs> findDmMap(Users user) {
+		String hql = "from Directmsgs as d where d.msgtime in (select max(dd.msgtime) "
+				+ "from Directmsgs as dd group by dd.usersByHuid, dd.usersBySuid) and "
+				+ "(d.usersByHuid=? or d.usersBySuid=?) and " + "d.dstate>0";
+		List<Directmsgs> list = getCurrentSession().createQuery(hql)
+				.setEntity(0, user).setEntity(1, user).list();
+		Map<Integer, Directmsgs> map = new HashMap<Integer, Directmsgs>();
+		for (Directmsgs x : list) {
+			if (x.getUsersByHuid().getUid() == user.getUid()) {
+				map.put(x.getUsersBySuid().getUid(), x);
+			} else {
+				map.put(x.getUsersByHuid().getUid(), x);
+			}
+		}
+		return map;
 	}
 }

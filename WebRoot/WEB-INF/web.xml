@@ -61,5 +61,13 @@
 		<servlet-name>ForwardNotificationsPage</servlet-name>
 		<url-pattern>/i/notifications</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>ForwardDMPage</servlet-name>
+		<servlet-class>com.rainsho.servlet.ForwardDMPage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ForwardDMPage</servlet-name>
+		<url-pattern>/i/directmsg</url-pattern>
+	</servlet-mapping>
 
 </web-app>

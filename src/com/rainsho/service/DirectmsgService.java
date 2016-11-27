@@ -1,6 +1,9 @@
 package com.rainsho.service;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.struts2.ServletActionContext;
 
 import com.rainsho.dao.DirectmsgsDAO;
 import com.rainsho.dao.UsersDAO;
@@ -46,6 +49,16 @@ public class DirectmsgService {
 	public void delDm(Directmsgs dm) {
 		dm.setDstate((short) 0);
 		dao.attachDirty(dm);
+	}
+
+	public List<Directmsgs> findmap() {
+		Users user = (Users) ServletActionContext.getRequest().getSession()
+				.getAttribute("LOGIN_USER");
+		List<Directmsgs> list = new ArrayList<Directmsgs>();
+		for (Directmsgs x : dao.findDmMap(user).values()) {
+			list.add(x);
+		}
+		return list;
 	}
 
 }

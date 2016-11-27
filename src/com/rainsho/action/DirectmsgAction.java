@@ -102,4 +102,10 @@ public class DirectmsgAction {
 		service.delDm(dm);
 		return "success";
 	}
+
+	public String findmap() {
+		dmlist = service.findmap();
+		return "dm_page";
+	}
+
 }
