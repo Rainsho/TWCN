@@ -1,5 +1,7 @@
 package com.rainsho.action;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 import org.apache.struts2.ServletActionContext;
@@ -13,6 +15,16 @@ public class InfoUpdateAction {
 	private String tocheck;
 	private Users user;
 	private int type;
+	// user.birthday无法传入
+	private String birthday;
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
 
 	public UserService getuService() {
 		return uService;
@@ -104,6 +116,22 @@ public class InfoUpdateAction {
 		}
 		if (type == 2) {
 			user_new.setPassword(user.getPassword());
+		}
+		if (type == 3) {
+			user_new.setNickname(user.getNickname());
+			user_new.setTelphone(user.getTelphone());
+			user_new.setCity(user.getCity());
+			user_new.setGender(user.getGender());
+			user_new.setBio(user.getBio());
+			// user_new.setBirthday(user.getBirthday());
+			if (birthday != null && birthday.length() == 10) {
+				try {
+					user_new.setBirthday(new SimpleDateFormat("yyyy-MM-dd")
+							.parse(birthday));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		uService.updateUser(user_new);
 		jsonResult = new HashMap<String, Object>();

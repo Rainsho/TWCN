@@ -141,10 +141,10 @@
 							href="javascript:void(0);" data-nav="2">密码<span
 								class="Icon Icon--caretRight"></span></a></li>
 						<li class=""><a class="list-link js-nav"
-							href="javascript:void(0);" data-nav="3">安全与隐私 <span
+							href="javascript:void(0);" data-nav="3">详细信息<span
 								class="Icon Icon--caretRight"></span></a></li>
 						<li class=""><a class="list-link js-nav"
-							href="javascript:void(0);" data-nav="4">你屏蔽的账号 <span
+							href="javascript:void(0);" data-nav="4">你屏蔽的账号<span
 								class="Icon Icon--caretRight"></span></a></li>
 					</ul>
 				</div>
@@ -168,8 +168,8 @@
 				class="content-main" id="div_username">
 				<div class="content-header">
 					<div class="header-inner">
-						<h2 id="content-main-heading">账号</h2>
-						<p class="subheader">修改你的基本账号和语言设置。</p>
+						<h2>账号</h2>
+						<p class="subheader">修改你的基本账号和邮箱。</p>
 					</div>
 				</div>
 				<div class="content-inner no-stream-end">
@@ -221,7 +221,7 @@
 				class="content-main" id="div_password">
 				<div class="content-header">
 					<div class="header-inner">
-						<h2 id="content-main-heading">密码</h2>
+						<h2>密码</h2>
 						<p class="subheader">更改你的密码或找回当前密码。</p>
 					</div>
 				</div>
@@ -273,6 +273,90 @@
 				</div>
 			</div>
 
+			<div role="main" aria-labelledby="content-main-heading"
+				class="content-main" id="div_moreinfo">
+				<div class="content-header">
+					<div class="header-inner">
+						<h2>详细信息</h2>
+						<p class="subheader">更改你的昵称及头像。</p>
+					</div>
+				</div>
+				<div class="content-inner no-stream-end">
+					<form class="t1-form form-horizontal" id="moreinfo-form"
+						method="POST" action="userupdatemoreinfo.action"
+						onsubmit="return updatemoreinfo();">
+						<div class="control-group">
+							<label class="t1-label control-label">头像</label>
+							<div class="controls">
+								<div class="ProfileAvatarEditing is-withAvatar">
+									<div class="ProfileAvatarEditing-placeholder u-bgUserColor"></div>
+									<div class="ProfileAvatarEditing-container">
+										<img class="ProfileAvatarEditing-image avatar"
+											src="${LOGIN_USER.avatar }" alt="${LOGIN_USER.nickname }">
+									</div>
+									<div class="ProfileAvatarEditing-overlay"></div>
+									<div class="ProfileAvatarEditing-buttonContainer">
+										<button
+											class="ProfileAvatarEditing-button u-boxShadowInsetUserColorHover"
+											type="button" tabindex="2">
+											<div class="ProfileAvatarEditing-changeAvatarHelp">
+												<span class="Icon Icon--camera"></span>
+												<p>更换您的头像</p>
+											</div>
+										</button>
+									</div>
+									<div class="image-selector">
+										<label><input type="file"
+											accept="image/gif,image/jpeg,image/jpg,image/png"
+											class="file-input" id="avatar_input"> </label>
+									</div>
+								</div>
+							</div>
+							<label class="t1-label control-label">昵称</label>
+							<div class="controls">
+								<input type="text" name="user.nickname"
+									value="${LOGIN_USER.nickname }" />
+							</div>
+							<label class="t1-label control-label">电话</label>
+							<div class="controls">
+								<input type="text" name="user.telphone"
+									value="${LOGIN_USER.telphone }" />
+							</div>
+							<label class="t1-label control-label">城市</label>
+							<div class="controls">
+								<input type="text" name="user.city" value="${LOGIN_USER.city }" />
+							</div>
+							<label class="t1-label control-label">性别</label>
+							<div class="controls">
+								<div style="width: 220px;height: 30px;text-align: center;">
+									<input type="hidden" id="ori_gender"
+										data-gender="${LOGIN_USER.gender }" /> <input type="radio"
+										name="user.gender" value="1" /><label
+										style="padding: 0 20px;">男</label> <input type="radio"
+										name="user.gender" value="2" /><label
+										style="padding: 0 20px;">女</label> <input type="radio"
+										name="user.gender" value="3" /><label
+										style="padding: 0 20px;">保密</label>
+								</div>
+							</div>
+							<label class="t1-label control-label">生日</label>
+							<div class="controls">
+								<input type="date" name="user.birthday"
+									value="${LOGIN_USER.birthday }" />
+							</div>
+							<label class="t1-label control-label">个人介绍</label>
+							<div class="controls">
+								<textarea name="user.bio">${LOGIN_USER.bio }</textarea>
+							</div>
+						</div>
+						<hr>
+						<div class="form-actions">
+							<button id="settings_save_moreinfo" class="btn primary-btn"
+								type="submit">保存更改</button>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>

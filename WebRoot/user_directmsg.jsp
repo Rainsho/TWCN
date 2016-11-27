@@ -181,9 +181,6 @@
 					</div>
 				</div>
 				<div class="content-inner no-stream-end">
-					<!-- to be done -->
-					<!-- to be done -->
-					<!-- to be done -->
 					<ul class="DMInbox-conversations">
 						<c:forEach var="d" items="${dmlist }">
 							<li class="DMInbox-conversationItem">
@@ -200,22 +197,23 @@
 											</div>
 										</a>
 									</div>
-									<div class="DMInboxItem-title">
-										<b class="fullname">${d.usersByHuid.uid==LOGIN_USER.uid? d.usersBySuid.nickname: d.usersByHuid.nickname }</b>
-										<small class="username"><s>@</s>${d.usersByHuid.uid==LOGIN_USER.uid? d.usersBySuid.username: d.usersByHuid.username }</small>
-									</div>
-									<div class="u-posRelative show-dm-area"
-										data-huid="${LOGIN_USER.uid }"
+									<div class="show-dm-area" data-huid="${LOGIN_USER.uid }"
 										data-suid="${d.usersByHuid.uid==LOGIN_USER.uid? d.usersBySuid.uid: d.usersByHuid.uid }">
-										<p class="DMInboxItem-snippet ">
-											<c:if test="${d.usersByHuid.uid==LOGIN_USER.uid }">
-												<span class="Icon Icon--reply"></span>
-											</c:if>
-											${d.dcontent }
-										</p>
-									</div>
-									<div class="DMInboxItem-timestamp">
-										<span class="_timestamp js-relative-timestamp">${d.fmtTime() }</span>
+										<div class="DMInboxItem-title">
+											<b class="fullname">${d.usersByHuid.uid==LOGIN_USER.uid? d.usersBySuid.nickname: d.usersByHuid.nickname }</b>
+											<small class="username"><s>@</s>${d.usersByHuid.uid==LOGIN_USER.uid? d.usersBySuid.username: d.usersByHuid.username }</small>
+										</div>
+										<div class="u-posRelative">
+											<p class="DMInboxItem-snippet ">
+												<c:if test="${d.usersByHuid.uid==LOGIN_USER.uid }">
+													<span class="Icon Icon--reply"></span>
+												</c:if>
+												${d.dcontent }
+											</p>
+										</div>
+										<div class="DMInboxItem-timestamp">
+											<span class="_timestamp js-relative-timestamp">${d.fmtTime() }</span>
+										</div>
 									</div>
 								</div>
 							</li>

@@ -19,6 +19,7 @@ import com.rainsho.entity.Tweets;
 import com.rainsho.entity.Users;
 import com.rainsho.entity.Videos;
 import com.rainsho.service.MediaService;
+import com.rainsho.service.UserService;
 import com.rainsho.util.StringUtil;
 
 public class TweetAction {
@@ -28,11 +29,20 @@ public class TweetAction {
 	private String[] fileContentType;
 	private MediaService mService;
 	private Tweets tweet;
+	private UserService uService;
 
 	// internal
 	private String path;
 	private List<Pics> pics = new ArrayList<Pics>(0);
 	private List<Videos> videos = new ArrayList<Videos>(0);
+
+	public UserService getuService() {
+		return uService;
+	}
+
+	public void setuService(UserService uService) {
+		this.uService = uService;
+	}
 
 	public HashMap<String, Object> getJsonResult() {
 		return jsonResult;
@@ -175,6 +185,37 @@ public class TweetAction {
 
 	public String delete() {
 		mService.deleteTweet(tweet);
+		return "success";
+	}
+
+	public String uploadavatar() {
+		path = ServletActionContext.getServletContext().getRealPath("upload");
+		jsonResult = new HashMap<String, Object>();
+		try {
+			InputStream in = new FileInputStream(file[0]);
+			String fn = StringUtil.randomString(8) + (new Date().getTime());
+			String ext = fileFileName[0].substring(fileFileName[0]
+					.lastIndexOf("."));
+			File uploadFile = new File(path, fn + ext);
+			OutputStream out = new FileOutputStream(uploadFile);
+			byte[] b = new byte[1024];
+			int length;
+			while ((length = in.read(b)) > 0) {
+				out.write(b, 0, length);
+			}
+			in.close();
+			out.close();
+			Users user = (Users) ServletActionContext.getRequest().getSession()
+					.getAttribute("LOGIN_USER");
+			user.setAvatar("upload" + "/" + fn + ext);
+			uService.updateUser(user);
+			uService.upLOGINUSER();
+			jsonResult.put("avatar", user.getAvatar());
+			reset();
+			resets();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "success";
 	}
 

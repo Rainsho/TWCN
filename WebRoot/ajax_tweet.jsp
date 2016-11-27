@@ -112,6 +112,16 @@
 										</div>
 									</div>
 								</c:if>
+								<c:if test="${t.videos != null }">
+									<div class="AdaptiveMedia">
+										<div class="AdaptiveMedia-container">
+											<div class="AdaptiveMedia-video">
+												<video controls="controls" src="${t.videos.vpath }"
+													style="width: 506px;"></video>
+											</div>
+										</div>
+									</div>
+								</c:if>
 								<!--option-->
 								<div class="replay_area">
 									<c:forEach var="r" items="${t.replayses }">
@@ -164,5 +174,5 @@
 			</ol>
 		</div>
 	</div>
-	</body>
+</body>
 </html>

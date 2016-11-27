@@ -121,6 +121,7 @@
 	</bean>
 	<bean id="TweetAction" class="com.rainsho.action.TweetAction">
 		<property name="mService" ref="MediaService"></property>
+		<property name="uService" ref="UserService"></property>
 	</bean>
 
 	<bean id="InfoUpdateAction" class="com.rainsho.action.InfoUpdateAction">

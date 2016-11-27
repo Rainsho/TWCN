@@ -53,8 +53,8 @@
 					</div>
 					<div class="pull-right" style="display: inline-block;">
 						<div role="search">
-							<form class="t1-form form-search js-search-form" action="usersearch.action"  method="get"
-								id="global-nav-search">
+							<form class="t1-form form-search js-search-form"
+								action="usersearch.action" method="get" id="global-nav-search">
 								<input class="search-input" type="text" id="search-query"
 									placeholder="搜索 Twitter" name="keyword"> <span
 									class="search-icon js-search-action">
@@ -80,7 +80,8 @@
 													<div class="account-group js-mini-current-user">
 														<b class="fullname">${LOGIN_USER.nickname }</b> <span
 															class="screen-name hidden" dir="ltr">@${LOGIN_USER.nickname
-															}</span> <small class="metadata">查看个人主页</small>
+															}</span>
+														<small class="metadata">查看个人主页</small>
 													</div>
 												</div>
 										</a></li>
@@ -374,6 +375,16 @@
 																</div>
 															</c:otherwise>
 														</c:choose>
+													</div>
+												</div>
+											</c:if>
+											<c:if test="${t.videos != null }">
+												<div class="AdaptiveMedia">
+													<div class="AdaptiveMedia-container">
+														<div class="AdaptiveMedia-video">
+															<video controls="controls" src="${t.videos.vpath }"
+																style="width: 506px;"></video>
+														</div>
 													</div>
 												</div>
 											</c:if>
