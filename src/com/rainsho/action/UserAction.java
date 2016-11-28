@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.rainsho.entity.Likes;
 import com.rainsho.entity.Relationships;
 import com.rainsho.entity.Replays;
 import com.rainsho.entity.Tweets;
@@ -22,6 +23,24 @@ public class UserAction {
 	private String keyword;
 	private List<Users> search_list;
 	private List<Replays> receive_list;
+	private List<Likes> like_list;
+	private List<Users> recommend_user;
+
+	public List<Users> getRecommend_user() {
+		return recommend_user;
+	}
+
+	public void setRecommend_user(List<Users> recommend_user) {
+		this.recommend_user = recommend_user;
+	}
+
+	public List<Likes> getLike_list() {
+		return like_list;
+	}
+
+	public void setLike_list(List<Likes> like_list) {
+		this.like_list = like_list;
+	}
 
 	public UserService getService() {
 		return service;
@@ -94,6 +113,7 @@ public class UserAction {
 			return "no_such_user";
 		}
 		list = service.findTweetByUser(user);
+		recommend_user = service.findRecommendUsers();
 		resetRs();
 		return "user_page";
 	}
@@ -103,6 +123,7 @@ public class UserAction {
 				.getAttribute("LOGIN_USER");
 		List<Users> users = service.findFollow(user);
 		list = service.findIndexTweets(users);
+		recommend_user = service.findRecommendUsers();
 		resetRs();
 		return "user_page";
 	}
@@ -163,6 +184,8 @@ public class UserAction {
 	public String ntf() {
 		// 收到的评论来自回复和评论本人推特
 		receive_list = service.findRRp();
+		// 收到的点赞
+		like_list = service.findRLike();
 		// 发出的评论取自LOGIN_USER
 		service.upLOGINUSER();
 		return "ntf_page";

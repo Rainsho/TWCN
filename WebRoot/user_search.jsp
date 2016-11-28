@@ -262,7 +262,7 @@
 													</a> <small class="time"><span class="_timestamp">${t.fmtTime()
 															}</span></small>
 												</div>
-												<div class="js-tweet-text-container">
+												<div class="js-tweet-text-container srh_tweet">
 													<p class="TweetTextSize">${t.tcontent }</p>
 												</div>
 											</div>

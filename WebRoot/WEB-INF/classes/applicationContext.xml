@@ -108,6 +108,7 @@
 		<property name="tdao" ref="TweetsDAO"></property>
 		<property name="rdao" ref="RelationshipsDAO"></property>
 		<property name="rpdao" ref="ReplaysDAO"></property>
+		<property name="ldao" ref="LikesDAO"></property>
 	</bean>
 	<bean id="UserAction" class="com.rainsho.action.UserAction">
 		<property name="service" ref="UserService"></property>

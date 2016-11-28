@@ -199,6 +199,7 @@ function updatemoreinfo() {
 		if (json.updateresult) {
 			alert('更新成功！');
 			$.post('userflushlogin.action');
+			$('.u-textTruncate a').text(obj['user.nickname']);
 		}
 	});
 	return false;

@@ -174,7 +174,7 @@ $(function() {
 	});
 
 	// 通知页相关事件
-	$('.ntf-tweet-div, .ntf-replay-btn').click(function() {
+	$('.ntf-tweet-div, .ntf-replay-btn, .srh_tweet').click(function() {
 		var tid = $(this).attr('data-tid');
 		$.post('tmrptweet.action', {
 			'tid' : tid
@@ -188,7 +188,7 @@ $(function() {
 			$('.replay_area').show();
 			replay_area_events();
 			dm_area_events();
-		})
+		});
 	});
 
 });
@@ -387,7 +387,7 @@ function tweet_area_events() {
 		if (ck_t_file()) {
 			var files = $('.t1-label input').prop('files');
 			var data = new FormData();
-			for (var i = 0; i < files.length; i++) {
+			for ( var i = 0; i < files.length; i++) {
 				data.append('file', files[i]);
 			}
 			// upload

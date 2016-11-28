@@ -37,6 +37,7 @@ public class LoginService {
 		rs.setFollowtime(new Timestamp(new Date().getTime()));
 		rs.setRsstate((short) 1);
 		rdao.save(rs);
+		user.getRelationshipsesForHuid().add(rs);
 	}
 
 	public boolean checkEmailExist(Users user) {

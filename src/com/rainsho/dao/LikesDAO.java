@@ -160,16 +160,22 @@ public class LikesDAO {
 	public static LikesDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (LikesDAO) ctx.getBean("LikesDAO");
 	}
-	
+
 	// other function
 	public Likes findByBoth(Tweets tweet, Users user) {
 		String hql = "from Likes as l where l.tweets=? and l.users=?";
-		List list = getCurrentSession().createQuery(hql).setEntity(0, tweet).setEntity(1, user).list();
-		if (list.size()>0) {
+		List list = getCurrentSession().createQuery(hql).setEntity(0, tweet)
+				.setEntity(1, user).list();
+		if (list.size() > 0) {
 			return (Likes) list.get(0);
-		}else {
+		} else {
 			return null;
 		}
 	}
-	
+
+	public List<Likes> findReceivedLikes(Users user) {
+		String hql = "from Likes as l where l.tweets.users=?";
+		return getCurrentSession().createQuery(hql).setEntity(0, user).list();
+	}
+
 }

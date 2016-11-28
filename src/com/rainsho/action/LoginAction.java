@@ -48,14 +48,18 @@ public class LoginAction {
 
 	public String signup() {
 		reset();
+		Users user_new = new Users();
 		if (service.checkEmailExist(user)) {
-			user.setUsername(service.generateUsername(user));
-			user.setRegisttime(new Timestamp(new Date().getTime()));
-			user.setAvatar("img/twitter-icon.png");
-			user.setUstate((short) 1);
-			service.signup(user);
+			user_new.setEmail(user.getEmail());
+			user_new.setNickname(user.getNickname());
+			user_new.setPassword(user.getPassword());
+			user_new.setUsername(service.generateUsername(user));
+			user_new.setRegisttime(new Timestamp(new Date().getTime()));
+			user_new.setAvatar("img/twitter-icon.png");
+			user_new.setUstate((short) 1);
+			service.signup(user_new);
 			ServletActionContext.getRequest().getSession()
-					.setAttribute("LOGIN_USER", user);
+					.setAttribute("LOGIN_USER", user_new);
 			return "success";
 		} else {
 			signup_msg = "该邮件地址已被注册。";

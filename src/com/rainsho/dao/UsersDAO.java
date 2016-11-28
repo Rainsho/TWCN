@@ -219,4 +219,10 @@ public class UsersDAO {
 				.setString(1, "%" + keyword + "%").list();
 	}
 
+	public List<Users> findRecommendUsers(List<Users> list) {
+		String hql = "from Users as u where u not in (:list)";
+		return getCurrentSession().createQuery(hql).setParameterList("list", list)
+				.list();
+	}
+
 }

@@ -1,14 +1,18 @@
 package com.rainsho.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.Hibernate;
 
+import com.rainsho.dao.LikesDAO;
 import com.rainsho.dao.RelationshipsDAO;
 import com.rainsho.dao.ReplaysDAO;
 import com.rainsho.dao.TweetsDAO;
 import com.rainsho.dao.UsersDAO;
+import com.rainsho.entity.Likes;
 import com.rainsho.entity.Replays;
 import com.rainsho.entity.Tweets;
 import com.rainsho.entity.Users;
@@ -18,6 +22,15 @@ public class UserService {
 	private TweetsDAO tdao;
 	private RelationshipsDAO rdao;
 	private ReplaysDAO rpdao;
+	private LikesDAO ldao;
+
+	public LikesDAO getLdao() {
+		return ldao;
+	}
+
+	public void setLdao(LikesDAO ldao) {
+		this.ldao = ldao;
+	}
 
 	public ReplaysDAO getRpdao() {
 		return rpdao;
@@ -113,4 +126,40 @@ public class UserService {
 				.getAttribute("LOGIN_USER");
 		return rpdao.findReceivedReplays(user);
 	}
+
+	public List<Likes> findRLike() {
+		Users user = (Users) ServletActionContext.getRequest().getSession()
+				.getAttribute("LOGIN_USER");
+		return ldao.findReceivedLikes(user);
+	}
+
+	public List<Users> findRecommendUsers() {
+		Users user = (Users) ServletActionContext.getRequest().getSession()
+				.getAttribute("LOGIN_USER");
+		List<Users> l = rdao.findFollow(user);
+		List<Users> list = dao.findRecommendUsers(l);
+		if (list.size() > 3) {
+			List<Users> r_list = new ArrayList<Users>();
+			Random random = new Random();
+			if (list.get(0).getUid() == 1) {
+				r_list.add(list.get(0));
+				list.remove(0);
+				for (int i = 0; i < 2; i++) {
+					int r = random.nextInt(list.size());
+					r_list.add(list.get(r));
+					list.remove(r);
+				}
+			} else {
+				for (int i = 0; i < 3; i++) {
+					int r = random.nextInt(list.size());
+					r_list.add(list.get(r));
+					list.remove(r);
+				}
+			}
+			return r_list;
+		} else {
+			return list;
+		}
+	}
+
 }

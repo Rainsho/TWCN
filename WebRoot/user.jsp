@@ -80,8 +80,7 @@
 													<div class="account-group js-mini-current-user">
 														<b class="fullname">${LOGIN_USER.nickname }</b> <span
 															class="screen-name hidden" dir="ltr">@${LOGIN_USER.nickname
-															}</span>
-														<small class="metadata">查看个人主页</small>
+															}</span> <small class="metadata">查看个人主页</small>
 													</div>
 												</div>
 										</a></li>
@@ -165,8 +164,8 @@
 					</div>
 				</div>
 
-				<!--tends-->
-				<div class="Trends module trends">
+				<!--tends pending-->
+				<!-- <div class="Trends module trends">
 					<div class="trends-inner">
 						<div class="flex-module trends-container context-trends-container">
 							<div class="flex-module-header">
@@ -192,7 +191,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 
 			<!-- twitter contents begin -->
@@ -569,48 +568,29 @@
 						<div class="dashboard-user-recommendations flex-module-inner"
 							style="opacity: 1;">
 							<!--who to follow-->
-							<div class="account-summary">
-								<div class="dismiss">
-									<span class="Icon Icon--close"></span>
-								</div>
-								<div class="content">
-									<a class="account-group user-thumb" href="/jerryxenos"> <img
-										class="avatar" src="img/twitter-icon.png" alt=""> <span
-										class="account-group-inner"><b class="fullname">nickname</b>
-											<span class="username"><s>@</s><span
-												class="js-username">username</span></span> </span>
-									</a>
-									<div class="user-actions not-following not-muting">
-										<button type="button"
-											class="small-follow-btn follow-btn btn small follow-button">
-											<div class="follow-text action-text">
-												<span class="Icon Icon--follow"></span>关注
+							<c:forEach var="ru" items="${recommend_user }">
+								<div class="account-summary">
+									<div class="content">
+										<a class="account-group user-thumb" href="u/${ru.username }">
+											<img class="avatar" src="${ru.avatar }" alt="${ru.username }">
+											<span class="account-group-inner"><b class="fullname">${ru.nickname
+													}</b> <span class="username"><s>@</s><span
+													class="js-username">${ru.username }</span></span> </span>
+										</a>
+										<c:if test="${! rs_set_suid.contains(ru.uid) }">
+											<div class="user-actions not-following not-muting">
+												<button type="button"
+													class="small-follow-btn follow-btn btn small follow-button"
+													data-uid="${ru.uid }">
+													<div class="follow-text action-text">
+														<span class="Icon Icon--follow"></span>关注
+													</div>
+												</button>
 											</div>
-										</button>
+										</c:if>
 									</div>
 								</div>
-							</div>
-							<div class="account-summary">
-								<div class="dismiss">
-									<span class="Icon Icon--close"></span>
-								</div>
-								<div class="content">
-									<a class="account-group user-thumb" href="/jerryxenos"> <img
-										class="avatar" src="img/twitter-icon.png" alt=""> <span
-										class="account-group-inner"><b class="fullname">nickname</b>
-											<span class="username"><s>@</s><span
-												class="js-username">username</span></span> </span>
-									</a>
-									<div class="user-actions not-following not-muting">
-										<button type="button"
-											class="small-follow-btn follow-btn btn small follow-button">
-											<div class="follow-text action-text">
-												<span class="Icon Icon--follow"></span>关注
-											</div>
-										</button>
-									</div>
-								</div>
-							</div>
+							</c:forEach>
 						</div>
 					</div>
 				</div>

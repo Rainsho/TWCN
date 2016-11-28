@@ -85,8 +85,7 @@
 													<div class="account-group js-mini-current-user">
 														<b class="fullname">${LOGIN_USER.nickname }</b> <span
 															class="screen-name hidden" dir="ltr">@${LOGIN_USER.username
-															}</span>
-														<small class="metadata">查看个人资料</small>
+															}</span> <small class="metadata">查看个人资料</small>
 													</div>
 												</div>
 										</a></li>
@@ -185,7 +184,8 @@
 								<div class="replay_area_d2">
 									<div style="padding-left:5px;">
 										<c:if test="${r.usersBySuid != null }">回复<a
-												href="u/${r.usersBySuid.username }">@${r.usersBySuid.username }</a>：
+												href="u/${r.usersBySuid.username }">@${r.usersBySuid.username
+												}</a>：
 										</c:if>
 										<span>${r.rcontent }</span>
 									</div>
@@ -194,7 +194,8 @@
 										class="ntf-tweet-div" data-tid="${r.tweets.tid }"
 										data-suid="${r.usersByHuid.uid }">
 										${r.usersBySuid != null ? "回复" : "评论" }<a
-											href="u/${r.tweets.users.username }">@${r.tweets.users.username }</a>的推特：${r.tweets.tcontent }
+											href="u/${r.tweets.users.username }">@${r.tweets.users.username
+											}</a>的推特：${r.tweets.tcontent }
 									</div>
 									<div style="margin-top: 1px;padding-left:5px;">
 										<span>时间：${r.fmtTime() }</span><span class="replay_span">
@@ -216,7 +217,8 @@
 								<div class="replay_area_d2">
 									<div style="padding-left:5px;">
 										<c:if test="${r.usersBySuid != null }">回复<a
-												href="u/${r.usersBySuid.username }">@${r.usersBySuid.username }</a>：
+												href="u/${r.usersBySuid.username }">@${r.usersBySuid.username
+												}</a>：
 										</c:if>
 										<span>${r.rcontent }</span>
 									</div>
@@ -225,12 +227,67 @@
 										class="ntf-tweet-div" data-tid="${r.tweets.tid }"
 										data-suid="${r.usersByHuid.uid }">
 										${r.usersBySuid != null ? "回复" : "评论" }<a
-											href="u/${r.tweets.users.username }">@${r.tweets.users.username }</a>的推特：${r.tweets.tcontent }
+											href="u/${r.tweets.users.username }">@${r.tweets.users.username
+											}</a>的推特：${r.tweets.tcontent }
 									</div>
 									<div style="margin-top: 1px;padding-left:5px;">
 										<span>时间：${r.fmtTime() }</span><span class="replay_span">
 											<button class="replay-del-btn" data-rid="${r.rid }">删除</button>
 										</span>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+					<div title="收到的点赞" style="padding:10px;">
+						<c:forEach var="l" items="${like_list }">
+							<div class="replay_area_d0" style="margin-bottom: 5px;">
+								<div class="replay_area_d1">
+									<a href="u/${l.users.username }"><img class="size24"
+										src="${l.users.avatar }"></a>
+								</div>
+								<div class="replay_area_d2">
+									<div style="padding-left:5px;">
+										<span><a href="u/${l.users.username }">@${l.users.username
+												}</a>赞了<a href="u/${l.tweets.users.username }">@${l.tweets.users.username
+												}</a>的推特： </span>
+									</div>
+									<div
+										style="margin: 8px 2px;padding:8px 8px;border: 1px dotted #e1e8ed;"
+										class="ntf-tweet-div" data-tid="${l.tweets.tid }"
+										data-suid="${l.tweets.users.uid }">
+										<a href="u/${l.tweets.users.username }">@${l.tweets.users.username
+											}</a>：${l.tweets.tcontent }
+									</div>
+									<div style="margin-top: 1px;padding-left:5px;">
+										<span>时间：${l.fmtTime() }</span>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+					<div title="发出的点赞" style="padding:10px;">
+						<c:forEach var="l" items="${LOGIN_USER.likeses }">
+							<div class="replay_area_d0" style="margin-bottom: 5px;">
+								<div class="replay_area_d1">
+									<a href="u/${l.users.username }"><img class="size24"
+										src="${l.users.avatar }"></a>
+								</div>
+								<div class="replay_area_d2">
+									<div style="padding-left:5px;">
+										<span><a href="u/${l.users.username }">@${l.users.username
+												}</a>赞了<a href="u/${l.tweets.users.username }">@${l.tweets.users.username
+												}</a>的推特： </span>
+									</div>
+									<div
+										style="margin: 8px 2px;padding:8px 8px;border: 1px dotted #e1e8ed;"
+										class="ntf-tweet-div" data-tid="${l.tweets.tid }"
+										data-suid="${l.tweets.users.uid }">
+										<a href="u/${l.tweets.users.username }">@${l.tweets.users.username
+											}</a>：${l.tweets.tcontent }
+									</div>
+									<div style="margin-top: 1px;padding-left:5px;">
+										<span>时间：${l.fmtTime() }</span>
 									</div>
 								</div>
 							</div>

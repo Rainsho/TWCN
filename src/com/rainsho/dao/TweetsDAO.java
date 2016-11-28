@@ -197,4 +197,5 @@ public class TweetsDAO {
 		return getCurrentSession().createQuery(hql)
 				.setString(0, "%" + keyword + "%").list();
 	}
+	
 }

@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.rainsho.util.StringUtil;
+
 /**
  * Likes entity. @author MyEclipse Persistence Tools
  */
@@ -81,5 +83,10 @@ public class Likes implements java.io.Serializable {
 	public void setLiketime(Timestamp liketime) {
 		this.liketime = liketime;
 	}
-	
+
+	// other function
+	public String fmtTime() {
+		return StringUtil.fmtTime(this.liketime);
+	}
+
 }
