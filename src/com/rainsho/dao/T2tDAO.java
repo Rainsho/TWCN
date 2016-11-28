@@ -12,6 +12,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rainsho.entity.T2t;
+import com.rainsho.entity.Topics;
+import com.rainsho.entity.Tweets;
 
 /**
  * A data access object (DAO) providing persistence and search support for T2t
@@ -68,8 +70,8 @@ public class T2tDAO {
 	public T2t findById(java.lang.Integer id) {
 		log.debug("getting T2t instance with id: " + id);
 		try {
-			T2t instance = (T2t) getCurrentSession().get("com.rainsho.entity.T2t",
-					id);
+			T2t instance = (T2t) getCurrentSession().get(
+					"com.rainsho.entity.T2t", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -157,4 +159,16 @@ public class T2tDAO {
 	public static T2tDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (T2tDAO) ctx.getBean("T2tDAO");
 	}
+
+	// other function
+	public List<Tweets> findByTopic(Topics topic) {
+		String hql = "select distinct t.tweets from T2t as t where t.topics=? and t.tweets.tstate>0 order by t.tweets.tweettime desc";
+		return getCurrentSession().createQuery(hql).setEntity(0, topic).list();
+	}
+
+	public List<Topics> upHotTopic() {
+		String hql = "select t.topics from T2t as t group by t.topics order by count(*) desc";
+		return getCurrentSession().createQuery(hql).setMaxResults(5).list();
+	}
+
 }

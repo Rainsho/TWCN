@@ -109,6 +109,9 @@
 		<property name="rdao" ref="RelationshipsDAO"></property>
 		<property name="rpdao" ref="ReplaysDAO"></property>
 		<property name="ldao" ref="LikesDAO"></property>
+		<property name="fdao" ref="ForwardsDAO"></property>
+		<property name="tpdao" ref="TopicsDAO"></property>
+		<property name="t2tdao" ref="T2tDAO"></property>
 	</bean>
 	<bean id="UserAction" class="com.rainsho.action.UserAction">
 		<property name="service" ref="UserService"></property>
@@ -142,6 +145,7 @@
 		<property name="ldao" ref="LikesDAO"></property>
 		<property name="rdao" ref="ReplaysDAO"></property>
 		<property name="udao" ref="UsersDAO"></property>
+		<property name="fdao" ref="ForwardsDAO"></property>
 	</bean>
 	<bean id="TweetMoreAction" class="com.rainsho.action.TweetMoreAction">
 		<property name="service" ref="TweetMoreService"></property>

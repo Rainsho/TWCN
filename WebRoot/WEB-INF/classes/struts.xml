@@ -34,6 +34,7 @@
 			<result>/ok.html</result>
 			<result name="addreplay">/ajax_replay.jsp</result>
 			<result name="rptweet">/ajax_tweet.jsp</result>
+			<result name="addforward">/ajax_forward.jsp</result>
 		</action>
 		<action name="dm*" class="DirectmsgAction" method="{1}">
 			<result>/ok.html</result>

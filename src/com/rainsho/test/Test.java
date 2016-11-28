@@ -2,6 +2,8 @@ package com.rainsho.test;
 
 import java.util.HashMap;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.rainsho.dao.UsersDAO;
 import com.rainsho.entity.Relationships;
@@ -54,9 +56,13 @@ public class Test {
 	}
 	
 	public static void main(String[] args) {
-		String str1 = "123.mp4";
-		String str2 = "abc.123.def.jpg";
-		System.out.println(str1.substring(str1.lastIndexOf(".")));
-		System.out.println(str2.substring(str2.lastIndexOf(".")));
+		String str = "fasdfasd#abc sjad;kfj;as##fjas;j";
+		Pattern p = Pattern.compile("#([^#]\\w+)");
+		Matcher m = p.matcher(str); 
+		 while (m.find()) { 
+			 m.start() ;
+			 m.end();
+			System.out.println( m.group(1));
+			   }
 	}
 }

@@ -13,6 +13,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rainsho.entity.Forwards;
+import com.rainsho.entity.Tweets;
+import com.rainsho.entity.Users;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -170,4 +172,12 @@ public class ForwardsDAO {
 	public static ForwardsDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (ForwardsDAO) ctx.getBean("ForwardsDAO");
 	}
+
+	// other function
+	public List<Forwards> findForwards(List<Users> list) {
+		String hql = "from Forwards as f where f.users in (:list) and f.fstate>0";
+		return getCurrentSession().createQuery(hql)
+				.setParameterList("list", list).list();
+	}
+
 }

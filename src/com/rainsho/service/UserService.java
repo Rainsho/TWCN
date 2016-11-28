@@ -1,19 +1,28 @@
 package com.rainsho.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.Hibernate;
 
+import com.rainsho.dao.ForwardsDAO;
 import com.rainsho.dao.LikesDAO;
 import com.rainsho.dao.RelationshipsDAO;
 import com.rainsho.dao.ReplaysDAO;
+import com.rainsho.dao.T2tDAO;
+import com.rainsho.dao.TopicsDAO;
 import com.rainsho.dao.TweetsDAO;
 import com.rainsho.dao.UsersDAO;
+import com.rainsho.entity.Forwards;
 import com.rainsho.entity.Likes;
 import com.rainsho.entity.Replays;
+import com.rainsho.entity.T2t;
+import com.rainsho.entity.Topics;
 import com.rainsho.entity.Tweets;
 import com.rainsho.entity.Users;
 
@@ -23,6 +32,33 @@ public class UserService {
 	private RelationshipsDAO rdao;
 	private ReplaysDAO rpdao;
 	private LikesDAO ldao;
+	private ForwardsDAO fdao;
+	private TopicsDAO tpdao;
+	private T2tDAO t2tdao;
+
+	public T2tDAO getT2tdao() {
+		return t2tdao;
+	}
+
+	public void setT2tdao(T2tDAO t2tdao) {
+		this.t2tdao = t2tdao;
+	}
+
+	public TopicsDAO getTpdao() {
+		return tpdao;
+	}
+
+	public void setTpdao(TopicsDAO tpdao) {
+		this.tpdao = tpdao;
+	}
+
+	public ForwardsDAO getFdao() {
+		return fdao;
+	}
+
+	public void setFdao(ForwardsDAO fdao) {
+		this.fdao = fdao;
+	}
 
 	public LikesDAO getLdao() {
 		return ldao;
@@ -160,6 +196,56 @@ public class UserService {
 		} else {
 			return list;
 		}
+	}
+
+	public List<Forwards> findForwards(List<Users> list) {
+		return fdao.findForwards(list);
+	}
+
+	public List<Forwards> merge(List<Forwards> forward_list, List<Tweets> list) {
+		for (Tweets x : list) {
+			Forwards f = new Forwards();
+			f.setTweets(x);
+			f.setForwardtime(x.getTweettime());
+			forward_list.add(f);
+		}
+		Collections.sort(forward_list);
+		return forward_list;
+	}
+
+	public void addTopic(Tweets tweet) {
+		String str = tweet.getTcontent();
+		Pattern p = Pattern.compile("#([^#]\\w+)");
+		Matcher m = p.matcher(str);
+		List<String> words = new ArrayList<String>();
+		while (m.find()) {
+			m.start();
+			m.end();
+			words.add(m.group(1));
+		}
+		for (String x : words) {
+			Topics topic = tpdao.findTopic(x);
+			T2t t2t = new T2t(tweet, topic);
+			t2tdao.save(t2t);
+			tweet.getT2ts().add(t2t);
+			topic.getT2ts().add(t2t);
+		}
+	}
+
+	public List<Tweets> topicTweets(String keyword) {
+		List<Topics> list = tpdao.findByTpcontent(keyword);
+		if (list.size() == 0) {
+			return new ArrayList<Tweets>(0);
+		}
+		return t2tdao.findByTopic(list.get(0));
+	}
+
+	public List<Topics> upHotTopic() {
+		return t2tdao.upHotTopic();
+	}
+	
+	public Topics key_topic(String keyword) {
+		return tpdao.findTopic(keyword);
 	}
 
 }

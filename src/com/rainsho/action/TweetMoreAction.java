@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.rainsho.entity.Forwards;
 import com.rainsho.entity.Replays;
 import com.rainsho.entity.Tweets;
 import com.rainsho.entity.Users;
@@ -22,6 +23,15 @@ public class TweetMoreAction {
 	// ajax test
 	private Replays r;
 	private List<Tweets> list;
+	private Forwards forward;
+
+	public Forwards getForward() {
+		return forward;
+	}
+
+	public void setForward(Forwards forward) {
+		this.forward = forward;
+	}
 
 	public List<Tweets> getList() {
 		return list;
@@ -127,6 +137,27 @@ public class TweetMoreAction {
 		list = new ArrayList<Tweets>();
 		list.add(service.findTweetById(tid));
 		return "rptweet";
+	}
+
+	public String addforward() {
+		Users user = (Users) ServletActionContext.getRequest().getSession()
+				.getAttribute("LOGIN_USER");
+		Tweets tweet = service.findTweetById(tid);
+		Forwards forward_new = new Forwards();
+		forward_new.setFcontent(forward.getFcontent());
+		forward_new.setTweets(tweet);
+		forward_new.setUsers(user);
+		forward_new.setForwardtime(new Timestamp(new Date().getTime()));
+		forward_new.setFstate((short) 1);
+		service.addForward(forward_new);
+		forward = forward_new;
+		return "addforward";
+	}
+
+	public String delforward() {
+		forward = service.findForwardById(forward.getFid());
+		service.delForward(forward);
+		return "success";
 	}
 
 }

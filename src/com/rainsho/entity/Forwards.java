@@ -10,12 +10,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.rainsho.util.StringUtil;
+
 /**
  * Forwards entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "forwards", catalog = "twcn")
-public class Forwards implements java.io.Serializable {
+public class Forwards implements java.io.Serializable, Comparable<Forwards> {
 
 	// Fields
 
@@ -103,6 +105,16 @@ public class Forwards implements java.io.Serializable {
 
 	public void setFstate(Short fstate) {
 		this.fstate = fstate;
+	}
+
+	@Override
+	public int compareTo(Forwards o) {
+		return this.getForwardtime().after(o.getForwardtime()) ? -1 : 1;
+	}
+
+	// other function
+	public String fmtTime() {
+		return StringUtil.fmtTime(this.forwardtime);
 	}
 
 }

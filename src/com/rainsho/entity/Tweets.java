@@ -184,6 +184,7 @@ public class Tweets implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "tweets")
+	@Where(clause = "fstate > 0")
 	public Set<Forwards> getForwardses() {
 		return this.forwardses;
 	}

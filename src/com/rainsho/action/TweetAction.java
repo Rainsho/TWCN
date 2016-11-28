@@ -33,8 +33,6 @@ public class TweetAction {
 
 	// internal
 	private String path;
-	private List<Pics> pics = new ArrayList<Pics>(0);
-	private List<Videos> videos = new ArrayList<Videos>(0);
 
 	public UserService getuService() {
 		return uService;
@@ -93,22 +91,27 @@ public class TweetAction {
 	}
 
 	public String uploadmedia() {
-		// 清理集合
-		resets();
 		path = ServletActionContext.getServletContext().getRealPath("upload");
 		for (int i = 0; i < file.length; i++) {
 			doUpload(i);
 		}
 		// 清理传参
 		reset();
-		ServletActionContext.getRequest().getSession()
-				.setAttribute("preparePics", pics);
-		ServletActionContext.getRequest().getSession()
-				.setAttribute("prepareVideos", videos);
 		return "success";
 	}
 
+	@SuppressWarnings("unchecked")
 	public void doUpload(int i) {
+		List<Pics> pics = (List<Pics>) ServletActionContext.getRequest()
+				.getSession().getAttribute("preparePics");
+		List<Videos> videos = (List<Videos>) ServletActionContext.getRequest()
+				.getSession().getAttribute("prepareVideos");
+		if (pics == null) {
+			pics = new ArrayList<Pics>();
+		}
+		if (videos == null) {
+			videos = new ArrayList<Videos>();
+		}
 		try {
 			InputStream in = new FileInputStream(file[i]);
 			String fn = StringUtil.randomString(8) + (new Date().getTime());
@@ -139,6 +142,10 @@ public class TweetAction {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		ServletActionContext.getRequest().getSession()
+				.setAttribute("preparePics", pics);
+		ServletActionContext.getRequest().getSession()
+				.setAttribute("prepareVideos", videos);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -162,6 +169,8 @@ public class TweetAction {
 				mService.saveT2p(t2p);
 			}
 		}
+		// 处理topic
+		uService.addTopic(tweet);
 		// 清理集合
 		resets();
 		return "success";
@@ -175,8 +184,6 @@ public class TweetAction {
 	}
 
 	public void resets() {
-		pics = new ArrayList<Pics>(0);
-		videos = new ArrayList<Videos>(0);
 		ServletActionContext.getRequest().getSession()
 				.removeAttribute("preparePics");
 		ServletActionContext.getRequest().getSession()

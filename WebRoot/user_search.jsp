@@ -79,8 +79,7 @@
 													<div class="account-group js-mini-current-user">
 														<b class="fullname">${LOGIN_USER.nickname }</b> <span
 															class="screen-name hidden" dir="ltr">@${LOGIN_USER.username
-															}</span>
-														<small class="metadata">查看个人资料</small>
+															}</span> <small class="metadata">查看个人资料</small>
 													</div>
 												</div>
 										</a></li>
@@ -212,8 +211,7 @@
 													dir="ltr"> <a
 													class="DashboardProfileCard-screennameLink u-linkComplex u-linkClean"
 													href="u/${su.username }">@<span
-														class="u-linkComplex-target">${su.username
-															}</span></a>
+														class="u-linkComplex-target">${su.username }</span></a>
 												</span>
 											</div>
 											<!-- 关注按钮+条件判断	 -->
@@ -262,8 +260,11 @@
 													</a> <small class="time"><span class="_timestamp">${t.fmtTime()
 															}</span></small>
 												</div>
-												<div class="js-tweet-text-container srh_tweet">
+												<div class="js-tweet-text-container">
 													<p class="TweetTextSize">${t.tcontent }</p>
+												</div>
+												<div style="text-align: right;font-size: 12px;">
+													<button class="srh_tweet" data-tid="${t.tid }">点击查看</button>
 												</div>
 											</div>
 										</div>
@@ -289,5 +290,8 @@
 			</div>
 		</div>
 	</div>
+	<input type="hidden" id="search_or_topic" value="${type }" />
+	<input type="hidden" id="topic_list" value="${key_topic.t2ts.size() }" />
+	<input type="hidden" id="topic_keyword" value="${keyword }" />
 </body>
 </html>

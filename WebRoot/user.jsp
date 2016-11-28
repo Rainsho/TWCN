@@ -165,33 +165,29 @@
 				</div>
 
 				<!--tends pending-->
-				<!-- <div class="Trends module trends">
+				<div class="Trends module trends">
 					<div class="trends-inner">
 						<div class="flex-module trends-container context-trends-container">
 							<div class="flex-module-header">
 								<h3>
-									<span class="trend-location">趋势</span>
+									<span class="trend-location">热门主题</span>
 								</h3>
 							</div>
 							<div class="flex-module-inner">
 								<ul class="trend-items">
-									<li class="trend-item context-trend-item"><a
-										class="pretty-link u-linkComplex "
-										href="/hashtag/trickortreat?src=tren"> <span
-											class="u-linkComplex-target trend-name" dir="ltr">#trickortreat</span>
-											<div class="trend-item-stats">10.5万 推文</div>
-									</a></li>
-									<li class="trend-item context-trend-item"><a
-										class="pretty-link u-linkComplex "
-										href="/hashtag/trickortreat?src=tren"> <span
-											class="u-linkComplex-target trend-name" dir="ltr">#trickortreat</span>
-											<div class="trend-item-stats">10.5万 推文</div>
-									</a></li>
+									<c:forEach var="tp" items="${hot_topic }">
+										<li class="trend-item context-trend-item"><a
+											class="pretty-link u-linkComplex "
+											href="usertopic.action?keyword=${tp.tpcontent }"> <span
+												class="u-linkComplex-target trend-name" dir="ltr">#${tp.tpcontent
+													}</span></a>
+											<div class="trend-item-stats">${tp.t2ts.size() } 次提到</div></li>
+									</c:forEach>
 								</ul>
 							</div>
 						</div>
 					</div>
-				</div> -->
+				</div>
 			</div>
 
 			<!-- twitter contents begin -->
@@ -279,261 +275,441 @@
 					<div class="stream">
 						<ol class="stream-items js-navigable-stream" id="stream-items-id">
 							<!-- core tweet -->
-							<c:forEach var="t" items="${list }">
-								<!--test html content begin-->
-								<li class="stream-item">
-									<div class="tweet">
-										<div class="content">
-											<!--userinfo-->
-											<div class="stream-item-header">
-												<a class="account-group" href="u/${t.users.username }">
-													<img class="avatar" src="${t.users.avatar }" alt="">
-													<strong class="fullname">${t.users.nickname }</strong> <span>‏</span><span
-													class="username"><s>@</s><b>${t.users.username }</b></span>
-												</a> <small class="time"><span class="_timestamp">${t.fmtTime()
-														}</span></small>
-											</div>
-											<!--msg-->
-											<div class="js-tweet-text-container">
-												<p class="TweetTextSize">${t.tcontent }</p>
-											</div>
-											<!--media-->
-											<c:if test="${t.t2ps.size() > 0 }">
-												<div class="AdaptiveMedia">
-													<div class="AdaptiveMedia-container">
-														<c:choose>
-															<c:when test="${t.t2ps.size()==1 }">
-																<c:forEach var="t2p" items="${t.t2ps }">
-																	<div class="AdaptiveMedia-singlePhoto">
-																		<div class="AdaptiveMedia-photoContainer">
-																			<img src="${t2p.pics.ppath }" alt="${t2p.pics.pid }"
-																				style="width: 100%; top: -0px;">
-																		</div>
-																	</div>
-																</c:forEach>
-															</c:when>
-															<c:when test="${t.t2ps.size()==2 }">
-																<div class="AdaptiveMedia-doublePhoto">
-																	<c:forEach var="t2p" items="${t.t2ps }">
-																		<div class="AdaptiveMedia-halfWidthPhoto">
-																			<div class="AdaptiveMedia-photoContainer">
-																				<img src="${t2p.pics.ppath }" alt="${t2p.pics.pid }"
-																					style="height: 100%; left: -62px;">
-																			</div>
-																		</div>
-																	</c:forEach>
-																</div>
-															</c:when>
-															<c:when test="${t.t2ps.size()==3 }">
-																<div class="AdaptiveMedia-triplePhoto">
-																	<c:forEach var="t2p" items="${t.t2ps }" begin="0"
-																		end="0">
-																		<div class="AdaptiveMedia-twoThirdsWidthPhoto">
-																			<div class="AdaptiveMedia-photoContainer">
-																				<img src="${t2p.pics.ppath }" alt="${t2p.pics.pid }"
-																					style="height: 100%; left: -83px;">
-																			</div>
-																		</div>
-																	</c:forEach>
-																	<div class="AdaptiveMedia-halfHeightPhotoContainer">
-																		<c:forEach var="t2p" items="${t.t2ps }" begin="1">
-																			<div class="AdaptiveMedia-halfHeightPhoto">
-																				<div class="AdaptiveMedia-photoContainer">
-																					<img src="${t2p.pics.ppath }"
-																						alt="${t2p.pics.pid }"
-																						style="height: 100%; left: -41px;">
-																				</div>
-																			</div>
-																		</c:forEach>
-																	</div>
-																</div>
-															</c:when>
-															<c:otherwise>
-																<div class="AdaptiveMedia-quadPhoto">
-																	<c:forEach var="t2p" items="${t.t2ps }" begin="0"
-																		end="0">
-																		<div class="AdaptiveMedia-threeQuartersWidthPhoto">
-																			<div class="AdaptiveMedia-photoContainer">
-																				<img src="${t2p.pics.ppath }" alt="${t2p.pics.pid }"
-																					style="height: 100%; left: -146px;">
-																			</div>
-																		</div>
-																	</c:forEach>
-																	<div class="AdaptiveMedia-thirdHeightPhotoContainer">
-																		<c:forEach var="t2p" items="${t.t2ps }" begin="1"
-																			end="3">
-																			<div class="AdaptiveMedia-thirdHeightPhoto">
-																				<div class="AdaptiveMedia-photoContainer">
-																					<img src="${t2p.pics.ppath }"
-																						alt="${t2p.pics.pid }"
-																						style="height: 100%; left: -41px;">
-																				</div>
-																			</div>
-																		</c:forEach>
-																	</div>
-																</div>
-															</c:otherwise>
-														</c:choose>
+							<c:forEach var="f" items="${forward_list }">
+								<c:choose>
+									<c:when test="${f.users == null }">
+										<!--test html content begin-->
+										<li class="stream-item">
+											<div class="tweet">
+												<div class="content">
+													<!--userinfo-->
+													<div class="stream-item-header">
+														<a class="account-group"
+															href="u/${f.tweets.users.username }"> <img
+															class="avatar" src="${f.tweets.users.avatar }" alt="">
+															<strong class="fullname">${f.tweets.users.nickname
+																}</strong> <span>‏</span><span class="username"><s>@</s><b>${f.tweets.users.username
+																	}</b></span>
+														</a> <small class="time"><span class="_timestamp">${f.tweets.fmtTime()
+																}</span></small>
 													</div>
-												</div>
-											</c:if>
-											<c:if test="${t.videos != null }">
-												<div class="AdaptiveMedia">
-													<div class="AdaptiveMedia-container">
-														<div class="AdaptiveMedia-video">
-															<video controls="controls" src="${t.videos.vpath }"
-																style="width: 506px;"></video>
+													<!--msg-->
+													<div class="js-tweet-text-container">
+														<p class="TweetTextSize">${f.tweets.tcontent }</p>
+													</div>
+													<!--media-->
+													<c:if test="${f.tweets.t2ps.size() > 0 }">
+														<div class="AdaptiveMedia">
+															<div class="AdaptiveMedia-container">
+																<c:choose>
+																	<c:when test="${f.tweets.t2ps.size()==1 }">
+																		<c:forEach var="t2p" items="${f.tweets.t2ps }">
+																			<div class="AdaptiveMedia-singlePhoto">
+																				<div class="AdaptiveMedia-photoContainer">
+																					<img src="${t2p.pics.ppath }"
+																						alt="${t2p.pics.pid }"
+																						style="width: 100%; top: -0px;">
+																				</div>
+																			</div>
+																		</c:forEach>
+																	</c:when>
+																	<c:when test="${f.tweets.t2ps.size()==2 }">
+																		<div class="AdaptiveMedia-doublePhoto">
+																			<c:forEach var="t2p" items="${f.tweets.t2ps }">
+																				<div class="AdaptiveMedia-halfWidthPhoto">
+																					<div class="AdaptiveMedia-photoContainer">
+																						<img src="${t2p.pics.ppath }"
+																							alt="${t2p.pics.pid }"
+																							style="height: 100%; left: -62px;">
+																					</div>
+																				</div>
+																			</c:forEach>
+																		</div>
+																	</c:when>
+																	<c:when test="${f.tweets.t2ps.size()==3 }">
+																		<div class="AdaptiveMedia-triplePhoto">
+																			<c:forEach var="t2p" items="${f.tweets.t2ps }"
+																				begin="0" end="0">
+																				<div class="AdaptiveMedia-twoThirdsWidthPhoto">
+																					<div class="AdaptiveMedia-photoContainer">
+																						<img src="${t2p.pics.ppath }"
+																							alt="${t2p.pics.pid }"
+																							style="height: 100%; left: -83px;">
+																					</div>
+																				</div>
+																			</c:forEach>
+																			<div class="AdaptiveMedia-halfHeightPhotoContainer">
+																				<c:forEach var="t2p" items="${f.tweets.t2ps }"
+																					begin="1">
+																					<div class="AdaptiveMedia-halfHeightPhoto">
+																						<div class="AdaptiveMedia-photoContainer">
+																							<img src="${t2p.pics.ppath }"
+																								alt="${t2p.pics.pid }"
+																								style="height: 100%; left: -41px;">
+																						</div>
+																					</div>
+																				</c:forEach>
+																			</div>
+																		</div>
+																	</c:when>
+																	<c:otherwise>
+																		<div class="AdaptiveMedia-quadPhoto">
+																			<c:forEach var="t2p" items="${f.tweets.t2ps }"
+																				begin="0" end="0">
+																				<div class="AdaptiveMedia-threeQuartersWidthPhoto">
+																					<div class="AdaptiveMedia-photoContainer">
+																						<img src="${t2p.pics.ppath }"
+																							alt="${t2p.pics.pid }"
+																							style="height: 100%; left: -146px;">
+																					</div>
+																				</div>
+																			</c:forEach>
+																			<div class="AdaptiveMedia-thirdHeightPhotoContainer">
+																				<c:forEach var="t2p" items="${f.tweets.t2ps }"
+																					begin="1" end="3">
+																					<div class="AdaptiveMedia-thirdHeightPhoto">
+																						<div class="AdaptiveMedia-photoContainer">
+																							<img src="${t2p.pics.ppath }"
+																								alt="${t2p.pics.pid }"
+																								style="height: 100%; left: -41px;">
+																						</div>
+																					</div>
+																				</c:forEach>
+																			</div>
+																		</div>
+																	</c:otherwise>
+																</c:choose>
+															</div>
 														</div>
-													</div>
-												</div>
-											</c:if>
-											<!--option-->
-											<div class="stream-item-footer">
-												<!--replay-->
-												<div class="ProfileTweet-actionList">
-													<div class="ProfileTweet-action ProfileTweet-action--reply">
-														<button
-															class="ProfileTweet-actionButton u-textUserColorHover js-replay-btn"
-															type="button">
-															<div class="IconContainer">
-																<span class="Icon Icon--reply"></span>
+													</c:if>
+													<c:if test="${f.tweets.videos != null }">
+														<div class="AdaptiveMedia">
+															<div class="AdaptiveMedia-container">
+																<div class="AdaptiveMedia-video">
+																	<video controls="controls"
+																		src="${f.tweets.videos.vpath }" style="width: 506px;"></video>
+																</div>
 															</div>
-															<div class="IconTextContainer">
-																<span
-																	class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">${t.replayses.size()
-																	}</span>
+														</div>
+													</c:if>
+													<!--option-->
+													<div class="stream-item-footer">
+														<!--replay-->
+														<div class="ProfileTweet-actionList">
+															<div
+																class="ProfileTweet-action ProfileTweet-action--reply">
+																<button
+																	class="ProfileTweet-actionButton u-textUserColorHover js-replay-btn"
+																	type="button">
+																	<div class="IconContainer">
+																		<span class="Icon Icon--reply"></span>
+																	</div>
+																	<div class="IconTextContainer">
+																		<span
+																			class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">${f.tweets.replayses.size()
+																			}</span>
+																	</div>
+																</button>
 															</div>
-														</button>
-													</div>
-													<!--forwart-->
-													<div
-														class="ProfileTweet-action ProfileTweet-action--retweet">
-														<button class="ProfileTweet-actionButton" type="button">
-															<div class="IconContainer js-tooltip">
-																<span class="Icon Icon--retweet"></span>
+															<!--forwart-->
+															<div
+																class="ProfileTweet-action ProfileTweet-action--retweet">
+																<button class="ProfileTweet-actionButton js-forward-btn"
+																	type="button">
+																	<div class="IconContainer js-tooltip">
+																		<span class="Icon Icon--retweet"></span>
+																	</div>
+																	<div class="IconTextContainer">
+																		<span
+																			class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">${f.tweets.forwardses.size()
+																			}</span>
+																	</div>
+																</button>
 															</div>
-															<div class="IconTextContainer">
-																<span
-																	class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">${t.forwardses.size()
-																	}</span>
-															</div>
-														</button>
-													</div>
-													<!--like-->
-													<div
-														class="ProfileTweet-action ProfileTweet-action--favorite">
-														<button class="ProfileTweet-actionButton js-like-btn"
-															type="button" data-tid="${t.tid }"
-															<c:forEach var="l" items="${t.likeses }">
+															<!--like-->
+															<div
+																class="ProfileTweet-action ProfileTweet-action--favorite">
+																<button class="ProfileTweet-actionButton js-like-btn"
+																	type="button" data-tid="${f.tweets.tid }"
+																	<c:forEach var="l" items="${f.tweets.likeses }">
 														<c:if test="${l.users.uid == sessionScope.LOGIN_USER.uid }">data-like="1"</c:if>
 														</c:forEach>>
-															<div class="IconContainer">
-																<div class="HeartAnimationContainer">
-																	<div class="HeartAnimation"></div>
-																</div>
+																	<div class="IconContainer">
+																		<div class="HeartAnimationContainer">
+																			<div class="HeartAnimation"></div>
+																		</div>
+																	</div>
+																	<div class="IconTextContainer">
+																		<span
+																			class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">${f.tweets.likeses.size()
+																			}</span>
+																	</div>
+																</button>
 															</div>
-															<div class="IconTextContainer">
-																<span
-																	class="ProfileTweet-actionCount ProfileTweet-actionCountForPresentation">${t.likeses.size()
-																	}</span>
-															</div>
-														</button>
-													</div>
-													<!--more option-->
-													<div class="ProfileTweet-action ProfileTweet-action--more">
-														<div class="dropdown">
-															<button
-																class="ProfileTweet-actionButton u-textUserColorHover"
-																type="button">
-																<div class="IconContainer">
-																	<span class="Icon Icon--dots"></span>
+															<!--more option-->
+															<div
+																class="ProfileTweet-action ProfileTweet-action--more">
+																<div class="dropdown">
+																	<button
+																		class="ProfileTweet-actionButton u-textUserColorHover"
+																		type="button">
+																		<div class="IconContainer">
+																			<span class="Icon Icon--dots"></span>
+																		</div>
+																	</button>
+																	<div class="dropdown-menu">
+																		<div class="dropdown-caret">
+																			<div class="caret-outer"></div>
+																			<div class="caret-inner"></div>
+																		</div>
+																		<ul>
+																			<c:if test="${LOGIN_USER.uid != t.users.uid }">
+																				<li class="share-via-dm">
+																					<button type="button"
+																						class="dropdown-link show-dm-area"
+																						data-huid="${LOGIN_USER.uid }"
+																						data-suid="${f.tweets.users.uid }">发送私信</button>
+																				</li>
+																			</c:if>
+																			<li class="block-link">
+																				<button type="button" class="dropdown-link">屏蔽
+																					@${f.tweets.users.username }</button>
+																			</li>
+																			<li class="dropdown-divider"></li>
+																			<c:if test="${LOGIN_USER.uid == t.users.uid }">
+																				<li class="js-actionDelete">
+																					<button type="button" class="dropdown-link"
+																						data-tid="${f.tweets.tid }">删除推文</button>
+																				</li>
+																			</c:if>
+																			<c:if test="${LOGIN_USER.uid != t.users.uid }">
+																				<li class="js-unfollowed">
+																					<button type="button" class="dropdown-link"
+																						data-uid="${f.tweets.users.uid }">取消关注@${f.tweets.users.username
+																						}</button>
+																				</li>
+																			</c:if>
+																		</ul>
+																	</div>
 																</div>
-															</button>
-															<div class="dropdown-menu">
-																<div class="dropdown-caret">
-																	<div class="caret-outer"></div>
-																	<div class="caret-inner"></div>
-																</div>
-																<ul>
-																	<c:if test="${LOGIN_USER.uid != t.users.uid }">
-																		<li class="share-via-dm">
-																			<button type="button"
-																				class="dropdown-link show-dm-area"
-																				data-huid="${LOGIN_USER.uid }"
-																				data-suid="${t.users.uid }">发送私信</button>
-																		</li>
-																	</c:if>
-																	<li class="block-link">
-																		<button type="button" class="dropdown-link">屏蔽
-																			@${t.users.username }</button>
-																	</li>
-																	<li class="dropdown-divider"></li>
-																	<c:if test="${LOGIN_USER.uid == t.users.uid }">
-																		<li class="js-actionDelete">
-																			<button type="button" class="dropdown-link"
-																				data-tid="${t.tid }">删除推文</button>
-																		</li>
-																	</c:if>
-																	<c:if test="${LOGIN_USER.uid != t.users.uid }">
-																		<li class="js-unfollowed">
-																			<button type="button" class="dropdown-link"
-																				data-uid="${t.users.uid }">取消关注@${t.users.username
-																				}</button>
-																		</li>
-																	</c:if>
-																</ul>
 															</div>
 														</div>
 													</div>
-												</div>
-											</div>
-											<div class="replay_area">
-												<c:forEach var="r" items="${t.replayses }">
-													<div class="replay_area_d0">
-														<div class="replay_area_d1">
-															<img class="size24" src="${r.usersByHuid.avatar }">
-														</div>
-														<div class="replay_area_d2">
-															<div>
-																<a href="u/${r.usersByHuid.username }">@${r.usersByHuid.username
-																	}</a>&nbsp;
-																<c:if test="${r.usersBySuid != null }">
+													<div class="replay_area">
+														<c:forEach var="r" items="${f.tweets.replayses }">
+															<div class="replay_area_d0">
+																<div class="replay_area_d1">
+																	<img class="size24" src="${r.usersByHuid.avatar }">
+																</div>
+																<div class="replay_area_d2">
+																	<div>
+																		<a href="u/${r.usersByHuid.username }">@${r.usersByHuid.username
+																			}</a>&nbsp;
+																		<c:if test="${r.usersBySuid != null }">
 																	回复&nbsp;<a href="u/${r.usersBySuid.username }">@${r.usersBySuid.username
-																		}</a>
-																</c:if>
-																：&nbsp;<span>${r.rcontent }</span>
-															</div>
-															<div style="margin-top: 1px;">
-																<span>&nbsp;&nbsp;时间：${r.fmtTime() }</span><span
-																	class="replay_span"><button
-																		class="replay-replay-btn"
-																		data-suid="${r.usersByHuid.uid }"
-																		data-username="${r.usersByHuid.username
+																				}</a>
+																		</c:if>
+																		：&nbsp;<span>${r.rcontent }</span>
+																	</div>
+																	<div style="margin-top: 1px;">
+																		<span>&nbsp;&nbsp;时间：${r.fmtTime() }</span><span
+																			class="replay_span"><button
+																				class="replay-replay-btn"
+																				data-suid="${r.usersByHuid.uid }"
+																				data-username="${r.usersByHuid.username
 																		}">回复</button>
-																	<c:if
-																		test="${r.usersByHuid.uid==sessionScope.LOGIN_USER.uid }">&nbsp;|&nbsp;&nbsp;<button
-																			class="replay-del-btn" data-rid="${r.rid }">删除</button>
-																	</c:if></span>
+																			<c:if
+																				test="${r.usersByHuid.uid==sessionScope.LOGIN_USER.uid }">&nbsp;|&nbsp;&nbsp;<button
+																					class="replay-del-btn" data-rid="${r.rid }">删除</button>
+																			</c:if></span>
+																	</div>
+																</div>
+															</div>
+														</c:forEach>
+														<div class="replay_area_d0" style="margin-top: 4px;">
+															<div class="replay_area_d1">
+																<img class="size24" src="${LOGIN_USER.avatar }">
+															</div>
+															<div class="replay_area_d2">
+																<div style="margin-top: 1px;">
+																	<input type="text" maxlength="200"
+																		style="height: 14px; width: 396px; margin-right: 12px;"></input>
+																	<button data-tid="${f.tweets.tid }" class="replay-btn">评论</button>
+																</div>
 															</div>
 														</div>
 													</div>
-												</c:forEach>
-												<div class="replay_area_d0" style="margin-top: 4px;">
-													<div class="replay_area_d1">
-														<img class="size24" src="${LOGIN_USER.avatar }">
-													</div>
-													<div class="replay_area_d2">
-														<div style="margin-top: 1px;">
-															<input type="text" maxlength="200"
-																style="height: 14px; width: 396px; margin-right: 12px;"></input>
-															<button data-tid="${t.tid }" class="replay-btn">评论</button>
+													<div class="forward_area">
+														<c:forEach var="ff" items="${f.tweets.forwardses }">
+															<div class="forward_area_d0">
+																<div class="forward_area_d1">
+																	<img class="size24" src="${ff.users.avatar }">
+																</div>
+																<div class="forward_area_d2">
+																	<div>
+																		<a href="u/${ff.users.username }">@${ff.users.username
+																			}</a>&nbsp; ：&nbsp;<span>${ff.fcontent }</span>
+																	</div>
+																	<div style="margin-top: 1px;">
+																		<span>&nbsp;&nbsp;时间：${ff.fmtTime() }</span><span
+																			class="forward_span"> <c:if
+																				test="${ff.users.uid==sessionScope.LOGIN_USER.uid }">
+																				<button class="forward-del-btn"
+																					data-fid="${ff.fid }">删除</button>
+																			</c:if></span>
+																	</div>
+																</div>
+															</div>
+														</c:forEach>
+														<div class="forward_area_d0" style="margin-top: 4px;">
+															<div class="forward_area_d1">
+																<img class="size24" src="${LOGIN_USER.avatar }">
+															</div>
+															<div class="forward_area_d2">
+																<div style="margin-top: 1px;">
+																	<input type="text" maxlength="200"
+																		style="height: 14px; width: 396px; margin-right: 12px;"></input>
+																	<button data-tid="${f.tweets.tid }" class="forward-btn">转发</button>
+																</div>
+															</div>
 														</div>
 													</div>
 												</div>
 											</div>
-										</div>
-									</div>
-								</li>
+										</li>
+									</c:when>
+									<c:otherwise>
+										<li class="stream-item">
+											<div class="tweet">
+												<div class="content">
+													<!--userinfo-->
+													<div class="stream-item-header">
+														<a class="account-group" href="u/${f.users.username }">
+															<img class="avatar" src="${f.users.avatar }"
+															alt="${f.users.username }"> <strong
+															class="fullname">${f.users.nickname }</strong> <span>‏</span><span
+															class="username"><s>@</s><b>${f.users.username
+																	}</b></span>
+														</a> <small class="time"><span class="_timestamp">${f.fmtTime()
+																}</span></small>
+													</div>
+													<!--msg-->
+													<div class="js-tweet-text-container">
+														<p class="TweetTextSize" style="padding-top: 4px;">${f.fcontent
+															}</p>
+														<div
+															style="margin: 8px 2px;padding:8px 8px 8px 36px;border: 1px dotted #e1e8ed;"
+															class="ntf-tweet-div" data-tid="${f.tweets.tid }"
+															data-suid="${f.tweets.users.uid }">
+															<a href="u/${f.tweets.users.username }"><img
+																class="size24" src="${f.tweets.users.avatar }"
+																style="position: absolute;left: 80px;top: 64px;">@${f.tweets.users.username
+																}</a>：${f.tweets.tcontent }
+															<c:if test="${f.tweets.t2ps.size() > 0 }">
+																<div class="AdaptiveMedia" style="zoom: 86%;">
+																	<div class="AdaptiveMedia-container">
+																		<c:choose>
+																			<c:when test="${f.tweets.t2ps.size()==1 }">
+																				<c:forEach var="t2p" items="${f.tweets.t2ps }">
+																					<div class="AdaptiveMedia-singlePhoto">
+																						<div class="AdaptiveMedia-photoContainer">
+																							<img src="${t2p.pics.ppath }"
+																								alt="${t2p.pics.pid }"
+																								style="width: 100%; top: -0px;">
+																						</div>
+																					</div>
+																				</c:forEach>
+																			</c:when>
+																			<c:when test="${f.tweets.t2ps.size()==2 }">
+																				<div class="AdaptiveMedia-doublePhoto">
+																					<c:forEach var="t2p" items="${f.tweets.t2ps }">
+																						<div class="AdaptiveMedia-halfWidthPhoto">
+																							<div class="AdaptiveMedia-photoContainer">
+																								<img src="${t2p.pics.ppath }"
+																									alt="${t2p.pics.pid }"
+																									style="height: 100%; left: -62px;">
+																							</div>
+																						</div>
+																					</c:forEach>
+																				</div>
+																			</c:when>
+																			<c:when test="${f.tweets.t2ps.size()==3 }">
+																				<div class="AdaptiveMedia-triplePhoto">
+																					<c:forEach var="t2p" items="${f.tweets.t2ps }"
+																						begin="0" end="0">
+																						<div class="AdaptiveMedia-twoThirdsWidthPhoto">
+																							<div class="AdaptiveMedia-photoContainer">
+																								<img src="${t2p.pics.ppath }"
+																									alt="${t2p.pics.pid }"
+																									style="height: 100%; left: -83px;">
+																							</div>
+																						</div>
+																					</c:forEach>
+																					<div class="AdaptiveMedia-halfHeightPhotoContainer">
+																						<c:forEach var="t2p" items="${f.tweets.t2ps }"
+																							begin="1">
+																							<div class="AdaptiveMedia-halfHeightPhoto">
+																								<div class="AdaptiveMedia-photoContainer">
+																									<img src="${t2p.pics.ppath }"
+																										alt="${t2p.pics.pid }"
+																										style="height: 100%; left: -41px;">
+																								</div>
+																							</div>
+																						</c:forEach>
+																					</div>
+																				</div>
+																			</c:when>
+																			<c:otherwise>
+																				<div class="AdaptiveMedia-quadPhoto">
+																					<c:forEach var="t2p" items="${f.tweets.t2ps }"
+																						begin="0" end="0">
+																						<div class="AdaptiveMedia-threeQuartersWidthPhoto">
+																							<div class="AdaptiveMedia-photoContainer">
+																								<img src="${t2p.pics.ppath }"
+																									alt="${t2p.pics.pid }"
+																									style="height: 100%; left: -146px;">
+																							</div>
+																						</div>
+																					</c:forEach>
+																					<div
+																						class="AdaptiveMedia-thirdHeightPhotoContainer">
+																						<c:forEach var="t2p" items="${f.tweets.t2ps }"
+																							begin="1" end="3">
+																							<div class="AdaptiveMedia-thirdHeightPhoto">
+																								<div class="AdaptiveMedia-photoContainer">
+																									<img src="${t2p.pics.ppath }"
+																										alt="${t2p.pics.pid }"
+																										style="height: 100%; left: -41px;">
+																								</div>
+																							</div>
+																						</c:forEach>
+																					</div>
+																				</div>
+																			</c:otherwise>
+																		</c:choose>
+																	</div>
+																</div>
+															</c:if>
+															<c:if test="${f.tweets.videos != null }">
+																<div class="AdaptiveMedia" style="zoom: 86%;">
+																	<div class="AdaptiveMedia-container">
+																		<div class="AdaptiveMedia-video">
+																			<video controls="controls"
+																				src="${f.tweets.videos.vpath }"
+																				style="width: 506px;"></video>
+																		</div>
+																	</div>
+																</div>
+															</c:if>
+														</div>
+
+													</div>
+												</div>
+											</div>
+										</li>
+
+									</c:otherwise>
+								</c:choose>
 							</c:forEach>
 							<!-- core tweet -->
 						</ol>
@@ -614,8 +790,5 @@
 
 		</div>
 	</div>
-
-	<!-- 私信模块 -->
-
 </body>
 </html>

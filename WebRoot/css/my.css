@@ -21,6 +21,25 @@
 	float: right;
 }
 
-#dm_dialog-dialog{
-	
+.forward_area {
+	margin-top: 5px;
+	display: none;
+}
+
+.forward_area_d0 {
+	border-bottom: 1px dashed #e1e8ed;
+	padding: 2px 0;
+}
+
+.forward_area_d1 {
+	float: left;
+}
+
+.forward_area_d2 {
+	padding: 0 30px;
+	font-size: 12px;
+}
+
+.forward_span {
+	float: right;
 }

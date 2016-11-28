@@ -164,4 +164,16 @@ public class TopicsDAO {
 	public static TopicsDAO getFromApplicationContext(ApplicationContext ctx) {
 		return (TopicsDAO) ctx.getBean("TopicsDAO");
 	}
+
+	// other function
+	public Topics findTopic(String tpcontent) {
+		List<Topics> list = findByTpcontent(tpcontent);
+		if (list.size() > 0) {
+			return list.get(0);
+		}
+		Topics topic = new Topics(tpcontent);
+		save(topic);
+		return topic;
+	}
+
 }

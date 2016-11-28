@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.rainsho.entity.Topics;
 import com.rainsho.entity.Tweets;
 import com.rainsho.entity.Users;
 
@@ -193,7 +194,7 @@ public class TweetsDAO {
 	}
 
 	public List<Tweets> search(String keyword) {
-		String hql = "from Tweets as t where t.tcontent like ? and t.tstate=1";
+		String hql = "from Tweets as t where t.tcontent like ? and t.tstate=1 order by t.tweettime desc";
 		return getCurrentSession().createQuery(hql)
 				.setString(0, "%" + keyword + "%").list();
 	}

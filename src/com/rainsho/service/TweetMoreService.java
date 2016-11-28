@@ -5,10 +5,12 @@ import java.util.Date;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.rainsho.dao.ForwardsDAO;
 import com.rainsho.dao.LikesDAO;
 import com.rainsho.dao.ReplaysDAO;
 import com.rainsho.dao.TweetsDAO;
 import com.rainsho.dao.UsersDAO;
+import com.rainsho.entity.Forwards;
 import com.rainsho.entity.Likes;
 import com.rainsho.entity.Replays;
 import com.rainsho.entity.Tweets;
@@ -19,6 +21,15 @@ public class TweetMoreService {
 	private LikesDAO ldao;
 	private ReplaysDAO rdao;
 	private UsersDAO udao;
+	private ForwardsDAO fdao;
+
+	public ForwardsDAO getFdao() {
+		return fdao;
+	}
+
+	public void setFdao(ForwardsDAO fdao) {
+		this.fdao = fdao;
+	}
 
 	public TweetsDAO getTdao() {
 		return tdao;
@@ -95,6 +106,19 @@ public class TweetMoreService {
 	public void delReplay(Replays replay) {
 		replay.setRstate((short) 0);
 		rdao.attachDirty(replay);
+	}
+	
+	public Forwards findForwardById(int id) {
+		return fdao.findById(id);
+	}
+	
+	public void addForward(Forwards forward) {
+		fdao.save(forward);
+	}
+	
+	public void delForward(Forwards forward) {
+		forward.setFstate((short) 0);
+		fdao.attachDirty(forward);
 	}
 
 }

@@ -149,10 +149,20 @@ $(function() {
 	// 评论相关事件
 	$('.js-replay-btn').click(function() {
 		$(this).parents('.stream-item').find('.replay_area').toggle(500);
+		$(this).parents('.stream-item').find('.forward_area').hide(500);
 	});
 
 	// 异步加载后新元素需要绑定事件，回复和删除按钮
 	replay_area_events();
+
+	// 转发相关事件
+	$('.js-forward-btn').click(function() {
+		$(this).parents('.stream-item').find('.forward_area').toggle(500);
+		$(this).parents('.stream-item').find('.replay_area').hide(500);
+	});
+
+	// 异步加载后新元素需要绑定事件，回复和删除按钮
+	forward_area_events();
 
 	// dm相关事件
 	$('.show-dm-area').click(function() {
@@ -185,11 +195,15 @@ $(function() {
 					$('body').append(x);
 				}
 			});
-			$('.replay_area').show();
+			$('.replay_area').last().show();
 			replay_area_events();
 			dm_area_events();
+			topic_area_events();
 		});
 	});
+
+	// topic 相关事件
+	topic_area_events();
 
 });
 
@@ -430,4 +444,71 @@ function tweet_area_events() {
 			$('.js-close-dm').click();
 		});
 	});
+}
+
+function forward_area_events() {
+	// 删除转发
+	$('.forward-del-btn').click(
+			function() {
+				var that = $(this);
+				var fid = that.attr('data-fid');
+				$.post('tmdelforward.action', {
+					'forward.fid' : fid
+				}, function() {
+					var c = that.parents('.tweet').find(
+							'.js-forward-btn .IconTextContainer span').text();
+					that.parents('.tweet').find(
+							'.js-forward-btn .IconTextContainer span')
+							.text(--c);
+					that.parents('.forward_area_d0').hide(1000);
+				});
+			});
+	// 转发
+	$('.forward-btn').click(
+			function() {
+				var that = $(this);
+				var fcontent = that.prev().val();
+				var tid = that.attr('data-tid');
+				if (fcontent.length == 0) {
+					alert('没有转发内容');
+					return;
+				}
+				var obj = {
+					'tid' : tid,
+					'forward.fcontent' : fcontent
+				};
+				$.post('tmaddforward.action', obj, function(data) {
+					var c = that.parents('.tweet').find(
+							'.js-forward-btn .IconTextContainer span').text();
+					that.parents('.tweet').find(
+							'.js-forward-btn .IconTextContainer span')
+							.text(++c);
+					that.prev().val('');
+					// 异步加载其他信息
+					var div = $.parseHTML(data);
+					that.parents('.forward_area_d0').before(
+							$(div).children().parent());
+					// 新元素绑定事件！！！
+					forward_area_events();
+					// 调用发送提醒
+					$('#new_tweet_bar').show();
+					$('#new_tweet_bar div').text('转发成功，请刷新查看新推文');
+				});
+			});
+}
+
+function topic_area_events() {
+	$.each($('.js-tweet-text-container p'), function(i, x) {
+		var t = $(x).text();
+		t = t.replace(/#([^#]\w+)/g,
+				'<a href="usertopic.action?keyword=$&">$&</a>');
+		t = t.replace(/keyword=#/g, 'keyword=');
+		$(x).html(t);
+	});
+	if ($('#search_or_topic').val() == 1) {
+		$('.content-header').first().remove();
+		$('.content-inner').remove();
+		$('.content-header h2').text('主题：' + $('#topic_keyword').val());
+		$('.content-header p').text('该主题共被提到过：' + $('#topic_list').val() + '次');
+	}
 }
