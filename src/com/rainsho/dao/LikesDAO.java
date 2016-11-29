@@ -174,8 +174,14 @@ public class LikesDAO {
 	}
 
 	public List<Likes> findReceivedLikes(Users user) {
-		String hql = "from Likes as l where l.tweets.users=?";
+		String hql = "from Likes as l where l.tweets.users=? and l.tweets.tstate>0";
 		return getCurrentSession().createQuery(hql).setEntity(0, user).list();
+	}
+
+	public int findNewLikes(Users user, Timestamp ts) {
+		String hql = "from Likes as l where l.tweets.users=? and l.tweets.tstate>0 and l.liketime>?";
+		return getCurrentSession().createQuery(hql).setEntity(0, user)
+				.setTimestamp(1, ts).list().size();
 	}
 
 }

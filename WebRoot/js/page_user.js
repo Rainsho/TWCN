@@ -1,6 +1,6 @@
 var i = 0;
 var h = null;
-var _test = null;
+var path = [];
 
 function heart_burst() {
 	h.css('background-position-x', (i++ / 0.28) + '%');
@@ -16,6 +16,18 @@ $(function() {
 });
 
 function onload_events() {
+	$('.Gallery-closeTarget, .Gallery .js-close').click(function() {
+		$('.gallery-overlay').hide();
+		$('.Gallery').hide();
+	});
+	$('.AdaptiveMedia img').click(function() {
+		path = [];
+		var s = $(this).parents('.AdaptiveMedia').find('img');
+		$.each(s, function(i, x) {
+			path[i] = $(x).attr('src');
+		});
+	});
+
 	$('.index_cc').css('height', $('#page-outer').css('height'));
 	$('.index_cc').click(function() {
 		$('#user-dropdown').removeClass('open');
@@ -521,4 +533,8 @@ function topic_area_events() {
 		$('.content-header h2').text('主题：' + $('#topic_keyword').val());
 		$('.content-header p').text('该主题共被提到过：' + $('#topic_list').val() + '次');
 	}
+}
+
+function gallery() {
+
 }

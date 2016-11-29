@@ -201,4 +201,22 @@ public class DirectmsgsDAO {
 		}
 		return map;
 	}
+
+	public List<Integer[]> findNewDMUserUid(Users user) {
+		String hql = "select d.usersByHuid.uid, count(*) from Directmsgs as d where d.usersBySuid=? and d.dstate = 1 group by d.usersByHuid.uid";
+		return getCurrentSession().createQuery(hql).setEntity(0, user).list();
+	}
+
+	public int findNewDMCount(Users user) {
+		String hql = "from Directmsgs as d where d.usersBySuid=? and d.dstate = 1";
+		return getCurrentSession().createQuery(hql).setEntity(0, user).list()
+				.size();
+	}
+
+	public void upReadDM(Users user, int suid) {
+		String hql = "update Directmsgs as d set d.dstate=3 where d.usersBySuid=? and d.usersByHuid.uid=? and d.dstate = 1";
+		getCurrentSession().createQuery(hql).setEntity(0, user)
+				.setInteger(1, suid).executeUpdate();
+	}
+
 }

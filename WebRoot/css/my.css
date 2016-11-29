@@ -43,3 +43,23 @@
 .forward_span {
 	float: right;
 }
+
+.my_dm_count {
+	position: absolute;
+	left: 40px;
+	background: #0084B4;
+	color: white;
+	text-align: center;
+	line-height: 16px;
+	width: 16px;
+	height: 16px;
+	border: 2px solid #fff;
+	border-radius: 7px;
+	z-index: 10;
+	display: none;
+}
+
+.my_lrr {
+	text-align: center;
+	color: red;
+}

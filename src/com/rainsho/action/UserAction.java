@@ -1,6 +1,8 @@
 package com.rainsho.action;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -193,6 +195,13 @@ public class UserAction {
 		// login的时候upHot
 		upHot();
 		resetRs();
+		// last read
+		if (page == 1) {
+			// ajax加载，不刷新last_read
+			Timestamp ts = new Timestamp(new Date().getTime());
+			ServletActionContext.getRequest().getSession()
+					.setAttribute("LAST_READ", ts);
+		}
 		return "user_page";
 	}
 

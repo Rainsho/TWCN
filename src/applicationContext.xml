@@ -159,4 +159,15 @@
 		<property name="service" ref="DirectmsgService"></property>
 	</bean>
 
+	<bean id="NewPushService" class="com.rainsho.service.NewPushService">
+		<property name="tdao" ref="TweetsDAO"></property>
+		<property name="rdao" ref="ReplaysDAO"></property>
+		<property name="ldao" ref="LikesDAO"></property>
+		<property name="ddao" ref="DirectmsgsDAO"></property>
+		<property name="rsdao" ref="RelationshipsDAO"></property>
+	</bean>
+	<bean id="NewPushAction" class="com.rainsho.action.NewPushAction">
+		<property name="service" ref="NewPushService"></property>
+	</bean>
+
 </beans>

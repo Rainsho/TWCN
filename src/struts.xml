@@ -57,6 +57,11 @@
 				<param name="root">jsonResult</param>
 			</result>
 		</action>
+		<action name="push*" class="NewPushAction" method="{1}">
+			<result type="json">
+				<param name="root">jsonResult</param>
+			</result>
+		</action>
 
 	</package>
 

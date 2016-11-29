@@ -180,4 +180,11 @@ public class ReplaysDAO {
 		return getCurrentSession().createQuery(hql).setEntity(0, user)
 				.setEntity(1, user).setEntity(2, user).list();
 	}
+
+	public void upReadReplay(List<Replays> list) {
+		String hql = "update Replays as r set r.rstate=3 where r in (:list) and r.rstate=1";
+		getCurrentSession().createQuery(hql).setParameterList("list", list)
+				.executeUpdate();
+	}
+
 }

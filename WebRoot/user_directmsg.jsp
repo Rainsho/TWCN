@@ -13,7 +13,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>TWCN —— ${user.nickname }</title>
+<title>TWCN —— ${LOGIN_USER.nickname }</title>
 <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="css/twitter_identify.css" />
 
@@ -31,6 +31,8 @@
 <link rel="stylesheet" type="text/css" href="easyui/icon.css">
 <link rel="stylesheet" type="text/css" href="easyui/demo.css">
 <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+
+<script type="text/javascript" src="js/page_push.js"></script>
 
 </head>
 
@@ -84,8 +86,7 @@
 													<div class="account-group js-mini-current-user">
 														<b class="fullname">${LOGIN_USER.nickname }</b> <span
 															class="screen-name hidden" dir="ltr">@${LOGIN_USER.username
-															}</span>
-														<small class="metadata">查看个人资料</small>
+															}</span> <small class="metadata">查看个人资料</small>
 													</div>
 												</div>
 										</a></li>
@@ -185,7 +186,7 @@
 							<li class="DMInbox-conversationItem">
 								<div class="DMInboxItem">
 									<div class="DMInboxItem-avatar">
-										<a
+										<span class="my_dm_count"></span> <a
 											href="u/${d.usersByHuid.uid==LOGIN_USER.uid? d.usersBySuid.username: d.usersByHuid.username }"
 											class="js-action-profile js-user-profile-link">
 											<div class="DMAvatar DMAvatar--1 u-chromeOverflowFix">
@@ -199,8 +200,10 @@
 									<div class="show-dm-area" data-huid="${LOGIN_USER.uid }"
 										data-suid="${d.usersByHuid.uid==LOGIN_USER.uid? d.usersBySuid.uid: d.usersByHuid.uid }">
 										<div class="DMInboxItem-title">
-											<b class="fullname">${d.usersByHuid.uid==LOGIN_USER.uid? d.usersBySuid.nickname: d.usersByHuid.nickname }</b>
-											<small class="username"><s>@</s>${d.usersByHuid.uid==LOGIN_USER.uid? d.usersBySuid.username: d.usersByHuid.username }</small>
+											<b class="fullname">${d.usersByHuid.uid==LOGIN_USER.uid?
+												d.usersBySuid.nickname: d.usersByHuid.nickname }</b> <small
+												class="username"><s>@</s>${d.usersByHuid.uid==LOGIN_USER.uid?
+												d.usersBySuid.username: d.usersByHuid.username }</small>
 										</div>
 										<div class="u-posRelative">
 											<p class="DMInboxItem-snippet ">
@@ -211,7 +214,8 @@
 											</p>
 										</div>
 										<div class="DMInboxItem-timestamp">
-											<span class="_timestamp js-relative-timestamp">${d.fmtTime() }</span>
+											<span class="_timestamp js-relative-timestamp">${d.fmtTime()
+												}</span>
 										</div>
 									</div>
 								</div>

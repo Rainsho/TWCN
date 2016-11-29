@@ -27,6 +27,7 @@
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="js/page_user.js"></script>
 <script type="text/javascript" src="js/page_ajax_load.js"></script>
+<script type="text/javascript" src="js/page_push.js"></script>
 
 </head>
 
@@ -779,6 +780,41 @@
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+	<!-- gallery -->
+	<div class="gallery-overlay"></div>
+	<div class="Gallery">
+		<div class="Gallery-closeTarget"></div>
+		<div class="Gallery-content no-grid"
+			style="width: 815px; min-height: 651px;">
+			<button type="button" class="modal-btn modal-close js-close">
+				<span class="Icon Icon--close Icon--large"> <span
+					class="visuallyhidden">关闭</span>
+				</span>
+			</button>
+			<div class="Gallery-media">
+				<img alt="" class="media-image"
+					src="https://pbs.twimg.com/media/Cx3HfevUkAAbotN.jpg:large"
+					data-height="853" data-width="1280"
+					style="width: 815px; height: 543px; margin-top: 0px; margin-bottom: 0px;">
+			</div>
+			<div class="GalleryNav GalleryNav--prev enabled"
+				style="display: block;">
+				<span class="GalleryNav-handle GalleryNav-handle--prev"> <span
+					class="Icon Icon--caretLeft Icon--large"> <span
+						class="u-hiddenVisually">上一页 </span>
+				</span>
+				</span>
+			</div>
+			<div class="GalleryNav GalleryNav--next enabled"
+				style="display: block;">
+				<span class="GalleryNav-handle GalleryNav-handle--next"> <span
+					class="Icon Icon--caretRight Icon--large"> <span
+						class="u-hiddenVisually">下一步 </span>
+				</span>
+				</span>
 			</div>
 		</div>
 	</div>

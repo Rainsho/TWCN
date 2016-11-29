@@ -198,5 +198,12 @@ public class TweetsDAO {
 		return getCurrentSession().createQuery(hql)
 				.setString(0, "%" + keyword + "%").list();
 	}
-	
+
+	public int findNewTweets(List<Users> list, Timestamp ts) {
+		String hql = "from Tweets as t where t.users in (:list) and t.tstate = 1 and t.tweettime > :ts order by t.tweettime desc";
+		return getCurrentSession().createQuery(hql)
+				.setParameterList("list", list).setTimestamp("ts", ts).list()
+				.size();
+	}
+
 }

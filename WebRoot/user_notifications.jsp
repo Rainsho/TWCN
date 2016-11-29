@@ -32,6 +32,8 @@
 <link rel="stylesheet" type="text/css" href="easyui/demo.css">
 <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
 
+<script type="text/javascript" src="js/page_push.js"></script>
+
 </head>
 
 <body>

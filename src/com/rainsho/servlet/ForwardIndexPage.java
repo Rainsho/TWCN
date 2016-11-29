@@ -26,19 +26,22 @@ public class ForwardIndexPage extends HttpServlet {
 		Users user = (Users) request.getSession().getAttribute("LOGIN_USER");
 		if (user == null) {
 			// 验证cookie
-			for (Cookie x : request.getCookies()) {
-				if (x.getName().equals("TWCN_USER")) {
-					String CODE = x.getValue();
-					@SuppressWarnings("unchecked")
-					Map<String, Integer> REMEMBERED = (Map<String, Integer>) request
-							.getServletContext().getAttribute("REMEMBERED");
-					if (REMEMBERED != null && REMEMBERED.containsKey(CODE)) {
-						int uid = REMEMBERED.get(CODE);
-						user = new Users();
-						user.setUid(uid);
-						request.getSession().setAttribute("LOGIN_USER", user);
+			if (request.getCookies() != null) {
+				for (Cookie x : request.getCookies()) {
+					if (x.getName().equals("TWCN_USER")) {
+						String CODE = x.getValue();
+						@SuppressWarnings("unchecked")
+						Map<String, Integer> REMEMBERED = (Map<String, Integer>) request
+								.getServletContext().getAttribute("REMEMBERED");
+						if (REMEMBERED != null && REMEMBERED.containsKey(CODE)) {
+							int uid = REMEMBERED.get(CODE);
+							user = new Users();
+							user.setUid(uid);
+							request.getSession().setAttribute("LOGIN_USER",
+									user);
+						}
+						break;
 					}
-					break;
 				}
 			}
 		}
