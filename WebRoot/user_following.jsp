@@ -103,7 +103,6 @@
 			</div>
 		</div>
 	</div>
-
 	<div id="page-outer">
 		<div id="page-container" class="AppContent wrapper wrapper-settings">
 			<div class="dashboard">
@@ -170,15 +169,14 @@
 								<li class="Footer-item Footer-copyright copyright">© 2016
 									TWCN</li>
 								<li class="Footer-item"><a class="Footer-link"
-									href="/about">关于</a></li>
+									href="https://github.com/rainsho/twcn">源码</a></li>
 								<li class="Footer-item"><a class="Footer-link"
-									href="//support.twitter.com">帮助</a></li>
+									href="mailto:rainsho@126.com">联系作者</a></li>
 							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
-
 			<div role="main" aria-labelledby="content-main-heading"
 				class="content-main" id="div_username">
 				<div class="content-header">

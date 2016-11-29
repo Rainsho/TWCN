@@ -13,4 +13,11 @@ function cg_bg_img() {
 
 $(function() {
 	cg_bg_img();
+	$('input[name="remember_me"]').change(function(){
+		if($('input[name="remember_me"]').prop('checked')){
+			$('input[name="remember_me"]').val(1);
+		}else{
+			$('input[name="remember_me"]').val(0);
+		}
+	});
 });

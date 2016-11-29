@@ -26,6 +26,7 @@
 
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="js/page_user.js"></script>
+<script type="text/javascript" src="js/page_ajax_load.js"></script>
 
 </head>
 
@@ -103,7 +104,8 @@
 			</div>
 		</div>
 	</div>
-	<div id="page-outer">
+	<div id="page-outer" style="height: auto;">
+		<div class="close-modal-background-target index_cc"></div>
 		<div id="page-container" class="AppContent wrapper wrapper-home">
 			<div class="dashboard dashboard-left">
 				<!--user info-->
@@ -163,7 +165,6 @@
 						<div id="dashboard-profile-prompt"></div>
 					</div>
 				</div>
-
 				<!--tends pending-->
 				<div class="Trends module trends">
 					<div class="trends-inner">
@@ -189,7 +190,6 @@
 					</div>
 				</div>
 			</div>
-
 			<!-- twitter contents begin -->
 			<!--tweet box-->
 			<div role="main" aria-labelledby="content-main-heading"
@@ -257,21 +257,16 @@
 						</form>
 					</div>
 				</div>
-				<!--home-tweet-box end-->
-
 				<div class="content-header visuallyhidden">
 					<div class="header-inner">
 						<h2 id="content-main-heading" class="js-timeline-title">推文</h2>
 					</div>
 				</div>
-
 				<div class="stream-container conversations-enabled">
-
 					<div class="stream-item new-tweets-bar-visible"
 						style="display: none;" id="new_tweet_bar">
 						<div class="new-tweets-bar">查看 2 条新推文</div>
 					</div>
-
 					<div class="stream">
 						<ol class="stream-items js-navigable-stream" id="stream-items-id">
 							<!-- core tweet -->
@@ -463,7 +458,7 @@
 																			<div class="caret-inner"></div>
 																		</div>
 																		<ul>
-																			<c:if test="${LOGIN_USER.uid != t.users.uid }">
+																			<c:if test="${LOGIN_USER.uid != f.tweets.users.uid }">
 																				<li class="share-via-dm">
 																					<button type="button"
 																						class="dropdown-link show-dm-area"
@@ -471,18 +466,19 @@
 																						data-suid="${f.tweets.users.uid }">发送私信</button>
 																				</li>
 																			</c:if>
-																			<li class="block-link">
+																			<%-- <li class="block-link">
 																				<button type="button" class="dropdown-link">屏蔽
 																					@${f.tweets.users.username }</button>
 																			</li>
-																			<li class="dropdown-divider"></li>
-																			<c:if test="${LOGIN_USER.uid == t.users.uid }">
+																			<li class="dropdown-divider"></li> --%>
+																			<c:if test="${LOGIN_USER.uid == f.tweets.users.uid }">
 																				<li class="js-actionDelete">
 																					<button type="button" class="dropdown-link"
 																						data-tid="${f.tweets.tid }">删除推文</button>
 																				</li>
 																			</c:if>
-																			<c:if test="${LOGIN_USER.uid != t.users.uid }">
+																			<c:if
+																				test="${rs_set_suid.contains(f.tweets.users.uid) && f.tweets.users.uid != LOGIN_USER.uid }">
 																				<li class="js-unfollowed">
 																					<button type="button" class="dropdown-link"
 																						data-uid="${f.tweets.users.uid }">取消关注@${f.tweets.users.username
@@ -711,19 +707,21 @@
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>
-							<!-- core tweet -->
 						</ol>
-
 						<div class="stream-footer ">
 							<div class="timeline-end has-items has-more-items">
 								<div class="stream-end" style="display: block;">
 									<div class="stream-end-inner">
-										<h1>test info</h1>
 										<span class="Icon Icon--large Icon--logo"></span>
 										<p>
 											<button type="button" class="btn-link back-to-top"
-												style="display: inline-block;">回到顶部 ↑</button>
+												style="display: none;">回到顶部 ↑</button>
 										</p>
+									</div>
+									<div class="stream-loading" style="display: none;">
+										<div class="stream-end-inner">
+											<span class="spinner" title="正在载入..."></span>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -731,9 +729,6 @@
 					</div>
 				</div>
 			</div>
-
-			<!-- twitter contents end-->
-
 			<!--who to follow and copyright begin-->
 			<div class="dashboard dashboard-right">
 				<div class="module roaming-module wtf-module has-content">
@@ -770,7 +765,6 @@
 						</div>
 					</div>
 				</div>
-
 				<div class="Footer module roaming-module">
 					<div class="flex-module">
 						<div class="flex-module-inner">
@@ -778,16 +772,14 @@
 								<li class="Footer-item Footer-copyright copyright">© 2016
 									TWCN</li>
 								<li class="Footer-item"><a class="Footer-link"
-									href="/about">关于</a></li>
+									href="https://github.com/rainsho/twcn">源码</a></li>
 								<li class="Footer-item"><a class="Footer-link"
-									href="//support.twitter.com">帮助</a></li>
+									href="mailto:rainsho@126.com">联系作者</a></li>
 							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!--who to follow and copyright end-->
-
 		</div>
 	</div>
 </body>

@@ -11,12 +11,23 @@ function heart_burst() {
 
 $(function() {
 
+	onload_events();
+
+});
+
+function onload_events() {
+	$('.index_cc').css('height', $('#page-outer').css('height'));
+	$('.index_cc').click(function() {
+		$('#user-dropdown').removeClass('open');
+		$('.ProfileTweet-action .dropdown').removeClass('open');
+	});
+
 	$('#tweet-box-home-timeline').click(function() {
 		$('.t1-form').removeClass('condensed');
 	});
 
-	$('.ProfileTweet-action').click(function() {
-		$(this).children('.dropdown').toggleClass('open');
+	$('.ProfileTweet-action .dropdown').click(function() {
+		$(this).toggleClass('open');
 	});
 
 	$('#user-dropdown').click(function() {
@@ -204,8 +215,7 @@ $(function() {
 
 	// topic 相关事件
 	topic_area_events();
-
-});
+}
 
 function ck_t_file() {
 	var files = $('.t1-label input').prop('files');
@@ -356,7 +366,7 @@ function dm_area_events() {
 					$('#dm_send_btn').prop('disabled', true);
 					var _html = $.parseHTML(data);
 					_html = $(_html).find('.DirectMessage').last();
-					$('.DirectMessage').last().after(_html);
+					$('.DMConversation-content').append(_html);
 					$('.js-dm-scroll').prop('scrollTop',
 							$('.js-dm-scroll').prop('scrollHeight'));
 					// 新元素绑定事件！！！

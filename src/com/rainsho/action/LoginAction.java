@@ -13,6 +13,15 @@ public class LoginAction {
 	private Users user;
 	private String login_msg;
 	private String signup_msg;
+	private int remember_me;
+
+	public int getRemember_me() {
+		return remember_me;
+	}
+
+	public void setRemember_me(int remember_me) {
+		this.remember_me = remember_me;
+	}
 
 	public LoginService getService() {
 		return service;
@@ -77,6 +86,9 @@ public class LoginAction {
 		}
 		ServletActionContext.getRequest().getSession()
 				.setAttribute("LOGIN_USER", user);
+		if (remember_me == 1) {
+			service.remember_me();
+		}
 		return "success";
 	}
 

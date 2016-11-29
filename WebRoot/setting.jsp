@@ -102,7 +102,6 @@
 			</div>
 		</div>
 	</div>
-
 	<div id="page-outer">
 		<div id="page-container" class="AppContent wrapper wrapper-settings">
 			<div class="dashboard">
@@ -131,7 +130,6 @@
 						</div>
 					</div>
 				</div>
-
 				<div id="settings_nav" role="navigation" class="module">
 					<ul class="js-nav-links">
 						<li class="active"><a class="list-link js-nav"
@@ -143,9 +141,9 @@
 						<li class=""><a class="list-link js-nav"
 							href="javascript:void(0);" data-nav="3">详细信息<span
 								class="Icon Icon--caretRight"></span></a></li>
-						<li class=""><a class="list-link js-nav"
+						<!-- <li class=""><a class="list-link js-nav"
 							href="javascript:void(0);" data-nav="4">你屏蔽的账号<span
-								class="Icon Icon--caretRight"></span></a></li>
+								class="Icon Icon--caretRight"></span></a></li> -->
 					</ul>
 				</div>
 				<div class="Footer module roaming-module">
@@ -155,15 +153,14 @@
 								<li class="Footer-item Footer-copyright copyright">© 2016
 									TWCN</li>
 								<li class="Footer-item"><a class="Footer-link"
-									href="/about">关于</a></li>
+									href="https://github.com/rainsho/twcn">源码</a></li>
 								<li class="Footer-item"><a class="Footer-link"
-									href="//support.twitter.com">帮助</a></li>
+									href="mailto:rainsho@126.com">联系作者</a></li>
 							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
-
 			<div role="main" aria-labelledby="content-main-heading"
 				class="content-main" id="div_username">
 				<div class="content-header">
@@ -216,7 +213,6 @@
 					</form>
 				</div>
 			</div>
-
 			<div role="main" aria-labelledby="content-main-heading"
 				class="content-main" id="div_password">
 				<div class="content-header">
@@ -272,7 +268,6 @@
 					</form>
 				</div>
 			</div>
-
 			<div role="main" aria-labelledby="content-main-heading"
 				class="content-main" id="div_moreinfo">
 				<div class="content-header">

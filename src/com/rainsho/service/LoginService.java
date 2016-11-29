@@ -2,6 +2,12 @@ package com.rainsho.service;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.Cookie;
+
+import org.apache.struts2.ServletActionContext;
 
 import com.rainsho.dao.RelationshipsDAO;
 import com.rainsho.dao.UsersDAO;
@@ -74,6 +80,26 @@ public class LoginService {
 			return u2;
 		}
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public void remember_me() {
+		Users user = (Users) ServletActionContext.getRequest().getSession()
+				.getAttribute("LOGIN_USER");
+		Map<String, Integer> REMEMBERED = (Map<String, Integer>) ServletActionContext
+				.getServletContext().getAttribute("REMEMBERED");
+		if (REMEMBERED == null) {
+			REMEMBERED = new HashMap<String, Integer>();
+		}
+
+		String CODE = StringUtil.randomString(16);
+		REMEMBERED.put(CODE, user.getUid());
+		ServletActionContext.getServletContext().setAttribute("REMEMBERED",
+				REMEMBERED);
+
+		Cookie ck = new Cookie("TWCN_USER", CODE);
+		ck.setMaxAge(60 * 60 * 24 * 7);
+		ServletActionContext.getResponse().addCookie(ck);
 	}
 
 }

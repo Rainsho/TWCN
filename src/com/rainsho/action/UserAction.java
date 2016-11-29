@@ -3,7 +3,10 @@ package com.rainsho.action;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import javax.servlet.http.Cookie;
 
 import org.apache.struts2.ServletActionContext;
 
@@ -32,6 +35,16 @@ public class UserAction {
 	private int type;
 	private List<Topics> hot_topic;
 	private Topics key_topic;
+	// ajax page
+	private int page = 1;
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
 
 	public Topics getKey_topic() {
 		return key_topic;
@@ -157,12 +170,16 @@ public class UserAction {
 		forward_list = service.findForwards(users);
 		// 合并tweet_list and forward_list
 		forward_list = service.merge(forward_list, list);
+		// 分页forward_lest
+		list_section();
 		recommend_user = service.findRecommendUsers();
 		resetRs();
 		return "user_page";
 	}
 
 	public String index() {
+		// cookie 验证，只有uid数据
+		service.upLOGINUSER();
 		user = (Users) ServletActionContext.getRequest().getSession()
 				.getAttribute("LOGIN_USER");
 		List<Users> users = service.findFollow(user);
@@ -170,6 +187,8 @@ public class UserAction {
 		forward_list = service.findForwards(users);
 		// 合并tweet_list and forward_list
 		forward_list = service.merge(forward_list, list);
+		// 分页forward_lest
+		list_section();
 		recommend_user = service.findRecommendUsers();
 		// login的时候upHot
 		upHot();
@@ -181,6 +200,22 @@ public class UserAction {
 		user = null;
 		ServletActionContext.getRequest().getSession()
 				.removeAttribute("LOGIN_USER");
+		// 清除cookie
+		for (Cookie x : ServletActionContext.getRequest().getCookies()) {
+			if (x.getName().equals("TWCN_USER")) {
+				String CODE = x.getValue();
+				x.setMaxAge(0);
+				@SuppressWarnings("unchecked")
+				Map<String, Integer> REMEMBERED = (Map<String, Integer>) ServletActionContext
+						.getServletContext().getAttribute("REMEMBERED");
+				if (REMEMBERED != null) {
+					REMEMBERED.remove(CODE);
+					ServletActionContext.getServletContext().setAttribute(
+							"REMEMBERED", REMEMBERED);
+				}
+				break;
+			}
+		}
 		return "logout";
 	}
 
@@ -246,7 +281,7 @@ public class UserAction {
 				.getAttribute("LOGIN_USER");
 		list = new ArrayList<Tweets>();
 		list = service.topicTweets(keyword);
-		if(list.size()>0){
+		if (list.size() > 0) {
 			key_topic = service.key_topic(keyword);
 		}
 		resetRs();
@@ -256,6 +291,22 @@ public class UserAction {
 
 	public void upHot() {
 		hot_topic = service.upHotTopic();
+	}
+
+	public void list_section() {
+		// 30+20*x
+		int max_index = forward_list.size();
+		if (page == 1) {
+			forward_list = forward_list.subList(0, Math.min(30, max_index));
+		} else {
+			if (page * 20 - 10 >= max_index) {
+				forward_list = new ArrayList<Forwards>(0);
+			} else {
+				forward_list = forward_list.subList(page * 20 - 10,
+						Math.min(page * 20 + 10, max_index));
+			}
+		}
+		page = 1;
 	}
 
 }

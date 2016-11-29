@@ -1,9 +1,9 @@
 package com.rainsho.test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.rainsho.dao.UsersDAO;
 import com.rainsho.entity.Relationships;
@@ -56,13 +56,10 @@ public class Test {
 	}
 	
 	public static void main(String[] args) {
-		String str = "fasdfasd#abc sjad;kfj;as##fjas;j";
-		Pattern p = Pattern.compile("#([^#]\\w+)");
-		Matcher m = p.matcher(str); 
-		 while (m.find()) { 
-			 m.start() ;
-			 m.end();
-			System.out.println( m.group(1));
-			   }
+		 List<String> list = new ArrayList<>();
+		 list.add("aaa");
+		 list.add("bbb");
+		 String str = new String("aaa");
+		 System.out.println(list.contains(str));
 	}
 }

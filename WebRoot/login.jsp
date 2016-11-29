@@ -41,8 +41,8 @@
 									class="Icon Icon--bird Icon--large"></span> <span class="text">主页</span>
 							</a></li>
 							<li id="global-nav-about" class="about"><a
-								class="js-tooltip js-dynamic-tooltip" href="javascript:void(0);"
-								target="_blank"> <span class="text">关于</span>
+								class="js-tooltip js-dynamic-tooltip" href="https://github.com/rainsho/twcn"
+								target="_blank"> <span class="text">源码</span>
 							</a></li>
 						</ul>
 					</div>
@@ -90,7 +90,7 @@
 								</table>
 								<div class="remember-forgot">
 									<label class="t1-label remember"><input type="checkbox"
-										value="1" name="remember_me"><span>记住我</span></label>
+										value="0" name="remember_me"><span>记住我（保存一周）</span></label>
 									<c:if test="${login_msg != null }">
 										<span style="color: red;font-size: 12px;">${login_msg }</span>
 									</c:if>
@@ -127,11 +127,9 @@
 					</div>
 					<div class="footer inline-list">
 						<ul>
-							<li><a href="javascript:void(0);">关于</a><span
+							<li><a href="https://github.com/rainsho/twcn">源码</a><span
 								class="dot divider"> ·</span></li>
-							<li><a href="javascript:void(0);">帮助</a><span
-								class="dot divider"> ·</span></li>
-							<li><a href="javascript:void(0);">博客</a><span
+							<li><a href="mailto:rainsho@126.com">联系作者</a><span
 								class="dot divider"> ·</span></li>
 							<li><span class="copyright">© 2016 TWCN</span></li>
 						</ul>
