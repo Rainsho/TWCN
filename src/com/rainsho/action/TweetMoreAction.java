@@ -92,13 +92,13 @@ public class TweetMoreAction {
 	public String like() {
 		Tweets tweet = service.findTweetById(tid);
 		service.tweetLike(tweet);
-		return "success";
+		return "none";
 	}
 
 	public String unlike() {
 		Tweets tweet = service.findTweetById(tid);
 		service.tweetUnlike(tweet);
-		return "success";
+		return "none";
 	}
 
 	public String addreplay() {
@@ -130,7 +130,7 @@ public class TweetMoreAction {
 			service.delReplay(replay);
 		}
 		rid = 0;
-		return "success";
+		return "none";
 	}
 
 	public String rptweet() {
@@ -157,7 +157,7 @@ public class TweetMoreAction {
 	public String delforward() {
 		forward = service.findForwardById(forward.getFid());
 		service.delForward(forward);
-		return "success";
+		return "none";
 	}
 
 }

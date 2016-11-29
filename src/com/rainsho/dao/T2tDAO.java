@@ -162,7 +162,7 @@ public class T2tDAO {
 
 	// other function
 	public List<Tweets> findByTopic(Topics topic) {
-		String hql = "select distinct t.tweets from T2t as t where t.topics=? and t.tweets.tstate>0 order by t.tweets.tweettime desc";
+		String hql = "select distinct t.tweets from T2t as t where t.topics=? and t.tweets.tstate>0";
 		return getCurrentSession().createQuery(hql).setEntity(0, topic).list();
 	}
 

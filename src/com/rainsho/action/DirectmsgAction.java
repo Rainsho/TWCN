@@ -100,7 +100,7 @@ public class DirectmsgAction {
 	public String todel() {
 		dm = service.findDmById(dm.getDid());
 		service.delDm(dm);
-		return "success";
+		return "none";
 	}
 
 	public String findmap() {

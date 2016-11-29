@@ -6,6 +6,15 @@
 	<constant name="struts.multipart.maxSize" value="30000000"></constant>
 
 	<package name="twcn" namespace="/" extends="struts-default">
+		<interceptors>
+			<interceptor name="login"
+				class="com.rainsho.interceptor.LoginInterceptor"></interceptor>
+		</interceptors>
+
+		<global-results>
+			<result name="not_login">/login.jsp</result>
+		</global-results>
+
 		<!-- test action -->
 		<action name="test" class="test">
 			<result>/test.jsp</result>
@@ -24,23 +33,30 @@
 			<result name="setting">/setting.jsp</result>
 			<result name="following_page">/user_following.jsp</result>
 			<result name="search_page">/user_search.jsp</result>
-			<result name="flush_session">/ok.html</result>
 			<result name="ntf_page">/user_notifications.jsp</result>
+			<interceptor-ref name="login"></interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
 		</action>
 		<action name="rs*" class="RelationshipAction" method="{1}">
-			<result>/ok.html</result>
+			<result>/index.jsp</result>
+			<interceptor-ref name="login"></interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
 		</action>
 		<action name="tm*" class="TweetMoreAction" method="{1}">
-			<result>/ok.html</result>
+			<result>/index.jsp</result>
 			<result name="addreplay">/ajax_replay.jsp</result>
 			<result name="rptweet">/ajax_tweet.jsp</result>
 			<result name="addforward">/ajax_forward.jsp</result>
+			<interceptor-ref name="login"></interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
 		</action>
 		<action name="dm*" class="DirectmsgAction" method="{1}">
-			<result>/ok.html</result>
+			<result>/index.jsp</result>
 			<result name="find_dm">/ajax_directmsg.jsp</result>
 			<result name="add_dm">/ajax_directmsg.jsp</result>
 			<result name="dm_page">/user_directmsg.jsp</result>
+			<interceptor-ref name="login"></interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
 		</action>
 
 	</package>

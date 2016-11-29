@@ -237,13 +237,15 @@ public class UserService {
 		if (list.size() == 0) {
 			return new ArrayList<Tweets>(0);
 		}
-		return t2tdao.findByTopic(list.get(0));
+		List<Tweets> list2 = t2tdao.findByTopic(list.get(0));
+		Collections.sort(list2);
+		return list2;
 	}
 
 	public List<Topics> upHotTopic() {
 		return t2tdao.upHotTopic();
 	}
-	
+
 	public Topics key_topic(String keyword) {
 		return tpdao.findTopic(keyword);
 	}

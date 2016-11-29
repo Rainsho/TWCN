@@ -16,16 +16,43 @@ $(function() {
 });
 
 function onload_events() {
+	// gallery events
 	$('.Gallery-closeTarget, .Gallery .js-close').click(function() {
 		$('.gallery-overlay').hide();
 		$('.Gallery').hide();
 	});
-	$('.AdaptiveMedia img').click(function() {
-		path = [];
-		var s = $(this).parents('.AdaptiveMedia').find('img');
-		$.each(s, function(i, x) {
-			path[i] = $(x).attr('src');
-		});
+	$('.AdaptiveMedia img').click(
+			function() {
+				path = [];
+				var s = $(this).parents('.AdaptiveMedia').find('img');
+				$.each(s, function(i, x) {
+					path[i] = $(x).attr('src');
+				});
+				$('.gallery-overlay').show();
+				$('.Gallery').show();
+				$('.Gallery-media img').attr('src', $(this).attr('src'));
+				$('.Gallery-media img').prop('data-index',
+						path.indexOf($(this).attr('src')));
+			});
+	$('.GalleryNav-handle--prev').click(function() {
+		var index = $('.Gallery-media img').prop('data-index');
+		if (index == 0) {
+			index = path.length - 1;
+		} else {
+			index--;
+		}
+		$('.Gallery-media img').attr('src', path[index]);
+		$('.Gallery-media img').prop('data-index', index);
+	});
+	$('.GalleryNav-handle--next').click(function() {
+		var index = $('.Gallery-media img').prop('data-index');
+		if (index == path.length - 1) {
+			index = 0;
+		} else {
+			index++;
+		}
+		$('.Gallery-media img').attr('src', path[index]);
+		$('.Gallery-media img').prop('data-index', index);
 	});
 
 	$('.index_cc').css('height', $('#page-outer').css('height'));
@@ -177,6 +204,8 @@ function onload_events() {
 
 	// 异步加载后新元素需要绑定事件，回复和删除按钮
 	replay_area_events();
+	// 发送按钮重复绑定会导致重复执行
+	send_replay();
 
 	// 转发相关事件
 	$('.js-forward-btn').click(function() {
@@ -186,6 +215,8 @@ function onload_events() {
 
 	// 异步加载后新元素需要绑定事件，回复和删除按钮
 	forward_area_events();
+	// 重复绑定抽离
+	send_forward();
 
 	// dm相关事件
 	$('.show-dm-area').click(function() {
@@ -220,6 +251,7 @@ function onload_events() {
 			});
 			$('.replay_area').last().show();
 			replay_area_events();
+			send_replay();
 			dm_area_events();
 			topic_area_events();
 		});
@@ -310,6 +342,9 @@ function replay_area_events() {
 			$(this).next().removeAttr('data-suid');
 		}
 	});
+}
+
+function send_replay() {
 	// 发送评论
 	$('.replay-btn').click(
 			function() {
@@ -423,7 +458,7 @@ function tweet_area_events() {
 		if (ck_t_file()) {
 			var files = $('.t1-label input').prop('files');
 			var data = new FormData();
-			for ( var i = 0; i < files.length; i++) {
+			for (var i = 0; i < files.length; i++) {
 				data.append('file', files[i]);
 			}
 			// upload
@@ -485,6 +520,9 @@ function forward_area_events() {
 					that.parents('.forward_area_d0').hide(1000);
 				});
 			});
+}
+
+function send_forward() {
 	// 转发
 	$('.forward-btn').click(
 			function() {
@@ -533,8 +571,4 @@ function topic_area_events() {
 		$('.content-header h2').text('主题：' + $('#topic_keyword').val());
 		$('.content-header p').text('该主题共被提到过：' + $('#topic_list').val() + '次');
 	}
-}
-
-function gallery() {
-
 }

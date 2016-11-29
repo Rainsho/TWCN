@@ -272,7 +272,7 @@ public class UserAction {
 	public String flushlogin() {
 		// update session
 		service.upLOGINUSER();
-		return "flush_session";
+		return "none";
 	}
 
 	public String ntf() {

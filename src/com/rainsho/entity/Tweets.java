@@ -23,7 +23,7 @@ import com.rainsho.util.StringUtil;
  */
 @Entity
 @Table(name = "tweets", catalog = "twcn")
-public class Tweets implements java.io.Serializable {
+public class Tweets implements java.io.Serializable, Comparable<Tweets> {
 
 	// Fields
 
@@ -205,6 +205,11 @@ public class Tweets implements java.io.Serializable {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public int compareTo(Tweets o) {
+		return this.getTweettime().after(o.getTweettime()) ? -1 : 1;
 	}
 
 }

@@ -35,7 +35,7 @@ public class RelationshipAction {
 			service.follow(huser, suser);
 		}
 		upLOGINUSER(huser.getUid());
-		return "success";
+		return "none";
 	}
 
 	public String unfollow() {
@@ -46,7 +46,7 @@ public class RelationshipAction {
 			service.unfollow(huser, suser);
 		}
 		upLOGINUSER(huser.getUid());
-		return "success";
+		return "none";
 	}
 
 	public void upLOGINUSER(int id) {

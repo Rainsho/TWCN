@@ -82,7 +82,8 @@
 													<div class="account-group js-mini-current-user">
 														<b class="fullname">${LOGIN_USER.nickname }</b> <span
 															class="screen-name hidden" dir="ltr">@${LOGIN_USER.nickname
-															}</span> <small class="metadata">查看个人主页</small>
+															}</span>
+														<small class="metadata">查看个人主页</small>
 													</div>
 												</div>
 										</a></li>
@@ -183,7 +184,7 @@
 											href="usertopic.action?keyword=${tp.tpcontent }"> <span
 												class="u-linkComplex-target trend-name" dir="ltr">#${tp.tpcontent
 													}</span></a>
-											<div class="trend-item-stats">${tp.t2ts.size() } 次提到</div></li>
+											<div class="trend-item-stats">${tp.t2ts.size() }次提到</div></li>
 									</c:forEach>
 								</ul>
 							</div>
@@ -284,7 +285,8 @@
 															href="u/${f.tweets.users.username }"> <img
 															class="avatar" src="${f.tweets.users.avatar }" alt="">
 															<strong class="fullname">${f.tweets.users.nickname
-																}</strong> <span>‏</span><span class="username"><s>@</s><b>${f.tweets.users.username
+																}</strong>
+															<span>‏</span><span class="username"><s>@</s><b>${f.tweets.users.username
 																	}</b></span>
 														</a> <small class="time"><span class="_timestamp">${f.tweets.fmtTime()
 																}</span></small>
@@ -545,7 +547,8 @@
 																<div class="forward_area_d2">
 																	<div>
 																		<a href="u/${ff.users.username }">@${ff.users.username
-																			}</a>&nbsp; ：&nbsp;<span>${ff.fcontent }</span>
+																			}</a>&nbsp;
+																		：&nbsp;<span>${ff.fcontent }</span>
 																	</div>
 																	<div style="margin-top: 1px;">
 																		<span>&nbsp;&nbsp;时间：${ff.fmtTime() }</span><span
@@ -746,7 +749,8 @@
 										<a class="account-group user-thumb" href="u/${ru.username }">
 											<img class="avatar" src="${ru.avatar }" alt="${ru.username }">
 											<span class="account-group-inner"><b class="fullname">${ru.nickname
-													}</b> <span class="username"><s>@</s><span
+													}</b>
+												<span class="username"><s>@</s><span
 													class="js-username">${ru.username }</span></span> </span>
 										</a>
 										<c:if test="${! rs_set_suid.contains(ru.uid) }">
@@ -787,18 +791,15 @@
 	<div class="gallery-overlay"></div>
 	<div class="Gallery">
 		<div class="Gallery-closeTarget"></div>
-		<div class="Gallery-content no-grid"
-			style="width: 815px; min-height: 651px;">
+		<div class="Gallery-content no-grid" style="max-width: 80%;">
 			<button type="button" class="modal-btn modal-close js-close">
 				<span class="Icon Icon--close Icon--large"> <span
 					class="visuallyhidden">关闭</span>
 				</span>
 			</button>
 			<div class="Gallery-media">
-				<img alt="" class="media-image"
-					src="https://pbs.twimg.com/media/Cx3HfevUkAAbotN.jpg:large"
-					data-height="853" data-width="1280"
-					style="width: 815px; height: 543px; margin-top: 0px; margin-bottom: 0px;">
+				<img class="media-image" src=""
+					style="width: 100%; margin-top: 0px; margin-bottom: 0px;">
 			</div>
 			<div class="GalleryNav GalleryNav--prev enabled"
 				style="display: block;">
@@ -812,7 +813,7 @@
 				style="display: block;">
 				<span class="GalleryNav-handle GalleryNav-handle--next"> <span
 					class="Icon Icon--caretRight Icon--large"> <span
-						class="u-hiddenVisually">下一步 </span>
+						class="u-hiddenVisually">下一页 </span>
 				</span>
 				</span>
 			</div>
