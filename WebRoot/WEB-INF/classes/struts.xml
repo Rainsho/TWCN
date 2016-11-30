@@ -15,16 +15,12 @@
 			<result name="not_login">/login.jsp</result>
 		</global-results>
 
-		<!-- test action -->
-		<action name="test" class="test">
-			<result>/test.jsp</result>
-		</action>
-
 		<!-- core action -->
 		<action name="login" class="LoginAction">
 			<result name="success">/index.jsp</result>
 			<result name="login_fail">/login.jsp</result>
 			<result name="signup_fail">/login.jsp</result>
+			<result name="input">/login.jsp</result>
 		</action>
 		<action name="user*" class="UserAction" method="{1}">
 			<result name="user_page">/user.jsp</result>
@@ -58,7 +54,6 @@
 			<interceptor-ref name="login"></interceptor-ref>
 			<interceptor-ref name="defaultStack"></interceptor-ref>
 		</action>
-
 	</package>
 
 	<!-- json -->
@@ -78,7 +73,6 @@
 				<param name="root">jsonResult</param>
 			</result>
 		</action>
-
 	</package>
 
 </struts>

@@ -5,10 +5,15 @@ import java.util.Date;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.opensymphony.xwork2.ActionSupport;
 import com.rainsho.entity.Users;
 import com.rainsho.service.LoginService;
 
-public class LoginAction {
+public class LoginAction extends ActionSupport {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private LoginService service;
 	private Users user;
 	private String login_msg;
@@ -97,4 +102,18 @@ public class LoginAction {
 		login_msg = null;
 		signup_msg = null;
 	}
+
+	public void validateSignup() {
+		// scope=prototype 不用重置FieldErrors
+		// this.clearFieldErrors();
+		if (!user.getNickname().matches("^[\\w\\u4e00-\\u9fa5]{4,16}$")) {
+			this.addFieldError("signup", "昵称为4-16位中英或数字");
+			return;
+		}
+		if (!user.getEmail().matches("(\\w+)(@)([\\w-_\\.]+)(\\.\\w{2,})")) {
+			this.addFieldError("signup", "邮箱非法，请再次确认");
+			return;
+		}
+	}
+
 }

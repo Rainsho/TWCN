@@ -17,7 +17,7 @@ import com.rainsho.util.StringUtil;
  */
 @Entity
 @Table(name = "replays", catalog = "twcn")
-public class Replays implements java.io.Serializable {
+public class Replays implements java.io.Serializable, Comparable<Replays> {
 
 	// Fields
 
@@ -118,10 +118,15 @@ public class Replays implements java.io.Serializable {
 	public void setRstate(Short rstate) {
 		this.rstate = rstate;
 	}
-	
+
 	// other function
 	public String fmtTime() {
 		return StringUtil.fmtTime(this.replaytime);
+	}
+
+	@Override
+	public int compareTo(Replays o) {
+		return this.getReplaytime().after(o.getReplaytime()) ? -1 : 1;
 	}
 
 }

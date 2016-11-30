@@ -1,6 +1,7 @@
 package com.rainsho.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
@@ -58,6 +59,7 @@ public class DirectmsgService {
 		for (Directmsgs x : dao.findDmMap(user).values()) {
 			list.add(x);
 		}
+		Collections.sort(list);
 		return list;
 	}
 

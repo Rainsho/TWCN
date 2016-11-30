@@ -1,8 +1,12 @@
 package com.rainsho.entity;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -210,6 +214,36 @@ public class Tweets implements java.io.Serializable, Comparable<Tweets> {
 	@Override
 	public int compareTo(Tweets o) {
 		return this.getTweettime().after(o.getTweettime()) ? -1 : 1;
+	}
+
+	public List<Replays> repN2O() {
+		List<Replays> list = new ArrayList<Replays>();
+		list.addAll(this.getReplayses());
+		Collections.sort(list);
+		return list;
+	}
+
+	public List<Replays> repO2N() {
+		List<Replays> list = new ArrayList<Replays>();
+		list.addAll(this.getReplayses());
+		Collections.sort(list);
+		Collections.reverse(list);
+		return list;
+	}
+
+	public List<Forwards> fwdN2O() {
+		List<Forwards> list = new ArrayList<Forwards>();
+		list.addAll(this.getForwardses());
+		Collections.sort(list);
+		return list;
+	}
+
+	public List<Forwards> fwdO2N() {
+		List<Forwards> list = new ArrayList<Forwards>();
+		list.addAll(this.getForwardses());
+		Collections.sort(list);
+		Collections.reverse(list);
+		return list;
 	}
 
 }

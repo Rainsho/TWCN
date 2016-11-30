@@ -1,9 +1,13 @@
 package com.rainsho.entity;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -334,6 +338,20 @@ public class Users implements java.io.Serializable {
 			}
 		}
 		return false;
+	}
+
+	public List<Replays> rep4HN2O() {
+		List<Replays> list = new ArrayList<Replays>();
+		list.addAll(this.getReplaysesForHuid());
+		Collections.sort(list);
+		return list;
+	}
+
+	public List<Likes> lkN2O() {
+		List<Likes> list = new ArrayList<Likes>();
+		list.addAll(this.getLikeses());
+		Collections.sort(list);
+		return list;
 	}
 
 }

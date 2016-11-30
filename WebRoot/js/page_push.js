@@ -111,5 +111,5 @@ $(function() {
 
 	// new push detected
 	new_push();
-	// setInterval('new_push()', 60000);
+	setInterval('new_push()', 60000);
 });

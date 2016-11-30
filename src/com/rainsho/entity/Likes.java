@@ -17,7 +17,7 @@ import com.rainsho.util.StringUtil;
  */
 @Entity
 @Table(name = "likes", catalog = "twcn")
-public class Likes implements java.io.Serializable {
+public class Likes implements java.io.Serializable, Comparable<Likes> {
 
 	// Fields
 
@@ -87,6 +87,11 @@ public class Likes implements java.io.Serializable {
 	// other function
 	public String fmtTime() {
 		return StringUtil.fmtTime(this.liketime);
+	}
+
+	@Override
+	public int compareTo(Likes o) {
+		return this.getLiketime().after(o.getLiketime()) ? -1 : 1;
 	}
 
 }

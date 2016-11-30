@@ -89,17 +89,12 @@
 		</property>
 	</bean>
 
-	<!-- test bean -->
-	<bean id="test" class="com.rainsho.test.Test">
-		<property name="dao" ref="UsersDAO"></property>
-	</bean>
-
 	<!-- function -->
 	<bean id="LoginService" class="com.rainsho.service.LoginService">
 		<property name="dao" ref="UsersDAO"></property>
 		<property name="rdao" ref="RelationshipsDAO"></property>
 	</bean>
-	<bean id="LoginAction" class="com.rainsho.action.LoginAction">
+	<bean id="LoginAction" class="com.rainsho.action.LoginAction" scope="prototype">
 		<property name="service" ref="LoginService"></property>
 	</bean>
 

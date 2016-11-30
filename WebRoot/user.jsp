@@ -495,7 +495,7 @@
 														</div>
 													</div>
 													<div class="replay_area">
-														<c:forEach var="r" items="${f.tweets.replayses }">
+														<c:forEach var="r" items="${f.tweets.repO2N() }">
 															<div class="replay_area_d0">
 																<div class="replay_area_d1">
 																	<img class="size24" src="${r.usersByHuid.avatar }">
@@ -539,7 +539,7 @@
 														</div>
 													</div>
 													<div class="forward_area">
-														<c:forEach var="ff" items="${f.tweets.forwardses }">
+														<c:forEach var="ff" items="${f.tweets.fwdO2N() }">
 															<div class="forward_area_d0">
 																<div class="forward_area_d1">
 																	<img class="size24" src="${ff.users.avatar }">
@@ -702,12 +702,10 @@
 																</div>
 															</c:if>
 														</div>
-
 													</div>
 												</div>
 											</div>
 										</li>
-
 									</c:otherwise>
 								</c:choose>
 							</c:forEach>

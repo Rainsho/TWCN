@@ -41,8 +41,9 @@
 									class="Icon Icon--bird Icon--large"></span> <span class="text">主页</span>
 							</a></li>
 							<li id="global-nav-about" class="about"><a
-								class="js-tooltip js-dynamic-tooltip" href="https://github.com/rainsho/twcn"
-								target="_blank"> <span class="text">源码</span>
+								class="js-tooltip js-dynamic-tooltip"
+								href="https://github.com/rainsho/twcn" target="_blank"> <span
+									class="text">源码</span>
 							</a></li>
 						</ul>
 					</div>
@@ -101,24 +102,24 @@
 						</div>
 						<div class="front-signup js-front-signup">
 							<h2>
-								<strong>新来 TWCN?</strong> 注册
-								<c:if test="${signup_msg != null }">
-									<span style="color: red;font-size: 12px;">${signup_msg }</span>
-								</c:if>
+								<strong>新来 TWCN?</strong> 注册 <span
+									style="color: red;font-size: 12px;"><c:if
+										test="${signup_msg != null }">${signup_msg }</c:if>${FieldErrors["signup"][0] }</span>
 							</h2>
 							<form action="login!signup.action" class="t1-form signup"
 								id="frontpage-signup-form" method="post">
 								<div class="field">
 									<input type="text" class="text-input" name="user.nickname"
-										maxlength="20" placeholder="全名" value="${user.nickname }">
+										required="required" maxlength="20" placeholder="全名"
+										value="${user.nickname }">
 								</div>
 								<div class="field">
-									<input type="text" class="text-input email-input"
-										name="user.email" placeholder="邮件地址">
+									<input type="email" class="text-input email-input"
+										required="required" name="user.email" placeholder="邮件地址">
 								</div>
 								<div class="field">
 									<input type="password" class="text-input" name="user.password"
-										placeholder="密码">
+										required="required" placeholder="密码">
 								</div>
 								<button type="submit" class="btn signup-btn u-floatRight">注册
 									TWCN</button>

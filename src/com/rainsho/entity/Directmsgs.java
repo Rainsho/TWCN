@@ -17,7 +17,7 @@ import com.rainsho.util.StringUtil;
  */
 @Entity
 @Table(name = "directmsgs", catalog = "twcn")
-public class Directmsgs implements java.io.Serializable {
+public class Directmsgs implements java.io.Serializable, Comparable<Directmsgs> {
 
 	// Fields
 
@@ -110,6 +110,11 @@ public class Directmsgs implements java.io.Serializable {
 	// other function
 	public String fmtTime() {
 		return StringUtil.fmtTime(this.msgtime);
+	}
+
+	@Override
+	public int compareTo(Directmsgs o) {
+		return this.getMsgtime().after(o.getMsgtime()) ? -1 : 1;
 	}
 
 }

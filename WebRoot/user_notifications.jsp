@@ -174,6 +174,14 @@
 			</div>
 			<div role="main" aria-labelledby="content-main-heading"
 				class="content-main" id="div_username">
+				<div class="content-header">
+					<div class="header-inner">
+						<h2 id="content-main-heading">${LOGIN_USER.nickname
+							}&nbsp;@${LOGIN_USER.username }</h2>
+						<p class="subheader">您的评论和点赞</p>
+					</div>
+				</div>
+				<div class="content-inner no-stream-end">
 				<div class="easyui-tabs" style="border-radius: 4px;">
 					<div title="收到的评论" style="padding:10px;">
 						<c:forEach var="r" items="${receive_list }">
@@ -209,7 +217,7 @@
 						</c:forEach>
 					</div>
 					<div title="发出的评论" style="padding:10px;">
-						<c:forEach var="r" items="${LOGIN_USER.replaysesForHuid }">
+						<c:forEach var="r" items="${LOGIN_USER.rep4HN2O() }">
 							<div class="replay_area_d0" style="margin-bottom: 5px;">
 								<div class="replay_area_d1">
 									<a href="u/${r.usersByHuid.username }"><img class="size24"
@@ -268,7 +276,7 @@
 						</c:forEach>
 					</div>
 					<div title="发出的点赞" style="padding:10px;">
-						<c:forEach var="l" items="${LOGIN_USER.likeses }">
+						<c:forEach var="l" items="${LOGIN_USER.lkN2O() }">
 							<div class="replay_area_d0" style="margin-bottom: 5px;">
 								<div class="replay_area_d1">
 									<a href="u/${l.users.username }"><img class="size24"
@@ -294,6 +302,7 @@
 							</div>
 						</c:forEach>
 					</div>
+				</div>
 				</div>
 				<div class="stream-end" style="display: block;">
 					<div class="stream-end-inner">
