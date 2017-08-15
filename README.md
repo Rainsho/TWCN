@@ -4,7 +4,7 @@ A Twitter-like SNS demo using Java SSH framework.
 
 For personal practicing and learning SSH framework.  
 
-效果测试：~~http://rainsho.cc:8080/TWCN/~~（服务器暂时关闭）  
+效果测试：http://twcn.rainsho.cc  
 AWS EC2服务器，位于海外。可能速度比较慢，请耐心等待（异步上传过程中可能无明显提示）。  
 测试账号密码：admin admin  
 
